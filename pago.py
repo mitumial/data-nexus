@@ -21,3 +21,12 @@ class Tarjeta(Pago):
 
   def verificar_validez():
     pass
+
+class Efectivo(Pago):
+  efectivo_operado = float
+
+  def __init__(self, efectivo_operado):
+    self.efectivo_operado = efectivo_operado
+
+  def devolver_cambio():
+    pass
