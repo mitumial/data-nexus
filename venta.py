@@ -3,7 +3,7 @@ class Venta:
   fecha = str
   estado = str
 
-  def __init__(self, id_venta, fecha, estado):
+  def __init__(self, id_venta, fecha):
     self.id_venta = id_venta
     self.fecha = fecha
     self.estado = "No pagado"
