@@ -44,8 +44,8 @@ class Vehiculo:
             self.cilindraje= float(input("Ingrese el cilindraje del vehiculo: \n"))
             self.kilometraje= float(input("Ingrese el kilometraje del vehiculo: \n"))
             self.puertas= int(input("Ingrese el numero de puertas del vehiculo: \n"))
-            self.alarma= bool(input("¿El vehiculo tiene alarma? (si/no): \n"))
-            self.sensor= bool(input("¿El vehiculo tiene sensores? (si/no): \n"))
+            self.alarma= input("¿El vehiculo tiene alarma? (si/no): \n")
+            self.sensor= input("¿El vehiculo tiene sensores? (si/no): \n")
             self.precio = float(input("Ingrese el precio del vehiculo: \n"))
             
         def mostrar_detalles_vehiculo():
