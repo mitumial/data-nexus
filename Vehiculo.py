@@ -45,11 +45,39 @@ class Vehiculo:
             self.kilometraje= float(input("Ingrese el kilometraje del vehiculo: \n"))
             self.puertas= int(input("Ingrese el numero de puertas del vehiculo: \n"))
             self.alarma= bool(input("¿El vehiculo tiene alarma? (si/no): \n"))
+            '''if self.alarma.lower() == "sí":
+                print("¡Genial!, el vehiculo tiene alarma")
+            elif self.alarma.lower() == "no":
+                print("El vehiculo no tiene alarma")
+            else:
+                print("Por favor, responde con 'sí' o 'no'.")'''
             self.sensor= bool(input("¿El vehiculo tiene sensores? (si/no): \n"))
+            '''if self.sensor.lower() == "sí":
+                print("¡Genial!, el vehiculo tiene sensor")
+            elif self.sensor.lower() == "no":
+                print("El vehiculo no tiene sensor")
+            else:
+                print("Por favor, responde con 'sí' o 'no'.")'''
             self.precio = float(input("Ingrese el precio del vehiculo: \n"))
             
         def mostrar_detalles_vehiculo():
             pass
+
+        def determinar_alarma(self):
+            if self.alarma.lower() == "sí":
+                print("¡Genial!, el vehiculo tiene alarma")
+            elif self.alarma.lower() == "no":
+                print("El vehiculo no tiene alarma")
+            else:
+                print("Por favor, responde con 'sí' o 'no'.")
+
+        def determinar_sensor(self):
+            if self.sensor.lower() == "sí":
+                print("¡Genial!, el vehiculo tiene sensor")
+            elif self.sensor.lower() == "no":
+                print("El vehiculo no tiene sensor")
+            else:
+                print("Por favor, responde con 'sí' o 'no'.")
     
         def borrar_vehiculo():
             pass   
