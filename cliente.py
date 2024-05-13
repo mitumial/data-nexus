@@ -36,10 +36,29 @@ class Cliente:
         self.celular = int(input("Ingrese el número de celular del cliente: \n"))
         self.vehiculos_comprados = []
         
-    def mostrar_detalles_cliente():
-        pass
+    def mostrar_detalles_cliente(self):
+        print("-" * 30)
+        print("DETALLES DEL CLIENTE:")
+        print("ID del Cliente:", self.id_cliente)
+        print("Nombre:", self.nombre)
+        print("Apellidos:", self.apellidos)
+        print("Documento:", self.documento)
+        print("Edad:", self.edad)
+        print("Género:", self.genero)
+        print("Dirección:", self.direccion)
+        print("Email:", self.email)
+        print("Celular:", self.celular)
+        print("Vehículos Comprados:", self.vehiculos_comprados)
+
+    def borrar_cliente(self):
+        print("-" * 30)
+        print("BORRAR CLIENTE")
+        confirmacion = input("¿Está seguro de que desea borrar este cliente? (s/n): ").lower()
+        if confirmacion == "s":
+            del self
+            print("Cliente borrado exitosamente.")
+        else:
+            print("Operación cancelada.")
+
     
-    def borrar_cliente():
-        pass    
-        
         
