@@ -60,7 +60,18 @@ class Vehiculo:
                 print("Por favor, responde con 'sí' o 'no'.")'''
             self.precio = float(input("Ingrese el precio del vehiculo: \n"))
             
-        def mostrar_detalles_vehiculo():
+        def mostrar_detalles_vehiculo(self):
+            print('-'*30)
+            print(f"El id del vehiculo es: {self.id_vehiculo}")
+            print(f"La marca del vehiculo es: {self.marca}")
+            print(f"El modelo del vehiculo es: {self.modelo}")
+            print(f"El año del vehiculo es: {self.año}")
+            print(f"La placa del vehiculo es: {self.placa}")
+            print(f"El color del vehiculo es: {self.color}")
+            print(f"El tipo de combustible que utiliza el vehiculo es: {self.combustible}")
+            print(f"El tipo de transmision del vehiculo es: {self.transmision}")
+            print(f"el cilindraje del vehiculo es: {self.cilindraje}")
+            
             pass
 
         def determinar_alarma(self):
