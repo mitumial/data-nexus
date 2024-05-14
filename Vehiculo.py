@@ -71,7 +71,7 @@ class Vehiculo:
             print(f"El tipo de combustible que utiliza el vehiculo es: {self.combustible}")
             print(f"El tipo de transmision del vehiculo es: {self.transmision}")
             print(f"el cilindraje del vehiculo es: {self.cilindraje}")
-            
+            print
             pass
 
         def determinar_alarma(self):
