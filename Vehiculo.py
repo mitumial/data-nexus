@@ -71,22 +71,26 @@ class Vehiculo:
             print(f"El tipo de combustible que utiliza el vehiculo es: {self.combustible}")
             print(f"El tipo de transmision del vehiculo es: {self.transmision}")
             print(f"el cilindraje del vehiculo es: {self.cilindraje}")
-            print
-            pass
+            print(f"El kilometraje del vehiculo es: {self.kilometraje} km/h")
+            print(f"El vehiculo tiene {self.puertas} puertas")
+            print(f"El vehiculo cuenta con alarma {self.alarma}")
+            print(f"El vehiculo cuenta con sensor {self.sensor}")
+            print(f"El vehiculo tiene un valor de {self.precio} pesos")
+            
 
         def determinar_alarma(self):
             if self.alarma.lower() == "sí":
-                print("¡Genial!, el vehiculo tiene alarma")
+                print(True)
             elif self.alarma.lower() == "no":
-                print("El vehiculo no tiene alarma")
+                print(False)
             else:
                 print("Por favor, responde con 'sí' o 'no'.")
 
         def determinar_sensor(self):
             if self.sensor.lower() == "sí":
-                print("¡Genial!, el vehiculo tiene sensor")
+                print(True)
             elif self.sensor.lower() == "no":
-                print("El vehiculo no tiene sensor")
+                print(False)
             else:
                 print("Por favor, responde con 'sí' o 'no'.")
     
