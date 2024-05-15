@@ -1,3 +1,9 @@
+class Cliente:
+  pass
+
+class Vehiculo:
+  pass
+
 class Venta:
   id_venta = int
   fecha = str
