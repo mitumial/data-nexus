@@ -1,36 +1,114 @@
+import re
+import uuid
+
 class Cliente:
-    _id_cliente = int
-    #Agregar atributos privados o publicos    POR REALIZAR
-    
     def __init__(self, id_cliente=None, nombre=None, apellidos=None, documento=None, edad=None, genero=None, direccion=None, email=None, celular=None, vehiculos_comprados=None):
-        # Inicializa los atributos del cliente
-        self.id_cliente = id_cliente
+        self.id_cliente = id_cliente if id_cliente is not None else uuid.uuid4().int
         self.nombre = nombre
         self.apellidos = apellidos
         self.documento = documento
+        self._edad = None
         self.edad = edad
+        self._genero = None
         self.genero = genero
         self.direccion = direccion
+        self._email = None
         self.email = email
+        self._celular = None
         self.celular = celular
-        # Inicializa vehiculos_comprados como una lista vacía si no se proporciona
         self.vehiculos_comprados = vehiculos_comprados if vehiculos_comprados is not None else []
-   
+
+    @property
+    def edad(self):
+        return self._edad
+
+    @edad.setter
+    def edad(self, value):
+        if value is not None:
+            if 0 < value < 120:
+                self._edad = value
+            else:
+                raise ValueError("La edad debe estar entre 1 y 119 años.")
+        else:
+            self._edad = value
+
+    @property
+    def genero(self):
+        return self._genero
+
+    @genero.setter
+    def genero(self, value):
+        if value is not None:
+            if value.lower() in ["masculino", "femenino"]:
+                self._genero = value.lower().capitalize()
+            else:
+                raise ValueError("El género debe ser 'Masculino' o 'Femenino'.")
+        else:
+            self._genero = value
+
+    @property
+    def email(self):
+        return self._email
+
+    @email.setter
+    def email(self, value):
+        if value is not None:
+            if re.match(r"^\w+@\w+\.\w{2,3}$", value):
+                self._email = value
+            else:
+                raise ValueError("El correo electrónico no es válido.")
+        else:
+            self._email = value
+
+    @property
+    def celular(self):
+        return self._celular
+
+    @celular.setter
+    def celular(self, value):
+        if value is not None:
+            if re.match(r"^\d{10}$", str(value)):
+                self._celular = value
+            else:
+                raise ValueError("El número de celular debe tener 10 dígitos.")
+        else:
+            self._celular = value
 
     def ingresar_cliente(self):
         print("-" * 30)
         print("INGRESAR DATOS DEL CLIENTE:")
-        #Poner uuid.uuid4() en el id             POR REALIZAR
-        self.id_cliente = int(input("Ingrese la id del cliente: \n"))   
         self.nombre = input("Ingrese los nombres del cliente: \n")
         self.apellidos = input("Ingrese los apellidos del cliente: \n")
         self.documento = int(input("Ingrese el numero de documento del cliente: \n"))
-        self.edad = int(input("Ingrese la edad del cliente: \n"))        #no permitir que coloque una edad sin sentido (aca por ejm se puede usar getter y/o setter)
-        self.genero = input("Ingrese el genero del cliente: (Masculino/Femenino): \n") #que no deje ingrEsar otrA cosa quue no sea m o f      POR REALIZAR    
-        self.direccion = input("Ingrese la dirección del cliente: \n")  #crear un menu para que el usuario eliga si es calle o carrera, y luego se agregue a eso el numero de la casa etc.
-        self.email = input("Ingrese la direccion de correo electronico del cliente: \n")  #re.match(r"\w+@\w+.\w{2,3}", email_que_puso)     patron para el email 
-        self.celular = int(input("Ingrese el número de celular del cliente: \n")) # que no permita ingresar mas de 10 digitos
-        self.vehiculos_comprados = []  # Inicializa como lista vacía al ingresar un cliente
+        try:
+            self.edad = int(input("Ingrese la edad del cliente: \n"))
+        except ValueError as e:
+            print(f"Error: {e}")
+            return
+
+        try:
+            self.genero = input("Ingrese el genero del cliente (Masculino/Femenino): \n")
+        except ValueError as e:
+            print(f"Error: {e}")
+            return
+
+        direccion_tipo = input("Ingrese el tipo de dirección (Calle/Carrera): \n")
+        direccion_numero = input("Ingrese el número de la dirección: \n")
+        self.direccion = f"{direccion_tipo} {direccion_numero}"
+
+        try:
+            self.email = input("Ingrese la direccion de correo electronico del cliente: \n")
+        except ValueError as e:
+            print(f"Error: {e}")
+            return
+
+        try:
+            self.celular = int(input("Ingrese el número de celular del cliente: \n"))
+        except ValueError as e:
+            print(f"Error: {e}")
+            return
+
+        self.vehiculos_comprados = []
 
     def mostrar_detalles_cliente(self):
         print("/","-" * 30, "/")
@@ -50,8 +128,11 @@ class Cliente:
 def agregar_cliente(clientes):
     cliente = Cliente()
     cliente.ingresar_cliente()
-    clientes.append(cliente)
-    print("Cliente agregado exitosamente.")
+    if cliente.nombre and cliente.apellidos and cliente.documento and cliente.edad and cliente.genero and cliente.direccion and cliente.email and cliente.celular:
+        clientes.append(cliente)
+        print("Cliente agregado exitosamente.")
+    else:
+        print("Error: Datos del cliente incompletos o incorrectos.")
 
 
 def mostrar_todos_los_clientes(clientes):
@@ -116,4 +197,3 @@ def menu():
 
 # Ejecutar el menú
 menu()
-#USAR GETTER Y SETTER para ahorrar condicionales y ver mas limpio el codigo 
