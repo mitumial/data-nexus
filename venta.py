@@ -1,5 +1,4 @@
 from datetime import datetime as dt
-import uuid
 import re
 
 
@@ -17,13 +16,19 @@ class Venta:
     _estado = str
     cliente = Cliente
     vehiculo = Vehiculo
+    interes = 0.19
+    lista_ventas = []
 
     def __init__(self, cliente=None, vehiculo=None):
-        self._id_venta = str(uuid.uuid4())
+        if not self.lista_ventas:
+            self._id_venta = 0
+        else:
+            self._id_venta = self.lista_ventas[-1]._id_venta + 1
         self._fecha = dt.now().strftime("%d-%m-%Y")
         self._estado = "No pagado"
         self.cliente = cliente
         self.vehiculo = vehiculo
+        self.lista_ventas.append(self)
 
     @property
     def fecha(self):
@@ -37,14 +42,13 @@ class Venta:
             self._fecha = value
 
     def realizar_compra(self):
-        self.cliente
-        self.vehiculo
-
-    def generar_factura(self):
-        pass
+        if self.pago.cantidad < self.calcular_total():
+            self._estado = "Pagado"
+            self.tarjeta.fondos = self.tarjeta.fondos - self.vehiculo.precio
 
     def calcular_total(self):
-        pass
+        precio_total = self.vehiculo.precio * (1 + self.interes)
+        return precio_total
 
     def mostrar_detalles_venta(self):
         print(
@@ -67,6 +71,5 @@ class Venta:
 
 
 mySale = Venta()
-
-mySale.fecha = "11-15-20"
+mySale.fecha = "08-07-2025"
 print(mySale.fecha)
