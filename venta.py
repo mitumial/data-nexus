@@ -66,8 +66,49 @@ class Venta:
             """
         )
 
-    def cancelar_venta(self):
+    def cancelar_compra(self):
         pass
+
+
+def identificar_cliente(clientes):
+    doc = int(input("Ingrese su numero de documento:\n"))
+    for cliente in clientes:
+        if cliente.documento == doc:
+            while True:
+                es_cliente = input(
+                    f"¿Esta seguro que se identifica como {cliente.nombre} {cliente.apellidos}?\n"
+                )
+                if es_cliente.lower() == "si":
+                    break
+                print(f"Por favor, ingrese su documento de nuevo.\n")
+            id_cliente_seleccionado = cliente.id_cliente
+    return id_cliente_seleccionado
+
+
+def menu():
+
+    while True:
+        print("\n" + "-" * 50)
+        print("VENTA DE VEHICULOS")
+        print("1. Mostrar lista de todos los vehiculos disponibles")
+        print("2. Cancelar compra")
+        print("3. Salir")
+
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == "1":
+            pass
+        elif opcion == "2":
+            pass
+        elif opcion == "3":
+            print("Saliendo del programa...")
+            break
+        else:
+            print("Opción no válida. Por favor, intente de nuevo.")
+
+
+# Ejecutar el menú
+# menu()
 
 
 mySale = Venta()

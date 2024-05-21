@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="Cf1AXsGbQuAOcQ2hujY1" name="Page-1">
-        <mxGraphModel dx="818" dy="287" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="#000000" math="0" shadow="0">
+        <mxGraphModel dx="818" dy="469" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="#000000" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -172,43 +172,43 @@
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="6f88BUgEilsf_mS2_Gx8-3" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="6f88BUgEilsf_mS2_Gx8-1" target="6f88BUgEilsf_mS2_Gx8-2">
+                <mxCell id="6f88BUgEilsf_mS2_Gx8-3" value="" style="edgeStyle=none;html=1;" parent="1" source="6f88BUgEilsf_mS2_Gx8-1" target="6f88BUgEilsf_mS2_Gx8-2" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="6f88BUgEilsf_mS2_Gx8-1" value="mostrar lista de vehiculos disponibles&lt;br&gt;o filtrar por&lt;br&gt;marca, modelo,año, precio" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="6f88BUgEilsf_mS2_Gx8-1" value="mostrar lista de vehiculos disponibles&lt;br&gt;o filtrar por&lt;br&gt;marca, modelo,año, precio" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="310" y="140" width="120" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="6f88BUgEilsf_mS2_Gx8-5" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="6f88BUgEilsf_mS2_Gx8-2" target="6f88BUgEilsf_mS2_Gx8-4">
+                <mxCell id="6f88BUgEilsf_mS2_Gx8-5" value="" style="edgeStyle=none;html=1;" parent="1" source="6f88BUgEilsf_mS2_Gx8-2" target="6f88BUgEilsf_mS2_Gx8-4" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="6f88BUgEilsf_mS2_Gx8-7" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="6f88BUgEilsf_mS2_Gx8-2" target="6f88BUgEilsf_mS2_Gx8-6">
+                <mxCell id="6f88BUgEilsf_mS2_Gx8-7" value="" style="edgeStyle=none;html=1;" parent="1" source="6f88BUgEilsf_mS2_Gx8-2" target="6f88BUgEilsf_mS2_Gx8-6" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="6f88BUgEilsf_mS2_Gx8-2" value="elegir metodo de pago" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                <mxCell id="6f88BUgEilsf_mS2_Gx8-2" value="elegir metodo de pago" style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="310" y="260" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="6f88BUgEilsf_mS2_Gx8-13" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="6f88BUgEilsf_mS2_Gx8-4" target="6f88BUgEilsf_mS2_Gx8-12">
+                <mxCell id="6f88BUgEilsf_mS2_Gx8-13" value="" style="edgeStyle=none;html=1;" parent="1" source="6f88BUgEilsf_mS2_Gx8-4" target="6f88BUgEilsf_mS2_Gx8-12" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="6f88BUgEilsf_mS2_Gx8-4" value="tarjeta" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                <mxCell id="6f88BUgEilsf_mS2_Gx8-4" value="tarjeta" style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="210" y="380" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="6f88BUgEilsf_mS2_Gx8-11" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="6f88BUgEilsf_mS2_Gx8-6" target="6f88BUgEilsf_mS2_Gx8-10">
+                <mxCell id="6f88BUgEilsf_mS2_Gx8-11" value="" style="edgeStyle=none;html=1;" parent="1" source="6f88BUgEilsf_mS2_Gx8-6" target="6f88BUgEilsf_mS2_Gx8-10" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="6f88BUgEilsf_mS2_Gx8-6" value="efectivo" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                <mxCell id="6f88BUgEilsf_mS2_Gx8-6" value="efectivo" style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="410" y="380" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="6f88BUgEilsf_mS2_Gx8-10" value="" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                <mxCell id="6f88BUgEilsf_mS2_Gx8-10" value="" style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="410" y="520" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="6f88BUgEilsf_mS2_Gx8-12" value="ingresar datos de tarjeta: credito o debito, fecha expiracion. etc" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                <mxCell id="6f88BUgEilsf_mS2_Gx8-12" value="ingresar datos de tarjeta: credito o debito, fecha expiracion. etc" style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="210" y="490" width="120" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="6f88BUgEilsf_mS2_Gx8-15" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="6f88BUgEilsf_mS2_Gx8-14" target="6f88BUgEilsf_mS2_Gx8-1">
+                <mxCell id="6f88BUgEilsf_mS2_Gx8-15" value="" style="edgeStyle=none;html=1;" parent="1" source="6f88BUgEilsf_mS2_Gx8-14" target="6f88BUgEilsf_mS2_Gx8-1" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="6f88BUgEilsf_mS2_Gx8-14" value="cual su documento?&lt;br&gt;devolver nombres y apellidos&lt;br&gt;preguntar si usted es nombre + apellido" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="6f88BUgEilsf_mS2_Gx8-14" value="cual su documento?&lt;br&gt;devolver nombres y apellidos&lt;br&gt;preguntar si usted es nombre + apellido" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="310" y="10" width="120" height="90" as="geometry"/>
                 </mxCell>
             </root>
