@@ -70,9 +70,9 @@ class Venta:
         pass
 
 
-def identificar_cliente(clientes):
+def identificar_cliente(lista_clientes):
     doc = int(input("Ingrese su numero de documento:\n"))
-    for cliente in clientes:
+    for cliente in lista_clientes:
         if cliente.documento == doc:
             while True:
                 es_cliente = input(
@@ -84,7 +84,7 @@ def identificar_cliente(clientes):
             id_cliente_seleccionado = cliente.id_cliente
     return id_cliente_seleccionado
 
-
+def mostrar
 def menu():
 
     while True:
