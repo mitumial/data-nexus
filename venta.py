@@ -84,7 +84,16 @@ def identificar_cliente(lista_clientes):
             id_cliente_seleccionado = cliente.id_cliente
     return id_cliente_seleccionado
 
-def mostrar
+
+def mostrar_vehiculos_disponibles(lista_vehiculos):
+    for vehiculo in lista_vehiculos:
+        print("\n" + "-" * 50)
+        print(f"Promoción especial! \033[9m{5_000_000 * 1.19} pesos\033[0m")
+        print(f"{vehiculo.precio * 1.19 * 5} pesos")
+        print(f"{vehiculo.marca} {vehiculo.modelo}")
+        print(f"{vehiculo.kilometraje} km | {vehiculo.año}")
+
+
 def menu():
 
     while True:
