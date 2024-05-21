@@ -88,28 +88,36 @@ def identificar_cliente(lista_clientes):
 def mostrar_vehiculos_disponibles(lista_vehiculos):
     for vehiculo in lista_vehiculos:
         print("\n" + "-" * 50)
+        print(f"[{vehiculo.id_vehiculo}] \t")
         print(f"Promoción especial! \033[9m{5_000_000 * 1.19} pesos\033[0m")
         print(f"{vehiculo.precio * 1.19 * 5} pesos")
         print(f"{vehiculo.marca} {vehiculo.modelo}")
         print(f"{vehiculo.kilometraje} km | {vehiculo.año}")
+        print("\n" + "-" * 50)
 
 
-def menu():
+def menu(lista_clientes, lista_vehiculos):
 
     while True:
         print("\n" + "-" * 50)
         print("VENTA DE VEHICULOS")
         print("1. Mostrar lista de todos los vehiculos disponibles")
-        print("2. Cancelar compra")
-        print("3. Salir")
+        print("2. Identifiquese")
+        print("3. Elegir metodo de pago")
+        print("4. Cancelar compra")
 
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
-            pass
+            mostrar_vehiculos_disponibles(lista_vehiculos)
+            id_carro_seleccionado = input(
+                "Ingrese el id correspondiente al vehiculo deseado: \n"
+            )
         elif opcion == "2":
-            pass
+            id_cliente_seleccionado = identificar_cliente(lista_clientes)
         elif opcion == "3":
+            pass
+        elif opcion == "4":
             print("Saliendo del programa...")
             break
         else:
