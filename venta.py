@@ -7,6 +7,12 @@ class Cliente:
 
 
 class Vehiculo:
+    interes = 0.19
+
+    def calcular_total(self):
+        precio_total = self.vehiculo.precio * (1 + self.interes)
+        return precio_total
+
     pass
 
 
@@ -14,9 +20,8 @@ class Venta:
     _id_venta = str
     _fecha = str
     _estado = str
-    cliente = Cliente
-    vehiculo = Vehiculo
-    interes = 0.19
+    _id_cliente = int
+    _id_vehiculo = int
     lista_ventas = []
 
     def __init__(self, cliente=None, vehiculo=None):
@@ -41,14 +46,26 @@ class Venta:
         else:
             self._fecha = value
 
-    def realizar_compra(self):
-        if self.pago.cantidad < self.calcular_total():
-            self._estado = "Pagado"
-            self.tarjeta.fondos = self.tarjeta.fondos - self.vehiculo.precio
+    @property
+    def cliente(self):
+        return self._cliente
 
-    def calcular_total(self):
-        precio_total = self.vehiculo.precio * (1 + self.interes)
-        return precio_total
+    @cliente.setter
+    def cliente(self, value):
+        self.cliente = value
+
+    @property
+    def vehiculo(self):
+        return self.vehiculo
+
+    @vehiculo.setter
+    def vehiculo(self, value):
+        self.vehiculo = value
+
+    # def realizar_compra(self):
+    #     if self.pago.cantidad < self.calcular_total():
+    #         self._estado = "Pagado"
+    #         self.tarjeta.fondos = self.tarjeta.fondos - self.vehiculo.precio
 
     def mostrar_detalles_venta(self):
         print(
@@ -70,13 +87,25 @@ class Venta:
         pass
 
 
+def realizar_venta(lista_vehiculos, lista_clientes):
+    nueva_venta = Venta()
+    mostrar_vehiculos_disponibles(lista_vehiculos)
+    id_carro_seleccionado = input(
+        "Ingrese el id correspondiente al vehiculo deseado: \n"
+    )
+    nueva_venta.vehiculo = id_carro_seleccionado
+
+    id_cliente_seleccionado = identificar_cliente(lista_clientes)
+    nueva_venta.cliente = id_cliente_seleccionado
+
+
 def identificar_cliente(lista_clientes):
     doc = int(input("Ingrese su numero de documento:\n"))
     for cliente in lista_clientes:
         if cliente.documento == doc:
             while True:
                 es_cliente = input(
-                    f"¿Esta seguro que se identifica como {cliente.nombre} {cliente.apellidos}?\n"
+                    f"¿Esta seguro que se identifica como {cliente.nombre} {cliente.apellidos}? (Si/No)\n"
                 )
                 if es_cliente.lower() == "si":
                     break
@@ -89,7 +118,7 @@ def mostrar_vehiculos_disponibles(lista_vehiculos):
     for vehiculo in lista_vehiculos:
         print("\n" + "-" * 50)
         print(f"[{vehiculo.id_vehiculo}] \t")
-        print(f"Promoción especial! \033[9m{5_000_000 * 1.19} pesos\033[0m")
+        print(f"Promoción especial! \033[9m{vehiculo.calcular_total()} pesos\033[0m")
         print(f"{vehiculo.precio * 1.19 * 5} pesos")
         print(f"{vehiculo.marca} {vehiculo.modelo}")
         print(f"{vehiculo.kilometraje} km | {vehiculo.año}")
@@ -122,6 +151,8 @@ def menu(lista_clientes, lista_vehiculos):
             break
         else:
             print("Opción no válida. Por favor, intente de nuevo.")
+
+    compra_de_vehiculo = Venta()
 
 
 # Ejecutar el menú
