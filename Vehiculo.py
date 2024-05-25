@@ -45,7 +45,31 @@ class Vehiculo:
              if not re.match(r"\w{3}-\d{3}", value):
                   raise ValueError("La placa debe estar en formato aaa-000") 
              else:
-                  self._placa = value   
+                  self._placa = value 
+
+        @property
+        def cilindraje(self):
+            return self._cilindraje
+
+        @cilindraje.setter
+        def cilindraje(self, value):
+            if not isinstance(value, (int, float)):
+                raise ValueError("El cilindraje debe ser un número (entero o decimal)")
+            if value <= 0 or value > 8.0:
+                raise ValueError("El cilindraje debe ser un número positivo y razonable (por ejemplo, entre 0.5L y 8.0L)")
+            else:
+                self._cilindraje = value 
+            
+        @property
+        def kilometraje(self):
+            return self._kilometraje
+
+        @kilometraje.setter
+        def kilometraje(self, value):
+            if not isinstance(value, int) or value < 0 or value > 2000:
+                raise ValueError("El kilometraje debe ser un número entero no negativo que debe estar entre cero y 2000 km.")
+            else:
+                 self._kilometraje = value
 
         def ingresar_vehiculo(self):
             print("-"*30)
