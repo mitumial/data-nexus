@@ -1,3 +1,4 @@
+import json
 from datetime import datetime as dt
 import re
 
@@ -20,20 +21,20 @@ class Venta:
     _id_venta = str
     _fecha = str
     _estado = str
-    _id_cliente = int
-    _id_vehiculo = int
-    lista_ventas = []
+    _cliente = Cliente
+    _vehiculo = Vehiculo
+    ventas_inventario = []
 
     def __init__(self, cliente=None, vehiculo=None):
-        if not self.lista_ventas:
+        if not self.ventas_inventario:
             self._id_venta = 0
         else:
-            self._id_venta = self.lista_ventas[-1]._id_venta + 1
+            self._id_venta = self.ventas_inventario[-1]["_id_venta"] + 1
         self._fecha = dt.now().strftime("%d-%m-%Y")
         self._estado = "No pagado"
-        self.cliente = cliente
-        self.vehiculo = vehiculo
-        self.lista_ventas.append(self)
+        self._cliente = cliente
+        self._vehiculo = vehiculo
+        self.ventas_inventario.append(self)
 
     @property
     def fecha(self):
@@ -52,33 +53,34 @@ class Venta:
 
     @cliente.setter
     def cliente(self, value):
-        self.cliente = value
+        self._cliente = value
 
     @property
     def vehiculo(self):
-        return self.vehiculo
+        return self._vehiculo
 
     @vehiculo.setter
     def vehiculo(self, value):
-        self.vehiculo = value
+        self._vehiculo = value
 
-    # def realizar_compra(self):
-    #     if self.pago.cantidad < self.calcular_total():
-    #         self._estado = "Pagado"
-    #         self.tarjeta.fondos = self.tarjeta.fondos - self.vehiculo.precio
+    def realizar_compra(self):
+        if self.pago.cantidad < self.calcular_total():
+            self._estado = "Pagado"
+            self.tarjeta.fondos = self.tarjeta.fondos - self.vehiculo.precio
 
     def mostrar_detalles_venta(self):
+
         print(
             f"""\n
-                Cliente:{self.cliente.nombres} {self.cliente.apellidos}
+                Cliente:{self._cliente.nombres} {self._cliente.apellidos}
                 \n
-                Vehiculo:{self.vehiculo.marca} {self.vehiculo.modelo}
+                Vehiculo:{self._vehiculo.marca} {self._vehiculo.modelo}
                 \n
                 Fecha:{self._fecha}
                 \n
                 Estado:{self._estado}
                 \n
-                Por la suma total de: {self.vehiculo.precio}
+                Por la suma total de: {self._vehiculo.precio}
                 \n
             """
         )
@@ -87,16 +89,45 @@ class Venta:
         pass
 
 
+def cargar_ventas(filename="./venta.json"):
+    with open(filename, "r") as archivo:
+        ventas = json.load(archivo)
+
+    for venta in ventas:
+        Venta.ventas_inventario.append(venta)
+
+
+def guardar_venta(venta, filename="./venta.json"):
+    with open(filename, "r+") as archivo:
+        archivo_datos = json.load(archivo)
+        archivo_datos.append(venta.__dict__)
+        archivo.seek(0)
+        json.dump(archivo_datos, archivo, indent=4)
+
+
 def realizar_venta(lista_vehiculos, lista_clientes):
     nueva_venta = Venta()
     mostrar_vehiculos_disponibles(lista_vehiculos)
     id_carro_seleccionado = input(
         "Ingrese el id correspondiente al vehiculo deseado: \n"
     )
-    nueva_venta.vehiculo = id_carro_seleccionado
+    vehiculo_informacion = list(
+        filter(
+            lambda vehiculo: vehiculo["id"] == id_carro_seleccionado,
+            Vehiculo.vehiculos_inventario,
+        )
+    )
+    nueva_venta.vehiculo = vehiculo_informacion
 
     id_cliente_seleccionado = identificar_cliente(lista_clientes)
-    nueva_venta.cliente = id_cliente_seleccionado
+    cliente_informacion = list(
+        filter(
+            lambda cliente: cliente["id"] == id_cliente_seleccionado,
+            Cliente.clientes_inventario,
+        )
+    )
+    nueva_venta.cliente = cliente_informacion
+    guardar_venta(nueva_venta)
 
 
 def identificar_cliente(lista_clientes):
@@ -125,40 +156,36 @@ def mostrar_vehiculos_disponibles(lista_vehiculos):
         print("\n" + "-" * 50)
 
 
-def menu(lista_clientes, lista_vehiculos):
+# def menu(lista_clientes, lista_vehiculos):
 
-    while True:
-        print("\n" + "-" * 50)
-        print("VENTA DE VEHICULOS")
-        print("1. Mostrar lista de todos los vehiculos disponibles")
-        print("2. Identifiquese")
-        print("3. Elegir metodo de pago")
-        print("4. Cancelar compra")
+#     while True:
+#         print("\n" + "-" * 50)
+#         print("VENTA DE VEHICULOS")
+#         print("1. Mostrar lista de todos los vehiculos disponibles")
+#         print("2. Identifiquese")
+#         print("3. Elegir metodo de pago")
+#         print("4. Cancelar compra")
 
-        opcion = input("Seleccione una opción: ")
+#         opcion = input("Seleccione una opción: ")
 
-        if opcion == "1":
-            mostrar_vehiculos_disponibles(lista_vehiculos)
-            id_carro_seleccionado = input(
-                "Ingrese el id correspondiente al vehiculo deseado: \n"
-            )
-        elif opcion == "2":
-            id_cliente_seleccionado = identificar_cliente(lista_clientes)
-        elif opcion == "3":
-            pass
-        elif opcion == "4":
-            print("Saliendo del programa...")
-            break
-        else:
-            print("Opción no válida. Por favor, intente de nuevo.")
+#         if opcion == "1":
+#             mostrar_vehiculos_disponibles(lista_vehiculos)
+#             id_carro_seleccionado = input(
+#                 "Ingrese el id correspondiente al vehiculo deseado: \n"
+#             )
+#         elif opcion == "2":
+#             id_cliente_seleccionado = identificar_cliente(lista_clientes)
+#         elif opcion == "3":
+#             pass
+#         elif opcion == "4":
+#             print("Saliendo del programa...")
+#             break
+#         else:
+#             print("Opción no válida. Por favor, intente de nuevo.")
 
-    compra_de_vehiculo = Venta()
+#     compra_de_vehiculo = Venta()
 
 
 # Ejecutar el menú
 # menu()
-
-
-mySale = Venta()
-mySale.fecha = "08-07-2025"
-print(mySale.fecha)
+cargar_ventas()
