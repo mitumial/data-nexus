@@ -58,7 +58,7 @@ class Vehiculo:
             if value <= 0 or value > 8.0:
                 raise ValueError("El cilindraje debe ser un número positivo y razonable (por ejemplo, entre 0.5L y 8.0L)")
             else:
-                self._cilindraje = value 
+                self._cilindraje = value
             
         @property
         def kilometraje(self):
@@ -70,6 +70,32 @@ class Vehiculo:
                 raise ValueError("El kilometraje debe ser un número entero no negativo que debe estar entre cero y 2000 km.")
             else:
                  self._kilometraje = value
+        
+        @property
+        def puertas(self):
+            return self._puertas
+
+        @puertas.setter
+        def puertas(self, value):
+             if value is not None:
+                  if 0 < value <= 5:
+                    self._puertas = value
+                  else:
+                      raise ValueError("el numero de puertas debe ser inferior a 5.")
+             else:
+                 self._puertas = value
+
+        @property
+        def precio(self):
+            return self._precio
+        
+        @precio.setter
+        def precio(self, value):
+            if not isinstance(value, int, float) or value < 0:
+                raise ValueError("el valor del precio debe ser entero o decimal, y debe ser mayor a cero.")
+            else:
+                self._precio = value
+
 
         def ingresar_vehiculo(self):
             print("-"*30)
