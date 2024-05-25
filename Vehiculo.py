@@ -92,7 +92,7 @@ class Vehiculo:
         @precio.setter
         def precio(self, value):
             if not isinstance(value, int, float) or value < 0:
-                raise ValueError("el valor del precio debe ser entero o decimal, y debe ser mayor a cero.")
+                raise ValueError("El precio debe ser un numero entero o decimal no negativo y mayor a cero.")
             else:
                 self._precio = value
 
