@@ -1,18 +1,7 @@
+import re
+from datetime import datetime
 class Vehiculo:
         id_vehiculo = int
-        marca = str
-        modelo = str
-        año = int
-        placa = str
-        color = str
-        combustible = str
-        transmision = str
-        cilindraje = float
-        kilometraje = float
-        puertas = int
-        alarma = bool
-        sensor = bool
-        precio = float
         lista_vehiculo = list
 
         def __init__(self, id_vehiculo=None, marca=None, modelo=None, año=None, placa=None, color=None, combustible=None, transmision=None, cilindraje=None, kilometraje=None, puertas=None, alarma=None, sensor=None, precio=None, lista_vehiculo=None):
@@ -31,6 +20,32 @@ class Vehiculo:
             self.sensor = sensor
             self.precio = precio
             self.lista_vehiculo = lista_vehiculo
+
+        @property
+        def año(self):
+            return self._año
+
+        @año.setter
+        def año(self, value):
+            current_year = datetime.now().year
+            if value is not None:
+                 if 1900 <= value <=current_year:
+                      self.año = value
+                 else:
+                      raise ValueError(f"El año debe estar entre 1900 y {current_year}.")
+            else:
+                 self._año = value       
+
+        @property
+        def placa(self):
+             return self._placa
+
+        @placa.setter
+        def placa(self, value):
+             if not re.match(r"\w{3}-\d{3}", value):
+                  raise ValueError("La placa debe estar en formato aaa-000") 
+             else:
+                  self._placa = value   
 
         def ingresar_vehiculo(self):
             print("-"*30)
