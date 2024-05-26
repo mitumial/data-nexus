@@ -9,7 +9,7 @@ class Cliente:
         if not self.clientes_inventario:
             self._id_cliente = 0
         else:
-            self._id_cliente = self.clientes_inventario[-1]["_id_cliente"] + 1  
+            self._id_cliente = self.clientes_inventario[-1].id_cliente + 1  
         self._nombre = nombre
         self._apellidos = apellidos
         self._documento = documento
@@ -153,7 +153,7 @@ def cargar_cliente(filename="./cliente.json"):
         clientes = json.load(archivo)
 
     for cliente in clientes:
-        Cliente.clientes_inventario.append(cliente)
+        Cliente.clientes_inventario.append(cliente)         #modificar y agg los atributos a usar como aleja - que se ingresan
 
 def guardar_cliente(cliente, filename="./cliente.json"):
     with open(filename, "r+") as archivo:
