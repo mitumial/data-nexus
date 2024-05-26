@@ -1,16 +1,14 @@
 import re
 from datetime import datetime
 class Vehiculo:
-        lista_vehiculo = []
-        _id_vehiculo = 0
+        vehiculo_inventario = []
 
         def __init__(self, marca=None, modelo=None, año=None, placa=None, color=None, combustible=None, transmision=None, cilindraje=None, kilometraje=None, puertas=None, alarma=None, sensor=None, precio=None, lista_vehiculo=None):
-            if not Vehiculo.lista_ventas:
-                Vehiculo._id_vehiculo = 0
+            if not self.vehiculo_inventario:
+                self._id_vehiculo = 0
             else:
-                Vehiculo._id_vehiculo = Vehiculo.lista_vehiculo[-1].id_vehiculo + 1
+                Vehiculo._id_vehiculo = Vehiculo.lista_vehiculo[-1]["id_vehiculo"] + 1
             self.id_vehiculo = Vehiculo._id_vehiculo
-
             self.marca = marca
             self.modelo = modelo
             self.año = año
@@ -24,7 +22,7 @@ class Vehiculo:
             self.alarma = alarma
             self.sensor = sensor
             self.precio = precio
-            self.lista_vehiculo = lista_vehiculo
+            self.vehiculo_inventario.append(self)
 
         @property
         def año(self):
