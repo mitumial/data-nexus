@@ -1,29 +1,24 @@
 import re
 
 class Cliente:
+    
     lista_ventas = []
-    _id_venta = 0
 
     def __init__(self, nombre=None, apellidos=None, documento=None, edad=None, genero=None, direccion=None, email=None, celular=None, vehiculos_comprados=None):
         if not Cliente.lista_ventas:
             Cliente._id_venta = 0
         else:
             Cliente._id_venta = Cliente.lista_ventas[-1].id_cliente + 1
-        self.id_cliente = Cliente._id_venta
-        
-        self.nombre = nombre
-        self.apellidos = apellidos
-        self.documento = documento
-        self._edad = None
-        self.edad = edad
-        self._genero = None
-        self.genero = genero
-        self.direccion = direccion
-        self._email = None
-        self.email = email
-        self._celular = None
-        self.celular = celular
-        self.vehiculos_comprados = vehiculos_comprados if vehiculos_comprados is not None else []
+        self._id_cliente = Cliente._id_venta
+        self._nombre = nombre
+        self._apellidos = apellidos
+        self._documento = documento
+        self._edad = edad
+        self._genero = genero
+        self._direccion = direccion
+        self._email = email
+        self._celular = celular
+        self._vehiculos_comprados = vehiculos_comprados if vehiculos_comprados is not None else []
 
         Cliente.lista_ventas.append(self)
 
@@ -33,13 +28,12 @@ class Cliente:
 
     @edad.setter
     def edad(self, value):
-        if value is not None:
+        
             if 0 < value < 120:
                 self._edad = value
             else:
                 raise ValueError("La edad debe estar entre 1 y 119 años.")
-        else:
-            self._edad = value
+        
 
     @property
     def genero(self):
@@ -47,13 +41,12 @@ class Cliente:
 
     @genero.setter
     def genero(self, value):
-        if value is not None:
+        
             if value.lower() in ["masculino", "femenino"]:
                 self._genero = value.lower().capitalize()
             else:
                 raise ValueError("El género debe ser 'Masculino' o 'Femenino'.")
-        else:
-            self._genero = value
+       
 
     @property
     def email(self):
@@ -61,13 +54,12 @@ class Cliente:
 
     @email.setter
     def email(self, value):
-        if value is not None:
+       
             if re.match(r"^\w+@\w+\.\w{2,3}$", value):
                 self._email = value
             else:
                 raise ValueError("El correo electrónico no es válido.")
-        else:
-            self._email = value
+       
 
     @property
     def celular(self):
@@ -75,13 +67,12 @@ class Cliente:
 
     @celular.setter
     def celular(self, value):
-        if value is not None:
+        
             if re.match(r"^\d{10}$", str(value)):
                 self._celular = value
             else:
                 raise ValueError("El número de celular debe tener 10 dígitos.")
-        else:
-            self._celular = value
+    
 
     def ingresar_cliente(self):
         print("-" * 30)
@@ -89,33 +80,7 @@ class Cliente:
         self.nombre = input("Ingrese los nombres del cliente: \n")
         self.apellidos = input("Ingrese los apellidos del cliente: \n")
         self.documento = int(input("Ingrese el numero de documento del cliente: \n"))
-        try:
-            self.edad = int(input("Ingrese la edad del cliente: \n"))
-        except ValueError as e:
-            print(f"Error: {e}")
-            return
-
-        try:
-            self.genero = input("Ingrese el genero del cliente (Masculino/Femenino): \n")
-        except ValueError as e:
-            print(f"Error: {e}")
-            return
-
-        direccion_tipo = input("Ingrese el tipo de dirección (Calle/Carrera): \n")
-        direccion_numero = input("Ingrese el número de la dirección: \n")
-        self.direccion = f"{direccion_tipo} {direccion_numero}"
-
-        try:
-            self.email = input("Ingrese la direccion de correo electronico del cliente: \n")
-        except ValueError as e:
-            print(f"Error: {e}")
-            return
-
-        try:
-            self.celular = int(input("Ingrese el número de celular del cliente: \n"))
-        except ValueError as e:
-            print(f"Error: {e}")
-            return
+    
 
         self.vehiculos_comprados = []
 
