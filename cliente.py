@@ -28,10 +28,10 @@ class Cliente:
     @edad.setter
     def edad(self, value):
         
-            if 0 < value < 120:
-                self._edad = value
-            else:
-                raise ValueError("La edad debe estar entre 1 y 119 años.")
+        if 0 < value < 120:
+            self._edad = value
+        else:
+            raise ValueError("La edad debe estar entre 1 y 119 años.")
         
 
     @property
@@ -41,10 +41,10 @@ class Cliente:
     @genero.setter
     def genero(self, value):
         
-            if value.lower() in ["masculino", "femenino"]:
-                self._genero = value.lower().capitalize()
-            else:
-                raise ValueError("El género debe ser 'Masculino' o 'Femenino'.")
+        if value.lower() in ["masculino", "femenino"]:
+            self._genero = value.lower().capitalize()
+        else:
+            raise ValueError("El género debe ser 'Masculino' o 'Femenino'.")
        
 
     @property
@@ -54,10 +54,10 @@ class Cliente:
     @email.setter
     def email(self, value):
        
-            if re.match(r"^\w+@\w+\.\w{2,3}$", value):
-                self._email = value
-            else:
-                raise ValueError("El correo electrónico no es válido.")
+        if re.match(r"^\w+@\w+\.\w{2,3}$", value):
+            self._email = value
+        else:
+            raise ValueError("El correo electrónico no es válido.")
        
 
     @property
@@ -67,10 +67,10 @@ class Cliente:
     @celular.setter
     def celular(self, value):
         
-            if re.match(r"^\d{10}$", str(value)):
-                self._celular = value
-            else:
-                raise ValueError("El número de celular debe tener 10 dígitos.")
+        if re.match(r"^\d{10}$", str(value)):
+            self._celular = value
+        else:
+            raise ValueError("El número de celular debe tener 10 dígitos.")
     
 
     def ingresar_cliente(self):
@@ -98,43 +98,43 @@ class Cliente:
         print("Vehículos Comprados:", self.vehiculos_comprados)
 
 
-def agregar_cliente(clientes):
+def agregar_cliente():
     cliente = Cliente()
     cliente.ingresar_cliente()
     if cliente.nombre and cliente.apellidos and cliente.documento and cliente.edad and cliente.genero and cliente.direccion and cliente.email and cliente.celular:
-        clientes.append(cliente)
+        Cliente.clientes_inventario.append(cliente)
         print("Cliente agregado exitosamente.")
     else:
         print("Error: Datos del cliente incompletos o incorrectos.")
 
 
-def mostrar_todos_los_clientes(clientes):
-    if not clientes:
+def mostrar_todos_los_clientes():
+    if not Cliente:
         print("No hay ningún cliente registrado.")
         return
-    for cliente in clientes:
+    for cliente in Cliente:
         cliente.mostrar_detalles_cliente()
 
 
-def buscar_cliente_por_id(clientes, id_cliente):
-    for cliente in clientes:
+def buscar_cliente_por_id(id_cliente):
+    for cliente in Cliente.clientes_inventario:
         if cliente.id_cliente == id_cliente:
             return cliente
     return None
 
 
-def eliminar_cliente(clientes):
-    if not clientes:
+def eliminar_cliente():
+    if not Cliente.clientes_inventario:
         print("No hay ningún cliente registrado para borrar.")
         return
 
     id_cliente = int(input("Ingrese la ID del cliente que desea eliminar: "))
-    cliente = buscar_cliente_por_id(clientes, id_cliente)
+    cliente = buscar_cliente_por_id(id_cliente)
 
     if cliente:
         confirmacion = input("¿Está seguro de que desea borrar este cliente? (s/n): ").lower()
         if confirmacion == "s":
-            clientes.remove(cliente)
+            Cliente.clientes_inventario.remove(cliente)
             print("Cliente borrado exitosamente.")
         else:
             print("Operación cancelada.")
@@ -143,7 +143,6 @@ def eliminar_cliente(clientes):
 
 
 def menu():
-    clientes = []
 
     while True:
         print("\n" + "-" * 50)
@@ -156,11 +155,11 @@ def menu():
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
-            agregar_cliente(clientes)
+            agregar_cliente()
         elif opcion == "2":
-            mostrar_todos_los_clientes(clientes)
+            mostrar_todos_los_clientes()
         elif opcion == "3":
-            eliminar_cliente(clientes)
+            eliminar_cliente()
         elif opcion == "4":
             print("Saliendo del programa.")
             break
