@@ -142,11 +142,11 @@ def eliminar_cliente():
     else:
         print("Cliente no encontrado.")
 
-def cargar_ventas(filename="./cliente.json"):
+def cargar_cliente(filename="./cliente.json"):
     with open(filename, "r") as archivo:
-        cliente = json.load(archivo)
+        clientes = json.load(archivo)
 
-    for cliente in Cliente.clientes_inventario:
+    for cliente in clientes:
         Cliente.clientes_inventario.append(cliente)
 
 def guardar_cliente(cliente, filename="./cliente.json"):
@@ -183,4 +183,4 @@ def menu():
 
 # Ejecutar el menú
 menu()
-cargar_ventas()
+cargar_cliente()
