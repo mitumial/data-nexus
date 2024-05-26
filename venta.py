@@ -29,12 +29,15 @@ class Venta:
         if not self.ventas_inventario:
             self._id_venta = 0
         else:
-            self._id_venta = self.ventas_inventario[-1]["_id_venta"] + 1
+            self._id_venta = self.ventas_inventario[-1].id_venta + 1
         self._fecha = dt.now().strftime("%d-%m-%Y")
         self._estado = "No pagado"
         self._cliente = cliente
         self._vehiculo = vehiculo
-        self.ventas_inventario.append(self)
+
+    @property
+    def id_venta(self):
+        return self._id_venta
 
     @property
     def fecha(self):
@@ -69,18 +72,13 @@ class Venta:
             self.tarjeta.fondos = self.tarjeta.fondos - self.vehiculo.precio
 
     def mostrar_detalles_venta(self):
-
         print(
             f"""\n
                 Cliente:{self._cliente.nombres} {self._cliente.apellidos}
-                \n
                 Vehiculo:{self._vehiculo.marca} {self._vehiculo.modelo}
-                \n
                 Fecha:{self._fecha}
-                \n
                 Estado:{self._estado}
-                \n
-                Por la suma total de: {self._vehiculo.precio}
+                Por la suma total de: {self._vehiculo}
                 \n
             """
         )
@@ -92,9 +90,8 @@ class Venta:
 def cargar_ventas(filename="./venta.json"):
     with open(filename, "r") as archivo:
         ventas = json.load(archivo)
-
     for venta in ventas:
-        Venta.ventas_inventario.append(venta)
+        Venta.ventas_inventario.append(Venta(venta["_cliente"], venta["_vehiculo"]))
 
 
 def guardar_venta(venta, filename="./venta.json"):
@@ -103,6 +100,15 @@ def guardar_venta(venta, filename="./venta.json"):
         ventas.append(venta.__dict__)
         archivo.seek(0)
         json.dump(ventas, archivo, indent=4)
+    cargar_ventas()
+
+
+def mostrar_todas_los_ventas():
+    if not Venta.ventas_inventario:
+        print("No hay ninguna venta registrado.")
+
+    for venta in Venta.ventas_inventario:
+        venta.mostrar_detalles_venta()
 
 
 def realizar_venta(lista_vehiculos, lista_clientes):
@@ -184,10 +190,11 @@ def mostrar_vehiculos_disponibles(lista_vehiculos):
 #             print("Opción no válida. Por favor, intente de nuevo.")
 
 #     compra_de_vehiculo = Venta()
-cargar_ventas()
+# cargar_ventas()
 
 mi_nueva_venta = Venta("addfsad", "gdsadaf")
 
 guardar_venta(mi_nueva_venta)
+mostrar_todas_los_ventas()
 # Ejecutar el menú
 # menu()
