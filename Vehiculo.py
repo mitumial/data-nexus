@@ -1,5 +1,7 @@
 import re
 from datetime import datetime
+import json
+
 class Vehiculo:
         vehiculo_inventario = []
 
@@ -7,22 +9,21 @@ class Vehiculo:
             if not self.vehiculo_inventario:
                 self._id_vehiculo = 0
             else:
-                Vehiculo._id_vehiculo = Vehiculo.lista_vehiculo[-1]["id_vehiculo"] + 1
-            self.id_vehiculo = Vehiculo._id_vehiculo
-            self.marca = marca
-            self.modelo = modelo
-            self.año = año
-            self.placa = placa
-            self.color = color
-            self.combustible = combustible
-            self.transmision = transmision
-            self.cilindraje = cilindraje
-            self.kilometraje = kilometraje
-            self.puertas = puertas
-            self.alarma = alarma
-            self.sensor = sensor
-            self.precio = precio
-            self.vehiculo_inventario.append(self)
+                self._id_vehiculo = self.vehiculo_inventario[-1]["_id_vehiculo"] + 1
+            self._marca = marca
+            self._modelo = modelo
+            self._año = año
+            self._placa = placa
+            self._color = color
+            self._combustible = combustible
+            self._transmision = transmision
+            self._cilindraje = cilindraje
+            self._kilometraje = kilometraje
+            self._puertas = puertas
+            self._alarma = alarma
+            self._sensor = sensor
+            self._precio = precio
+            self._vehiculo_inventario.append(self)
 
         @property
         def año(self):
@@ -131,57 +132,19 @@ class Vehiculo:
             self.marca = input("Ingrese la marca del vehiculo: \n")
             self.modelo = input("Ingrese el modelo del vehiculo: \n")
             self.año = int(input("Ingrese el año del vehiculo: \n"))
-            try:
-             self.año = int(input("Ingrese el año del vehiculo: \n"))
-            except ValueError as e:
-                print(f"Error: {e}")
-                return
-            
-            try:
-                self.placa = input("Ingrese la placa del vehiculo: \n")
-            except ValueError as e:
-                print(f"Error: {e}")
-                return
-            
+            self.año = int(input("Ingrese el año del vehiculo: \n"))
+            self.placa = input("Ingrese la placa del vehiculo: \n")
             self.color = input("Ingrese el color del vehiculo: \n")
-            try:
-                self.combustible = input("Ingrese el tipo de combustible del vehiculo: \n")
-            except ValueError as e:
-                print(f"Error: {e}")
-                return
-            
-            try:
-                self.transmision = input("Ingrese el tipo de transmision del vehiculo \n (Manual, Automatica, CVT, Semiautomatica): \n")
-            except ValueError as e:
-                print(f"Error: {e}")
-                return
-            
-            try:
-                self.cilindraje = float(input("Ingrese el cilindraje del vehiculo: \n"))
-            except ValueError as e:
-                print(f"Error: {e}")
-                return
-            
-            try:
-                self.kilometraje = float(input("Ingrese el kilometraje del vehiculo: \n"))
-            except ValueError as e:
-                print(f"Error: {e}")
-                return
-            
-            try:
-                self.puertas= int(input("Ingrese el numero de puertas del vehiculo: \n"))
-            except ValueError as e:
-                print(f"Error: {e}")
-                return
+            self.combustible = input("Ingrese el tipo de combustible del vehiculo: \n")
+            self.transmision = input("Ingrese el tipo de transmision del vehiculo \n (Manual, Automatica, CVT, Semiautomatica): \n")
+            self.cilindraje = float(input("Ingrese el cilindraje del vehiculo: \n"))
+            self.kilometraje = float(input("Ingrese el kilometraje del vehiculo: \n"))
+            self.puertas= int(input("Ingrese el numero de puertas del vehiculo: \n"))
             self.alarma = input("¿El vehiculo tiene alarma? (si/no): \n").lower() == "si"
             self.sensor = input("¿El vehiculo tiene sensores? (si/no): \n").lower() == "si"
-            try:
-                self.precio = float(input("Ingrese el precio del vehiculo: \n"))
-            except ValueError as e:
-                print(f"Error: {e}")
-                return
-            
-            self.lista_vehiculo = []
+            self.precio = float(input("Ingrese el precio del vehiculo: \n"))
+                
+            self.vehiculo_inventario = []
 
         def mostrar_detalles_vehiculo(self):
             print("-"*30)
@@ -202,52 +165,86 @@ class Vehiculo:
             print("El vehiculo tiene un valor de ",self.precio ,"pesos")
             print("lista de vehiculos: ",self.lista_vehiculo)
 
-        def agregar_vehiculo(vehiculos):
-            vehiculo = Vehiculo()
-            vehiculo.ingresar_vehiculo()
-            if vehiculo.marca and vehiculo.modelo and vehiculo.año and vehiculo.placa and vehiculo.color and vehiculo.combustible and vehiculo.transmision and vehiculo.cilindraje and vehiculo.kilometraje and vehiculo.puertas and vehiculo.alarma and vehiculo.sensor and vehiculo.precio:
-                vehiculos.append(vehiculo)
-                print("Vehiculo agregado exitosamente.")
-            else:
-                print("Error: Datos del vehiculo incompletos o incorrectos.")
+def agregar_vehiculo():
+    vehiculo = Vehiculo()
+    vehiculo.ingresar_vehiculo()
+    #if vehiculo.marca and vehiculo.modelo and vehiculo.año and vehiculo.placa and vehiculo.color and vehiculo.combustible and vehiculo.transmision and vehiculo.cilindraje and vehiculo.kilometraje and vehiculo.puertas and vehiculo.alarma and vehiculo.sensor and vehiculo.precio:
+    Vehiculo.vehiculo_inventario.append(vehiculo)
+    guardar_vehiculo(vehiculo)
+    print("Vehiculo agregado exitosamente.")
+    #else:
+       # print("Error: Datos del vehiculo incompletos o incorrectos.")
 
 
-        def mostrar_todos_los_vehiculos(vehiculos):
-            if not vehiculos:
-                print("No hay ningún vehiculo registrado.")
-                return
-            for vehiculo in vehiculos:
-                vehiculo.mostrar_detalles_vehiculo()
+def mostrar_todos_los_vehiculos():
+    if not Vehiculo.vehiculo_inventario:
+        print("No hay ningún vehiculo registrado.")
+        return
+    for vehiculo in Vehiculo.vehiculo_inventario:
+        vehiculo.mostrar_detalles_vehiculo()
 
-        def buscar_vehiculo_por_id(vehiculos, id_vehiculo):
-            for vehiculo in vehiculos:
-                if vehiculo.id_vehiculo == id_vehiculo:
-                    return vehiculo
-            return None
-         
-        def eliminar_vehiculo(vehiculos):
-            if not vehiculos:
-                print("No hay ningún vehiculo registrado para borrar.")
-                return
+def buscar_vehiculo_por_id(id_vehiculo):
+    for vehiculo in Vehiculo.vehiculo_inventario:
+        if vehiculo.id_vehiculo == id_vehiculo:
+            return vehiculo
+    return None
+    
+def eliminar_vehiculo():
+    if not Vehiculo.vehiculo_inventario:
+        print("No hay ningún vehiculo registrado para borrar.")
+        return
 
-            id_vehiculo = int(input("Ingrese la ID del vehiculo que desea eliminar: "))
-            Vehiculo = Vehiculo.buscar_vehiculo_por_id(vehiculos, id_vehiculo)
+    id_vehiculo = int(input("Ingrese la ID del vehiculo que desea eliminar: "))
+    Vehiculo = buscar_vehiculo_por_id(id_vehiculo)
 
-            if Vehiculo:
-                confirmacion = input("¿Está seguro de que desea borrar este vehiculo? (s/n): ").lower()
-                if confirmacion == "s":
-                    vehiculos.remove(Vehiculo)
-                    print("vehiculo borrado exitosamente.")
-                else:
-                    print("Operación cancelada.")
-            else:
-                print("Vehiculo no encontrado.")
+    if Vehiculo:
+        confirmacion = input("¿Está seguro de que desea borrar este vehiculo? (s/n): ").lower()
+        if confirmacion == "s":
+            Vehiculo.vehiculo_inventario.remove(Vehiculo)
+            print("vehiculo borrado exitosamente.")
+        else:
+            print("Operación cancelada.")
+    else:
+        print("Vehiculo no encontrado.")
 
-        def menu():
-            vehiculos = []
+def cargar_vehiculo(filename="./vehiculo.json"):
+    with open(filename, "r") as archivo:
+        vehiculos = json.load(archivo)
 
-            while True:
-                print("\n" + "-" * 50)
-                print("MENÚ DE OPCIONES")
-                print("1. Ingresar Vehiculo")
+    for vehiculo in vehiculos:
+        Vehiculo.vehiculo_inventario.append(Vehiculo(vehiculo["_marca"], vehiculo["_modelo"], vehiculo["_año"], vehiculo["_placa"], vehiculo["_color"], vehiculo["_combustible"], vehiculo["_transmision"], vehiculo["_cilindraje"], vehiculo["_kilometraje"], vehiculo["_puertas"], vehiculo["_alarma"], vehiculo["_sensor"], vehiculo["_precio"], vehiculo["_vehiculo_inventario"]))         #modificar y agg los atributos a usar como aleja - que se ingresan
 
+def guardar_vehiculo(vehiculo, filename="./vehiculo.json"):
+    with open(filename, "r+") as archivo:
+        archivo_datos = json.load(archivo)
+        archivo_datos.append(vehiculo.__dict__)
+        archivo.seek(0)
+        json.dump(archivo_datos, archivo, indent=4)
+
+def menu():
+
+    while True:
+        print("\n" + "-" * 50)
+        print("MENÚ DE OPCIONES")
+        print("1. Ingresar Vehiculo")
+        print("2. Mostrar detalles de todos los vehiculos")
+        print("3. Eliminar vehiculo")
+        print("4. Salir")
+
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == "1":
+            agregar_vehiculo()
+        elif opcion == "2":
+            mostrar_todos_los_vehiculos()
+        elif opcion == "3":
+            eliminar_vehiculo()
+        elif opcion == "4":
+            print("Saliendo del programa.")
+            break
+        else:
+            print("Opción no válida. Por favor, intente de nuevo.")
+
+
+cargar_vehiculo()
+menu()
