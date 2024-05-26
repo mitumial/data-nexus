@@ -2,14 +2,13 @@ import re
 
 class Cliente:
     
-    lista_ventas = []
+    clientes_inventario = []
 
     def __init__(self, nombre=None, apellidos=None, documento=None, edad=None, genero=None, direccion=None, email=None, celular=None, vehiculos_comprados=None):
-        if not Cliente.lista_ventas:
-            Cliente._id_venta = 0
+        if not self.clientes_inventario:
+            self._id_cliente = 0
         else:
-            Cliente._id_venta = Cliente.lista_ventas[-1].id_cliente + 1
-        self._id_cliente = Cliente._id_venta
+            self._id_cliente = self.clientes_inventario[-1]["_id_cliente"] + 1  
         self._nombre = nombre
         self._apellidos = apellidos
         self._documento = documento
@@ -20,7 +19,7 @@ class Cliente:
         self._celular = celular
         self._vehiculos_comprados = vehiculos_comprados if vehiculos_comprados is not None else []
 
-        Cliente.lista_ventas.append(self)
+        self.clientes_inventario.append(self)
 
     @property
     def edad(self):
