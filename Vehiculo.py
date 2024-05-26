@@ -1,11 +1,16 @@
 import re
 from datetime import datetime
 class Vehiculo:
-        id_vehiculo = int
-        lista_vehiculo = list
+        lista_vehiculo = []
+        _id_vehiculo = 0
 
-        def __init__(self, id_vehiculo=None, marca=None, modelo=None, año=None, placa=None, color=None, combustible=None, transmision=None, cilindraje=None, kilometraje=None, puertas=None, alarma=None, sensor=None, precio=None, lista_vehiculo=None):
-            self.id_vehiculo = id_vehiculo
+        def __init__(self, marca=None, modelo=None, año=None, placa=None, color=None, combustible=None, transmision=None, cilindraje=None, kilometraje=None, puertas=None, alarma=None, sensor=None, precio=None, lista_vehiculo=None):
+            if not Vehiculo.lista_ventas:
+                Vehiculo._id_vehiculo = 0
+            else:
+                Vehiculo._id_vehiculo = Vehiculo.lista_vehiculo[-1].id_vehiculo + 1
+            self.id_vehiculo = Vehiculo._id_vehiculo
+
             self.marca = marca
             self.modelo = modelo
             self.año = año
@@ -45,7 +50,31 @@ class Vehiculo:
              if not re.match(r"\w{3}-\d{3}", value):
                   raise ValueError("La placa debe estar en formato aaa-000") 
              else:
-                  self._placa = value 
+                  self._placa = value
+        
+        @property
+        def combustible(self):
+            return self._combustible
+
+        @combustible.setter
+        def combustible(self, value):
+            tipos_validos_combustible = {'gasolina', 'diésel', 'eléctrica'}
+            if value.lower() in tipos_validos_combustible:
+                self._combustible = value.lower()
+            else:
+                raise ValueError(f"Tipo de combustible '{value}' no es válido. Debe ser 'gasolina', 'diésel' o 'eléctrica'.")
+
+        @property
+        def transmision(self):
+            return self._transmision
+        
+        @transmision.setter
+        def transmision(self,value):
+            tipos_validos = {'manual', 'automatica', 'semiautomatica', 'cvt'}
+            if value.lower() in tipos_validos:
+                self._transmision = value.lower()
+            else:
+                raise ValueError(f"Tipo de transmisión '{value}' no es válido. Debe ser 'manual', 'automatica', 'semiautomatica' o 'cvt'.")
 
         @property
         def cilindraje(self):
@@ -104,16 +133,56 @@ class Vehiculo:
             self.marca = input("Ingrese la marca del vehiculo: \n")
             self.modelo = input("Ingrese el modelo del vehiculo: \n")
             self.año = int(input("Ingrese el año del vehiculo: \n"))
-            self.placa = input("Ingrese la placa del vehiculo: \n")
+            try:
+             self.año = int(input("Ingrese el año del vehiculo: \n"))
+            except ValueError as e:
+                print(f"Error: {e}")
+                return
+            
+            try:
+                self.placa = input("Ingrese la placa del vehiculo: \n")
+            except ValueError as e:
+                print(f"Error: {e}")
+                return
+            
             self.color = input("Ingrese el color del vehiculo: \n")
-            self.combustible = input("Ingrese el tipo de combustible del vehiculo: \n")
-            self.transmision = input("Ingrese el tipo de transmision del vehiculo \n (Manual, Automatica, CVT, Semiautomatica, Doble embrague): \n")
-            self.cilindraje = float(input("Ingrese el cilindraje del vehiculo: \n"))
-            self.kilometraje = float(input("Ingrese el kilometraje del vehiculo: \n"))
-            self.puertas= int(input("Ingrese el numero de puertas del vehiculo: \n"))
+            try:
+                self.combustible = input("Ingrese el tipo de combustible del vehiculo: \n")
+            except ValueError as e:
+                print(f"Error: {e}")
+                return
+            
+            try:
+                self.transmision = input("Ingrese el tipo de transmision del vehiculo \n (Manual, Automatica, CVT, Semiautomatica): \n")
+            except ValueError as e:
+                print(f"Error: {e}")
+                return
+            
+            try:
+                self.cilindraje = float(input("Ingrese el cilindraje del vehiculo: \n"))
+            except ValueError as e:
+                print(f"Error: {e}")
+                return
+            
+            try:
+                self.kilometraje = float(input("Ingrese el kilometraje del vehiculo: \n"))
+            except ValueError as e:
+                print(f"Error: {e}")
+                return
+            
+            try:
+                self.puertas= int(input("Ingrese el numero de puertas del vehiculo: \n"))
+            except ValueError as e:
+                print(f"Error: {e}")
+                return
             self.alarma = input("¿El vehiculo tiene alarma? (si/no): \n").lower() == "si"
             self.sensor = input("¿El vehiculo tiene sensores? (si/no): \n").lower() == "si"
-            self.precio = float(input("Ingrese el precio del vehiculo: \n"))
+            try:
+                self.precio = float(input("Ingrese el precio del vehiculo: \n"))
+            except ValueError as e:
+                print(f"Error: {e}")
+                return
+            
             self.lista_vehiculo = []
 
         def mostrar_detalles_vehiculo(self):
@@ -135,5 +204,43 @@ class Vehiculo:
             print("El vehiculo tiene un valor de ",self.precio ,"pesos")
             print("lista de vehiculos: ",self.lista_vehiculo)
 
-        def borrar_vehiculo(self):
-            pass 
+        def agregar_vehiculo(vehiculos):
+            vehiculo = Vehiculo()
+            vehiculo.ingresar_vehiculo()
+            if vehiculo.marca and vehiculo.modelo and vehiculo.año and vehiculo.placa and vehiculo.color and vehiculo.combustible and vehiculo.transmision and vehiculo.cilindraje and vehiculo.kilometraje and vehiculo.puertas and vehiculo.alarma and vehiculo.sensor and vehiculo.precio:
+                vehiculos.append(vehiculo)
+                print("Vehiculo agregado exitosamente.")
+            else:
+                print("Error: Datos del vehiculo incompletos o incorrectos.")
+
+
+        def mostrar_todos_los_vehiculos(vehiculos):
+            if not vehiculos:
+                print("No hay ningún vehiculo registrado.")
+                return
+            for vehiculo in vehiculos:
+                vehiculo.mostrar_detalles_vehiculo()
+
+        def buscar_vehiculo_por_id(vehiculos, id_vehiculo):
+            for vehiculo in vehiculos:
+                if vehiculo.id_vehiculo == id_vehiculo:
+                    return vehiculo
+            return None      
+         
+        def eliminar_vehiculo(vehiculos):
+            if not vehiculos:
+                print("No hay ningún vehiculo registrado para borrar.")
+                return
+
+            id_vehiculo = int(input("Ingrese la ID del vehiculo que desea eliminar: "))
+            Vehiculo = buscar_vehiculo_por_id(vehiculos, id_vehiculo)
+
+            if Vehiculo:
+                confirmacion = input("¿Está seguro de que desea borrar este vehiculo? (s/n): ").lower()
+                if confirmacion == "s":
+                    vehiculos.remove(Vehiculo)
+                    print("vehiculo borrado exitosamente.")
+                else:
+                    print("Operación cancelada.")
+            else:
+                print("Vehiculo no encontrado.")
