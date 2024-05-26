@@ -1,4 +1,5 @@
 import re
+import json
 
 class Cliente:
     
@@ -141,6 +142,19 @@ def eliminar_cliente():
     else:
         print("Cliente no encontrado.")
 
+def cargar_ventas(filename="./cliente.json"):
+    with open(filename, "r") as archivo:
+        cliente = json.load(archivo)
+
+    for cliente in Cliente.clientes_inventario:
+        Cliente.clientes_inventario.append(cliente)
+
+def guardar_cliente(cliente, filename="./cliente.json"):
+    with open(filename, "r+") as archivo:
+        archivo_datos = json.load(archivo)
+        archivo_datos.append(cliente.__dict__)
+        archivo.seek(0)
+        json.dump(archivo_datos, archivo, indent=4)
 
 def menu():
 
@@ -169,3 +183,4 @@ def menu():
 
 # Ejecutar el menú
 menu()
+cargar_ventas()
