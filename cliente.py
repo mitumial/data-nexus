@@ -6,10 +6,10 @@ class Cliente:
     clientes_inventario = []
 
     def __init__(self, id_cliente=None, nombre=None, apellidos=None, documento=None, edad=None, genero=None, direccion=None, email=None, celular=None, vehiculos_comprados=None):
-        if not self.clientes_inventario and (not id_cliente):
-            self._id_cliente = 0
-        elif id_cliente:
-            self._id_cliente = id_cliente      
+        if id_cliente:
+            self._id_cliente = id_cliente
+        elif  not self.clientes_inventario and (not id_cliente):
+            self._id_cliente = 0     
         else:
             self._id_cliente = self.clientes_inventario[-1]._id_cliente + 1  
         self._nombre = nombre
@@ -128,7 +128,7 @@ def mostrar_todos_los_clientes():
 
 def buscar_cliente_por_id(id_cliente):
     for cliente in Cliente.clientes_inventario:
-        if cliente.id_cliente == id_cliente:
+        if cliente._id_cliente == id_cliente:
             return cliente
     return None
 
@@ -145,18 +145,33 @@ def eliminar_cliente():
         confirmacion = input("¿Está seguro de que desea borrar este cliente? (s/n): ").lower()
         if confirmacion == "s":
             Cliente.clientes_inventario.remove(cliente)
+            eliminar(id_cliente)
             print("Cliente borrado exitosamente.")
         else:
             print("Operación cancelada.")
     else:
         print("Cliente no encontrado.")
+        
+        
+def eliminar(id,filename="./cliente.json"):
+    obj  = json.load(open(filename))
+
+                                                 
+    for i in range(len(obj)):
+        if obj[i]["_id_cliente"] == id:
+            obj.pop(i)
+            break
+                                   
+    open("updated-file.json", "w").write(
+        json.dumps(obj, sort_keys=True, indent=4)
+)        
 
 def cargar_cliente(filename="./cliente.json"):
     with open(filename, "r") as archivo:
         clientes = json.load(archivo)
 
     for cliente in clientes:
-        Cliente.clientes_inventario.append(Cliente(**cliente))   
+        Cliente.clientes_inventario.append(Cliente(cliente["_id_cliente"], cliente["_nombre"], cliente["_apellidos"], cliente["_documento"], cliente["_edad"], cliente["_genero"], cliente["_direccion"], cliente["_email"], cliente["_celular"], cliente["_vehiculos_comprados"]))   
             
 def guardar_cliente(cliente, filename="./cliente.json"):
     with open(filename, "r+") as archivo:
