@@ -109,10 +109,10 @@ def agregar_cliente():
 
 
 def mostrar_todos_los_clientes():
-    if not Cliente:
+    if not Cliente.clientes_inventario:
         print("No hay ningún cliente registrado.")
         
-    for cliente in Cliente:
+    for cliente in Cliente.clientes_inventario:
         cliente.mostrar_detalles_cliente()
 
 
