@@ -18,7 +18,7 @@ class Vehiculo:
 
 
 class Venta:
-    _id_venta = str
+    _id_venta = int
     _fecha = str
     _estado = str
     _cliente = Cliente
@@ -99,10 +99,10 @@ def cargar_ventas(filename="./venta.json"):
 
 def guardar_venta(venta, filename="./venta.json"):
     with open(filename, "r+") as archivo:
-        archivo_datos = json.load(archivo)
-        archivo_datos.append(venta.__dict__)
+        ventas = json.load(archivo)
+        ventas.append(venta.__dict__)
         archivo.seek(0)
-        json.dump(archivo_datos, archivo, indent=4)
+        json.dump(ventas, archivo, indent=4)
 
 
 def realizar_venta(lista_vehiculos, lista_clientes):
@@ -184,8 +184,10 @@ def mostrar_vehiculos_disponibles(lista_vehiculos):
 #             print("Opción no válida. Por favor, intente de nuevo.")
 
 #     compra_de_vehiculo = Venta()
+cargar_ventas()
 
+mi_nueva_venta = Venta("addfsad", "gdsadaf")
 
+guardar_venta(mi_nueva_venta)
 # Ejecutar el menú
 # menu()
-cargar_ventas()

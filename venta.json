@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "_id_venta": 0,
+        "_fecha": "26-05-2024",
+        "_estado": "No pagado",
+        "_cliente": "adsa",
+        "_vehiculo": "sadaf"
+    },
+    {
+        "_id_venta": 1,
+        "_fecha": "26-05-2024",
+        "_estado": "No pagado",
+        "_cliente": "addfsad",
+        "_vehiculo": "gdsadaf"
+    }
+]
