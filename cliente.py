@@ -5,9 +5,11 @@ class Cliente:
     
     clientes_inventario = []
 
-    def __init__(self, nombre=None, apellidos=None, documento=None, edad=None, genero=None, direccion=None, email=None, celular=None, vehiculos_comprados=None):
-        if not self.clientes_inventario:
+    def __init__(self, id_cliente=None, nombre=None, apellidos=None, documento=None, edad=None, genero=None, direccion=None, email=None, celular=None, vehiculos_comprados=None):
+        if not self.clientes_inventario and (not id_cliente):
             self._id_cliente = 0
+        elif id_cliente:
+            self._id_cliente = id_cliente      
         else:
             self._id_cliente = self.clientes_inventario[-1]._id_cliente + 1  
         self._nombre = nombre
@@ -82,7 +84,7 @@ class Cliente:
         self._documento = int(input("Ingrese el numero de documento del cliente: \n"))
         self._edad = int(input("Ingrese la edad del cliente: \n"))
         self._genero = input("Ingrese el genero del cliente : (Masculino/Femenino): \n")
-        self._direccion = input("Ingrese la dirección dle cliente: \n")
+        self._direccion = input("Ingrese la dirección del cliente: \n")
         self._email = input("Ingrese la direccion de correo electronico del cliente: \n")
         self._celular = int(input("Ingrese el número de celular del cliente: \n"))
 
