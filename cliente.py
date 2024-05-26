@@ -111,7 +111,7 @@ def agregar_cliente():
 def mostrar_todos_los_clientes():
     if not Cliente:
         print("No hay ningún cliente registrado.")
-        return
+        
     for cliente in Cliente:
         cliente.mostrar_detalles_cliente()
 
@@ -126,7 +126,7 @@ def buscar_cliente_por_id(id_cliente):
 def eliminar_cliente():
     if not Cliente.clientes_inventario:
         print("No hay ningún cliente registrado para borrar.")
-        return
+    
 
     id_cliente = int(input("Ingrese la ID del cliente que desea eliminar: "))
     cliente = buscar_cliente_por_id(id_cliente)
