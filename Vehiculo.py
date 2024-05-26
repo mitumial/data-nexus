@@ -23,7 +23,7 @@ class Vehiculo:
             self._alarma = alarma
             self._sensor = sensor
             self._precio = precio
-            self._vehiculo_inventario.append(self)
+            self.vehiculo_inventario.append(self)
 
         @property
         def año(self):
@@ -33,8 +33,8 @@ class Vehiculo:
         def año(self, value):
             current_year = datetime.now().year
             if value is not None:
-                 if 1800 <= value <=current_year:
-                      self.año = value
+                 if 1800 <= value <= current_year:
+                      self._año = value
                  else:
                       raise ValueError(f"El año debe estar entre 1900 y {current_year}.")
             else:
@@ -94,7 +94,7 @@ class Vehiculo:
 
         @kilometraje.setter
         def kilometraje(self, value):
-            if not isinstance(value, int) or value < 0 or value > 2000:
+            if not isinstance(value, (int, float)) or value < 0 or value > 2000:
                 raise ValueError("El kilometraje debe ser un número entero no negativo que debe estar entre cero y 2000 km.")
             else:
                  self._kilometraje = value
@@ -119,7 +119,7 @@ class Vehiculo:
         
         @precio.setter
         def precio(self, value):
-            if not isinstance(value, int, float) or value < 0:
+            if not isinstance(value, (int, float)) or value < 0:
                 raise ValueError("El precio debe ser un numero entero o decimal no negativo y mayor a cero.")
             else:
                 self._precio = value
@@ -131,7 +131,6 @@ class Vehiculo:
             self.id_vehiculo = int(input("Ingrese el id del vehiculo: \n"))
             self.marca = input("Ingrese la marca del vehiculo: \n")
             self.modelo = input("Ingrese el modelo del vehiculo: \n")
-            self.año = int(input("Ingrese el año del vehiculo: \n"))
             self.año = int(input("Ingrese el año del vehiculo: \n"))
             self.placa = input("Ingrese la placa del vehiculo: \n")
             self.color = input("Ingrese el color del vehiculo: \n")

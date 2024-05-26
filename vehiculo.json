@@ -1,1 +1,25 @@
-[]
+[
+    {
+        "_id_vehiculo": 0,
+        "_marca": null,
+        "_modelo": null,
+        "_a\u00f1o": 2023,
+        "_placa": "HLP-459",
+        "_color": null,
+        "_combustible": "gasolina",
+        "_transmision": "automatica",
+        "_cilindraje": 4.2,
+        "_kilometraje": 200.0,
+        "_puertas": 5,
+        "_alarma": null,
+        "_sensor": null,
+        "_precio": 3000000.0,
+        "id_vehiculo": 0,
+        "marca": "mazda",
+        "modelo": "cx-30",
+        "color": "rojo",
+        "alarma": true,
+        "sensor": true,
+        "vehiculo_inventario": []
+    }
+]
