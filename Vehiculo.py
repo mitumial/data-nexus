@@ -34,7 +34,7 @@ class Vehiculo:
         def año(self, value):
             current_year = datetime.now().year
             if value is not None:
-                 if 1900 <= value <=current_year:
+                 if 1800 <= value <=current_year:
                       self.año = value
                  else:
                       raise ValueError(f"El año debe estar entre 1900 y {current_year}.")
@@ -244,3 +244,12 @@ class Vehiculo:
                     print("Operación cancelada.")
             else:
                 print("Vehiculo no encontrado.")
+
+        def menu():
+            vehiculos = []
+
+            while True:
+                print("\n" + "-" * 50)
+                print("MENÚ DE OPCIONES")
+                print("1. Ingresar Vehiculo")
+
