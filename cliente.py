@@ -77,42 +77,48 @@ class Cliente:
     def ingresar_cliente(self):
         print("-" * 30)
         print("INGRESAR DATOS DEL CLIENTE:")
-        self.nombre = input("Ingrese los nombres del cliente: \n")
-        self.apellidos = input("Ingrese los apellidos del cliente: \n")
-        self.documento = int(input("Ingrese el numero de documento del cliente: \n"))
-    
+        self._nombre = input("Ingrese los nombres del cliente: \n")
+        self._apellidos = input("Ingrese los apellidos del cliente: \n")
+        self._documento = int(input("Ingrese el numero de documento del cliente: \n"))
+        self._edad = int(input("Ingrese la edad del cliente: \n"))
+        self._genero = input("Ingrese el genero del cliente : (Masculino/Femenino): \n")
+        self._direccion = input("Ingrese la dirección dle cliente: \n")
+        self._email = input("Ingrese la direccion de correo electronico del cliente: \n")
+        self._celular = int(input("Ingrese el número de celular del cliente: \n"))
 
-        self.vehiculos_comprados = []
+        self._vehiculos_comprados = []
 
     def mostrar_detalles_cliente(self):
         print("/", "-" * 30, "/")
         print("DETALLES DEL CLIENTE:")
-        print("ID del Cliente:", self.id_cliente)
-        print("Nombre:", self.nombre)
-        print("Apellidos:", self.apellidos)
-        print("Documento:", self.documento)
+        print("ID del Cliente:", self._id_cliente)
+        print("Nombre:", self._nombre)
+        print("Apellidos:", self._apellidos)
+        print("Documento:", self._documento)
         print("Edad:", self.edad)
         print("Género:", self.genero)
-        print("Dirección:", self.direccion)
-        print("Email:", self.email)
-        print("Celular:", self.celular)
+        print("Dirección:", self._direccion)
+        print("Email:", self._email)
+        print("Celular:", self._celular)
         print("Vehículos Comprados:", self.vehiculos_comprados)
 
 
 def agregar_cliente():
     cliente = Cliente()
     cliente.ingresar_cliente()
-    if cliente.nombre and cliente.apellidos and cliente.documento and cliente.edad and cliente.genero and cliente.direccion and cliente.email and cliente.celular:
-        Cliente.clientes_inventario.append(cliente)
-        print("Cliente agregado exitosamente.")
-    else:
-        print("Error: Datos del cliente incompletos o incorrectos.")
+   # if cliente.nombre and cliente.apellidos and cliente.documento and cliente.edad and cliente.genero and cliente.direccion and cliente.email and cliente.celular:
+    Cliente.clientes_inventario.append(cliente)
+    guardar_cliente(cliente)
+    print("Cliente agregado exitosamente.")
+    #else:
+        #print("Error: Datos del cliente incompletos o incorrectos.")
 
+    
 
 def mostrar_todos_los_clientes():
     if not Cliente.clientes_inventario:
         print("No hay ningún cliente registrado.")
-        
+        return
     for cliente in Cliente.clientes_inventario:
         cliente.mostrar_detalles_cliente()
 
@@ -127,7 +133,7 @@ def buscar_cliente_por_id(id_cliente):
 def eliminar_cliente():
     if not Cliente.clientes_inventario:
         print("No hay ningún cliente registrado para borrar.")
-    
+        return
 
     id_cliente = int(input("Ingrese la ID del cliente que desea eliminar: "))
     cliente = buscar_cliente_por_id(id_cliente)
@@ -181,6 +187,6 @@ def menu():
             print("Opción no válida. Por favor, intente de nuevo.")
 
 
-# Ejecutar el menú
-menu()
 cargar_cliente()
+menu()
+
