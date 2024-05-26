@@ -156,7 +156,8 @@ def cargar_cliente(filename="./cliente.json"):
         clientes = json.load(archivo)
 
     for cliente in clientes:
-        Cliente.clientes_inventario.append(Cliente(**cliente))       
+        Cliente.clientes_inventario.append(Cliente(**cliente))   
+            
 def guardar_cliente(cliente, filename="./cliente.json"):
     with open(filename, "r+") as archivo:
         archivo_datos = json.load(archivo)
