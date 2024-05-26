@@ -1,3 +1,38 @@
 [
-   
+    {
+        "_id_cliente": 0,
+        "_nombre": "sd\u00f1flg",
+        "_apellidos": "dsfg",
+        "_documento": 1234568790,
+        "_edad": 35,
+        "_genero": "masculino",
+        "_direccion": "asd",
+        "_email": "asd@dsg.co",
+        "_celular": 123456789,
+        "_vehiculos_comprados": []
+    },
+    {
+        "_id_cliente": 1,
+        "_nombre": "asfsd",
+        "_apellidos": "sdf",
+        "_documento": 1234,
+        "_edad": 35,
+        "_genero": "masculino",
+        "_direccion": "asf35",
+        "_email": "sdf@fg.vo",
+        "_celular": 123456789,
+        "_vehiculos_comprados": []
+    },
+    {
+        "_id_cliente": 2,
+        "_nombre": "dfg",
+        "_apellidos": "dfg",
+        "_documento": 123456789,
+        "_edad": 35,
+        "_genero": "masculino",
+        "_direccion": "sdf356",
+        "_email": "sdf@sd.co",
+        "_celular": 123456789,
+        "_vehiculos_comprados": []
+    }
 ]
