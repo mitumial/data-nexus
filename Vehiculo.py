@@ -225,7 +225,7 @@ class Vehiculo:
             for vehiculo in vehiculos:
                 if vehiculo.id_vehiculo == id_vehiculo:
                     return vehiculo
-            return None      
+            return None
          
         def eliminar_vehiculo(vehiculos):
             if not vehiculos:
@@ -233,7 +233,7 @@ class Vehiculo:
                 return
 
             id_vehiculo = int(input("Ingrese la ID del vehiculo que desea eliminar: "))
-            Vehiculo = buscar_vehiculo_por_id(vehiculos, id_vehiculo)
+            Vehiculo = Vehiculo.buscar_vehiculo_por_id(vehiculos, id_vehiculo)
 
             if Vehiculo:
                 confirmacion = input("¿Está seguro de que desea borrar este vehiculo? (s/n): ").lower()
