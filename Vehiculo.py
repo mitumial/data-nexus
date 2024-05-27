@@ -5,7 +5,7 @@ import json
 class Vehiculo:
         vehiculo_inventario = []
 
-        def __init__(self, id_vehiculo=None, marca=None, modelo=None, año=None, placa=None, color=None, combustible=None, transmision=None, cilindraje=None, kilometraje=None, puertas=None, alarma=None, sensor=None, precio=None, lista_vehiculo=None):
+        def __init__(self, id_vehiculo=None, marca=None, modelo=None, anio=None, placa=None, color=None, combustible=None, transmision=None, cilindraje=None, kilometraje=None, puertas=None, alarma=bool, sensor=bool, precio=None, lista_vehiculo=None):
             if id_vehiculo:
                self._id_vehiculo = id_vehiculo
             elif  not self.vehiculo_inventario and (not id_vehiculo):
@@ -14,7 +14,7 @@ class Vehiculo:
                 self._id_vehiculo = self.vehiculo_inventario[-1]._id_vehiculo + 1 
             self._marca = marca
             self._modelo = modelo
-            self._año = año
+            self._anio = anio
             self._placa = placa
             self._color = color
             self._combustible = combustible
@@ -28,19 +28,35 @@ class Vehiculo:
             self.vehiculo_inventario.append(self)
 
         @property
-        def año(self):
-            return self._año
+        def marca(self):
+            return self._marca
 
-        @año.setter
-        def año(self, value):
+        @marca.setter
+        def marca(self, value):
+            self._marca = value
+
+        @property
+        def modelo(self):
+            return self._modelo
+
+        @modelo.setter
+        def modelo(self, value):
+            self._modelo = value
+
+        @property
+        def anio(self):
+            return self._anio
+
+        @anio.setter
+        def anio(self, value):
             current_year = datetime.now().year
             if value is not None:
                  if 1800 <= value <= current_year:
-                      self._año = value
+                      self._anio = value
                  else:
                       raise ValueError(f"El año debe estar entre 1900 y {current_year}.")
             else:
-                 self._año = value       
+                 self._anio = value       
 
         @property
         def placa(self):
@@ -52,6 +68,14 @@ class Vehiculo:
                   raise ValueError("La placa debe estar en formato aaa-000") 
              else:
                   self._placa = value
+
+        @property
+        def color(self):
+            return self._color
+
+        @color.setter
+        def color(self, value):
+            self._color = value
         
         @property
         def combustible(self):
@@ -116,6 +140,32 @@ class Vehiculo:
                  self._puertas = value
 
         @property
+        def alarma(self):
+            return self._alarma
+
+        @alarma.setter
+        def alarma(self, value):
+            if value.lower() == "si":
+                self._alarma = True
+            elif value.lower() == "no":
+                self._alarma = False
+            else:
+                raise ValueError("Valor para alarma debe ser 'si' o 'no'.")
+
+        @property
+        def sensor(self):
+            return self._sensor
+
+        @sensor.setter
+        def sensor(self, value):
+            if value.lower() == "si":
+                self._sensor = True
+            elif value.lower() == "no":
+                self._sensor = False
+            else:
+                raise ValueError("Valor para sensor debe ser 'si' o 'no'.")
+
+        @property
         def precio(self):
             return self._precio
         
@@ -132,18 +182,18 @@ class Vehiculo:
             print("INGRESAR DATOS DEL VEHICULO:")
             self.marca = input("Ingrese la marca del vehiculo: \n")
             self.modelo = input("Ingrese el modelo del vehiculo: \n")
-            self.año = int(input("Ingrese el año del vehiculo: \n"))
+            self.anio = int(input("Ingrese el año del vehiculo: \n"))
             self.placa = input("Ingrese la placa del vehiculo: \n")
             self.color = input("Ingrese el color del vehiculo: \n")
-            self.combustible = input("Ingrese el tipo de combustible del vehiculo: \n (gasolina, diesel, electrica)")
+            self.combustible = input("Ingrese el tipo de combustible del vehiculo \n (gasolina, diesel, electrica): \n")
             self.transmision = input("Ingrese el tipo de transmision del vehiculo \n (Manual, Automatica, CVT, Semiautomatica): \n")
-            self.cilindraje = float(input("Ingrese el cilindraje del vehiculo: \n (El cilindraje debe ser un número (entero o decimal))"))
+            self.cilindraje = float(input("Ingrese el cilindraje del vehiculo \n(El cilindraje debe ser un número (entero o decimal)): \n"))
             self.kilometraje = float(input("Ingrese el kilometraje del vehiculo: \n"))
-            self.puertas= int(input("Ingrese el numero de puertas del vehiculo: \n"))
-            self.alarma = input("¿El vehiculo tiene alarma? (si/no): \n").lower() == "si"
-            self.sensor = input("¿El vehiculo tiene sensores? (si/no): \n").lower() == "si"
+            self.puertas = int(input("Ingrese el numero de puertas del vehiculo: \n"))
+            self.alarma = input("¿El vehiculo tiene alarma? (si/no): \n")
+            self.sensor = input("¿El vehiculo tiene sensores? (si/no): \n")
             self.precio = float(input("Ingrese el precio del vehiculo: \n"))
-                
+                    
             self.vehiculo_inventario = []
 
         def mostrar_detalles_vehiculo(self):
@@ -152,7 +202,7 @@ class Vehiculo:
             print("El id del vehiculo es: ",self._id_vehiculo)
             print("La marca del vehiculo es: ",self._marca)
             print("El modelo del vehiculo es: ",self._modelo)
-            print("El año del vehiculo es: ",self._año)
+            print("El año del vehiculo es: ",self._anio)
             print("La placa del vehiculo es: ",self._placa)
             print("El color del vehiculo es: ",self._color)
             print("El tipo de combustible que utiliza el vehiculo es: ",self._combustible)
@@ -212,7 +262,7 @@ def cargar_vehiculo(filename="./vehiculo.json"):
         vehiculos = json.load(archivo)
 
     for vehiculo in vehiculos:
-        Vehiculo.vehiculo_inventario.append(Vehiculo(vehiculo["_id_vehiculo"], vehiculo["_marca"], vehiculo["_modelo"], vehiculo["_año"], vehiculo["_placa"], vehiculo["_color"], vehiculo["_combustible"], vehiculo["_transmision"], vehiculo["_cilindraje"], vehiculo["_kilometraje"], vehiculo["_puertas"], vehiculo["_alarma"], vehiculo["_sensor"], vehiculo["_precio"], vehiculo["vehiculo_inventario"]))         #modificar y agg los atributos a usar como aleja - que se ingresan
+        Vehiculo.vehiculo_inventario.append(Vehiculo(vehiculo["_id_vehiculo"], vehiculo["_marca"], vehiculo["_modelo"], vehiculo["_anio"], vehiculo["_placa"], vehiculo["_color"], vehiculo["_combustible"], vehiculo["_transmision"], vehiculo["_cilindraje"], vehiculo["_kilometraje"], vehiculo["_puertas"], vehiculo["_alarma"], vehiculo["_sensor"], vehiculo["_precio"], vehiculo["vehiculo_inventario"]))         #modificar y agg los atributos a usar como aleja - que se ingresan
 
 def guardar_vehiculo(vehiculo, filename="./vehiculo.json"):
     with open(filename, "r+") as archivo:

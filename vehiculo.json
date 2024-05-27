@@ -1,1 +1,19 @@
-[]
+[
+    {
+        "_id_vehiculo": 0,
+        "_marca": "mazda",
+        "_modelo": "cx.5",
+        "_anio": 2023,
+        "_placa": "rft-729",
+        "_color": "negro",
+        "_combustible": "gasolina",
+        "_transmision": "manual",
+        "_cilindraje": 4.0,
+        "_kilometraje": 200.0,
+        "_puertas": 5,
+        "_alarma": true,
+        "_sensor": true,
+        "_precio": 12586450.0,
+        "vehiculo_inventario": []
+    }
+]
