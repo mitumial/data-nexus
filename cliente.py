@@ -2,16 +2,28 @@ import re
 import json
 
 class Cliente:
-    
-    clientes_inventario = []
 
-    def __init__(self, id_cliente=None, nombre=None, apellidos=None, documento=None, edad=None, genero=None, direccion=None, email=None, celular=None, vehiculos_comprados=None):
-        if id_cliente:
-            self._id_cliente = id_cliente
-        elif  not self.clientes_inventario and (not id_cliente):
-            self._id_cliente = 0     
-        else:
-            self._id_cliente = self.clientes_inventario[-1]._id_cliente + 1  
+    def __init__(
+        self,
+        id_cliente=None,
+        nombre=None,
+        apellidos=None,
+        documento=None,
+        edad=None,
+        genero=None,
+        direccion=None,
+        email=None,
+        celular=None,
+        vehiculos_comprados=None,
+    ):
+        with open("./cliente.json", "r", encoding="utf-8") as archivo:
+            clientes = json.load(archivo)
+            if id_cliente is not None:
+                self._id_cliente = id_cliente
+            elif not clientes and (id_cliente is None):
+                self._id_cliente = 0
+            else:
+                self._id_cliente = clientes[-1]['_id_cliente'] + 1
         self._nombre = nombre
         self._apellidos = apellidos
         self._documento = documento
@@ -20,9 +32,9 @@ class Cliente:
         self._direccion = direccion
         self._email = email
         self._celular = celular
-        self._vehiculos_comprados = vehiculos_comprados if vehiculos_comprados is not None else []
-
-        self.clientes_inventario.append(self)
+        self._vehiculos_comprados = (
+            vehiculos_comprados if vehiculos_comprados is not None else []
+        )
 
     @property
     def edad(self):
@@ -30,12 +42,10 @@ class Cliente:
 
     @edad.setter
     def edad(self, value):
-        
         if 0 < value < 120:
             self._edad = value
         else:
             raise ValueError("La edad debe estar entre 1 y 119 años.")
-        
 
     @property
     def genero(self):
@@ -43,12 +53,10 @@ class Cliente:
 
     @genero.setter
     def genero(self, value):
-        
         if value.lower() in ["masculino", "femenino"]:
             self._genero = value.lower().capitalize()
         else:
             raise ValueError("El género debe ser 'Masculino' o 'Femenino'.")
-       
 
     @property
     def email(self):
@@ -56,12 +64,10 @@ class Cliente:
 
     @email.setter
     def email(self, value):
-       
         if re.match(r"^\w+@\w+\.\w{2,3}$", value):
             self._email = value
         else:
             raise ValueError("El correo electrónico no es válido.")
-       
 
     @property
     def celular(self):
@@ -69,12 +75,10 @@ class Cliente:
 
     @celular.setter
     def celular(self, value):
-        
         if re.match(r"^\d{10}$", str(value)):
             self._celular = value
         else:
             raise ValueError("El número de celular debe tener 10 dígitos.")
-    
 
     def ingresar_cliente(self):
         print("-" * 30)
@@ -104,86 +108,69 @@ class Cliente:
         print("Celular:", self._celular)
         print("Vehículos Comprados:", self._vehiculos_comprados)
 
-
-
 def agregar_cliente():
     cliente = Cliente()
     cliente.ingresar_cliente()
-   # if cliente.nombre and cliente.apellidos and cliente.documento and cliente.edad and cliente.genero and cliente.direccion and cliente.email and cliente.celular:
-    Cliente.clientes_inventario.append(cliente)
     guardar_cliente(cliente)
     print("Cliente agregado exitosamente.")
-    #else:
-        #print("Error: Datos del cliente incompletos o incorrectos.")
 
-    
+def mostrar_todos_los_clientes(filename="./cliente.json"):
+    with open(filename, "r", encoding="utf-8") as archivo:
+        clientes = json.load(archivo)
+        if not clientes:
+            print("No hay ningún cliente registrado.")
+            return
+        for cliente in clientes:
+            nuevo_cliente = Cliente(
+                id_cliente=cliente["_id_cliente"],
+                nombre=cliente["_nombre"],
+                apellidos=cliente["_apellidos"],
+                documento=cliente["_documento"],
+                edad=cliente["_edad"],
+                genero=cliente["_genero"],
+                direccion=cliente["_direccion"],
+                email=cliente["_email"],
+                celular=cliente["_celular"],
+                vehiculos_comprados=cliente["_vehiculos_comprados"],
+            )
+            nuevo_cliente.mostrar_detalles_cliente()
 
-def mostrar_todos_los_clientes():
-    if not Cliente.clientes_inventario:
-        print("No hay ningún cliente registrado.")
-        return
-    for cliente in Cliente.clientes_inventario:
-        cliente.mostrar_detalles_cliente()
+def eliminar_cliente(filename="./cliente.json"):
+    with open(filename, "r", encoding="utf-8") as f:
+        clientes = json.load(f)
+        if not clientes:
+            print("No hay ningún cliente registrado para borrar.")
+            return
 
+        id_cliente = int(input("Ingrese la ID del cliente que desea eliminar: "))
 
-def buscar_cliente_por_id(id_cliente):
-    for cliente in Cliente.clientes_inventario:
-        if cliente._id_cliente == id_cliente:
-            return cliente
-    return None
-
-
-def eliminar_cliente():
-    if not Cliente.clientes_inventario:
-        print("No hay ningún cliente registrado para borrar.")
-        return
-
-    id_cliente = int(input("Ingrese la ID del cliente que desea eliminar: "))
-    cliente = buscar_cliente_por_id(id_cliente)
-
-    if cliente:
         confirmacion = input("¿Está seguro de que desea borrar este cliente? (s/n): ").lower()
+
         if confirmacion == "s":
-            Cliente.clientes_inventario.remove(cliente)
-            eliminar(id_cliente)
-            print("Cliente borrado exitosamente.")
+            for idx, obj in enumerate(clientes):
+                if obj["_id_cliente"] == id_cliente:
+                    clientes.pop(idx)
+                    print("Cliente borrado exitosamente.")
+                    break
+            else:
+                print("Cliente no encontrado.")
         else:
             print("Operación cancelada.")
-    else:
-        print("Cliente no encontrado.")
-        
-        
-def eliminar(id, filename="./cliente.json"):
-    with open(filename, 'r', encoding='utf-8') as f:
-        clientes = json.load(f)
-    
 
-    for idx, obj in enumerate(clientes):
-        if obj['_id_cliente'] == id:
-            clientes.pop(idx)
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(clientes, f, indent=4)
 
-
-
-    with open(filename, 'w', encoding='utf-8') as f:
-        f.write(json.dumps(clientes, indent=4))
-    
-
-def cargar_clientes(filename="./cliente.json"):
-    with open(filename, "r") as archivo:
-        clientes = json.load(archivo)
-
-    for cliente in clientes:
-        Cliente.clientes_inventario.append(Cliente(cliente["_id_cliente"], cliente["_nombre"], cliente["_apellidos"], cliente["_documento"], cliente["_edad"], cliente["_genero"], cliente["_direccion"], cliente["_email"], cliente["_celular"], cliente["_vehiculos_comprados"]))   
-            
 def guardar_cliente(cliente, filename="./cliente.json"):
-    with open(filename, "r+") as archivo:
-        archivo_datos = json.load(archivo)
+    with open(filename, "r+", encoding="utf-8") as archivo:
+        try:
+            archivo_datos = json.load(archivo)
+        except json.JSONDecodeError:
+            archivo_datos = []
         archivo_datos.append(cliente.__dict__)
         archivo.seek(0)
         json.dump(archivo_datos, archivo, indent=4)
 
 def menu():
-
     while True:
         print("\n" + "-" * 50)
         print("MENÚ DE OPCIONES")
@@ -206,7 +193,4 @@ def menu():
         else:
             print("Opción no válida. Por favor, intente de nuevo.")
 
-
-cargar_clientes()
 menu()
-

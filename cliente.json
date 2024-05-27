@@ -1,26 +1,26 @@
 [
     {
         "_id_cliente": 1,
-        "_nombre": "asfsd",
-        "_apellidos": "sdf",
-        "_documento": 1234,
-        "_edad": 35,
-        "_genero": "masculino",
-        "_direccion": "asf35",
-        "_email": "sdf@fg.vo",
-        "_celular": 123456789,
+        "_nombre": "Alvaro",
+        "_apellidos": "Osuna",
+        "_documento": 71937870,
+        "_edad": 25,
+        "_genero": "Masculino",
+        "_direccion": "Buenaventura",
+        "_email": "alvaro845@gmail.com",
+        "_celular": 3152459874,
         "_vehiculos_comprados": []
     },
     {
         "_id_cliente": 2,
-        "_nombre": "dfg",
-        "_apellidos": "dfg",
-        "_documento": 123456789,
+        "_nombre": "carlos",
+        "_apellidos": "enrique",
+        "_documento": 2321565489,
         "_edad": 35,
-        "_genero": "masculino",
-        "_direccion": "sdf356",
-        "_email": "sdf@sd.co",
-        "_celular": 123456789,
+        "_genero": "femenino",
+        "_direccion": "alpacheque",
+        "_email": "alala@mg.com",
+        "_celular": 3124567890,
         "_vehiculos_comprados": []
     }
 ]
