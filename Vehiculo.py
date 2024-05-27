@@ -5,11 +5,13 @@ import json
 class Vehiculo:
         vehiculo_inventario = []
 
-        def __init__(self, marca=None, modelo=None, año=None, placa=None, color=None, combustible=None, transmision=None, cilindraje=None, kilometraje=None, puertas=None, alarma=None, sensor=None, precio=None, lista_vehiculo=None):
-            if not self.vehiculo_inventario:
-                self._id_vehiculo = 0
+        def __init__(self, id_vehiculo=None, marca=None, modelo=None, año=None, placa=None, color=None, combustible=None, transmision=None, cilindraje=None, kilometraje=None, puertas=None, alarma=None, sensor=None, precio=None, lista_vehiculo=None):
+            if id_vehiculo:
+               self._id_vehiculo = id_vehiculo
+            elif  not self.vehiculo_inventario and (not id_vehiculo):
+               self._id_vehiculo = 0     
             else:
-                self._id_vehiculo = self.vehiculo_inventario[-1]["_id_vehiculo"] + 1
+                self._id_vehiculo = self.vehiculo_inventario[-1]._id_vehiculo + 1 
             self._marca = marca
             self._modelo = modelo
             self._año = año
@@ -57,7 +59,7 @@ class Vehiculo:
 
         @combustible.setter
         def combustible(self, value):
-            tipos_validos_combustible = {'gasolina', 'diésel', 'eléctrica'}
+            tipos_validos_combustible = {'gasolina', 'diesel', 'electrica'}
             if value.lower() in tipos_validos_combustible:
                 self._combustible = value.lower()
             else:
@@ -128,15 +130,14 @@ class Vehiculo:
         def ingresar_vehiculo(self):
             print("-"*30)
             print("INGRESAR DATOS DEL VEHICULO:")
-            self.id_vehiculo = int(input("Ingrese el id del vehiculo: \n"))
             self.marca = input("Ingrese la marca del vehiculo: \n")
             self.modelo = input("Ingrese el modelo del vehiculo: \n")
             self.año = int(input("Ingrese el año del vehiculo: \n"))
             self.placa = input("Ingrese la placa del vehiculo: \n")
             self.color = input("Ingrese el color del vehiculo: \n")
-            self.combustible = input("Ingrese el tipo de combustible del vehiculo: \n")
+            self.combustible = input("Ingrese el tipo de combustible del vehiculo: \n (gasolina, diesel, electrica)")
             self.transmision = input("Ingrese el tipo de transmision del vehiculo \n (Manual, Automatica, CVT, Semiautomatica): \n")
-            self.cilindraje = float(input("Ingrese el cilindraje del vehiculo: \n"))
+            self.cilindraje = float(input("Ingrese el cilindraje del vehiculo: \n (El cilindraje debe ser un número (entero o decimal))"))
             self.kilometraje = float(input("Ingrese el kilometraje del vehiculo: \n"))
             self.puertas= int(input("Ingrese el numero de puertas del vehiculo: \n"))
             self.alarma = input("¿El vehiculo tiene alarma? (si/no): \n").lower() == "si"
@@ -148,21 +149,21 @@ class Vehiculo:
         def mostrar_detalles_vehiculo(self):
             print("-"*30)
             print("DETALLES DEL VEHICULO")
-            print("El id del vehiculo es: ",self.id_vehiculo)
-            print("La marca del vehiculo es: ",self.marca)
-            print("El modelo del vehiculo es: ",self.modelo)
-            print("El año del vehiculo es: ",self.año)
-            print("La placa del vehiculo es: ",self.placa)
-            print("El color del vehiculo es: ",self.color)
-            print("El tipo de combustible que utiliza el vehiculo es: ",self.combustible)
-            print("El tipo de transmision del vehiculo es: ",self.transmision)
-            print("el cilindraje del vehiculo es: ",self.cilindraje)
-            print("El kilometraje del vehiculo es: ",self.kilometraje ,"km/h")
-            print("El vehiculo tiene ",self.puertas ,"puertas")
-            print("El vehiculo cuenta con alarma ",self.alarma)
-            print("El vehiculo cuenta con sensor ",self.sensor)
-            print("El vehiculo tiene un valor de ",self.precio ,"pesos")
-            print("lista de vehiculos: ",self.lista_vehiculo)
+            print("El id del vehiculo es: ",self._id_vehiculo)
+            print("La marca del vehiculo es: ",self._marca)
+            print("El modelo del vehiculo es: ",self._modelo)
+            print("El año del vehiculo es: ",self._año)
+            print("La placa del vehiculo es: ",self._placa)
+            print("El color del vehiculo es: ",self._color)
+            print("El tipo de combustible que utiliza el vehiculo es: ",self._combustible)
+            print("El tipo de transmision del vehiculo es: ",self._transmision)
+            print("el cilindraje del vehiculo es: ",self._cilindraje)
+            print("El kilometraje del vehiculo es: ",self._kilometraje ,"km/h")
+            print("El vehiculo tiene ",self._puertas ,"puertas")
+            print("El vehiculo cuenta con alarma ",self._alarma)
+            print("El vehiculo cuenta con sensor ",self._sensor)
+            print("El vehiculo tiene un valor de ",self._precio ,"pesos")
+            #print("lista de vehiculos: ",self.lista_vehiculo)
 
 def agregar_vehiculo():
     vehiculo = Vehiculo()
@@ -211,7 +212,7 @@ def cargar_vehiculo(filename="./vehiculo.json"):
         vehiculos = json.load(archivo)
 
     for vehiculo in vehiculos:
-        Vehiculo.vehiculo_inventario.append(Vehiculo(vehiculo["_marca"], vehiculo["_modelo"], vehiculo["_año"], vehiculo["_placa"], vehiculo["_color"], vehiculo["_combustible"], vehiculo["_transmision"], vehiculo["_cilindraje"], vehiculo["_kilometraje"], vehiculo["_puertas"], vehiculo["_alarma"], vehiculo["_sensor"], vehiculo["_precio"], vehiculo["_vehiculo_inventario"]))         #modificar y agg los atributos a usar como aleja - que se ingresan
+        Vehiculo.vehiculo_inventario.append(Vehiculo(vehiculo["_id_vehiculo"], vehiculo["_marca"], vehiculo["_modelo"], vehiculo["_año"], vehiculo["_placa"], vehiculo["_color"], vehiculo["_combustible"], vehiculo["_transmision"], vehiculo["_cilindraje"], vehiculo["_kilometraje"], vehiculo["_puertas"], vehiculo["_alarma"], vehiculo["_sensor"], vehiculo["_precio"], vehiculo["vehiculo_inventario"]))         #modificar y agg los atributos a usar como aleja - que se ingresan
 
 def guardar_vehiculo(vehiculo, filename="./vehiculo.json"):
     with open(filename, "r+") as archivo:
