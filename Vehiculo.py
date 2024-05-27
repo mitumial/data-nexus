@@ -213,7 +213,7 @@ class Vehiculo:
             print("El vehiculo cuenta con alarma ",self._alarma)
             print("El vehiculo cuenta con sensor ",self._sensor)
             print("El vehiculo tiene un valor de ",self._precio ,"pesos")
-            #print("lista de vehiculos: ",self.lista_vehiculo)
+            
 
 def agregar_vehiculo():
     vehiculo = Vehiculo()
@@ -256,6 +256,19 @@ def eliminar_vehiculo():
             print("Operación cancelada.")
     else:
         print("Vehiculo no encontrado.")
+
+    
+    def eliminar(id, filename="./vehiculo.json"):
+        with open(filename, 'r', encoding='utf-8') as f:
+            vehiculos = json.load(f)
+
+        for idx, obj in enumerate(vehiculos):
+            if obj['_id_vehiculo'] == id:
+                vehiculos.pop(idx)
+
+        with open(filename, 'w', encoding='utf-8') as f:
+            f.write(json.dumps(vehiculos, indent=4))
+        
 
 def cargar_vehiculo(filename="./vehiculo.json"):
     with open(filename, "r") as archivo:
