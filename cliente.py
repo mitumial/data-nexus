@@ -153,20 +153,22 @@ def eliminar_cliente():
         print("Cliente no encontrado.")
         
         
-def eliminar(id,filename="./cliente.json"):
-    obj  = json.load(open(filename))
+def eliminar(id, filename="./cliente.json"):
+    with open(filename, 'r', encoding='utf-8') as f:
+        clientes = json.load(f)
+    
 
-                                                 
-    for i in range(len(obj)):
-        if obj[i]["_id_cliente"] == id:
-            obj.pop(i)
-            break
-                                   
-    open("updated-file.json", "w").write(
-        json.dumps(obj, sort_keys=True, indent=4)
-)        
+    for idx, obj in enumerate(clientes):
+        if obj['_id_cliente'] == id:
+            clientes.pop(idx)
 
-def cargar_cliente(filename="./cliente.json"):
+
+
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write(json.dumps(clientes, indent=4))
+    
+
+def cargar_clientes(filename="./cliente.json"):
     with open(filename, "r") as archivo:
         clientes = json.load(archivo)
 
@@ -205,6 +207,6 @@ def menu():
             print("Opción no válida. Por favor, intente de nuevo.")
 
 
-cargar_cliente()
+cargar_clientes()
 menu()
 
