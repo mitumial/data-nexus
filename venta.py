@@ -23,15 +23,29 @@ class Venta:
     _estado = str
     _cliente = Cliente
     _vehiculo = Vehiculo
-    ventas_inventario = []
 
-    def __init__(self, cliente=None, vehiculo=None):
-        if not self.ventas_inventario:
-            self._id_venta = 0
+    def __init__(
+        self, id_venta=None, fecha=None, estado=None, cliente=None, vehiculo=None
+    ):
+        with open("./venta.json", "r", encoding="utf-8") as archivo:
+            ventas = json.load(archivo)
+            if id_venta is not None:
+                self._id_venta = id_venta
+            elif not ventas and (id_venta is None):
+                self._id_venta = 0
+            else:
+                self._id_venta = ventas[-1]["_id_venta"] + 1
+
+        if fecha is not None:
+            self._fecha = fecha
         else:
-            self._id_venta = self.ventas_inventario[-1].id_venta + 1
-        self._fecha = dt.now().strftime("%d-%m-%Y")
-        self._estado = "No pagado"
+            self._fecha = dt.now().strftime("%d-%m-%Y")
+
+        if estado is not None:
+            self._estado = estado
+        else:
+            self._estado = "No pagado"
+
         self._cliente = cliente
         self._vehiculo = vehiculo
 
@@ -90,8 +104,14 @@ class Venta:
 def cargar_ventas(filename="./venta.json"):
     with open(filename, "r") as archivo:
         ventas = json.load(archivo)
-    for venta in ventas:
-        Venta.ventas_inventario.append(Venta(venta["_cliente"], venta["_vehiculo"]))
+        for venta in ventas:
+            nueva_venta = Venta(
+                venta["_id_venta"],
+                venta["_fecha"],
+                venta["_estado"],
+                venta["_cliente"],
+                venta["_vehiculo"],
+            )
 
 
 def guardar_venta(venta, filename="./venta.json"):
@@ -100,15 +120,26 @@ def guardar_venta(venta, filename="./venta.json"):
         ventas.append(venta.__dict__)
         archivo.seek(0)
         json.dump(ventas, archivo, indent=4)
-    cargar_ventas()
 
 
-def mostrar_todas_los_ventas():
-    if not Venta.ventas_inventario:
-        print("No hay ninguna venta registrado.")
+def cancelar_venta(venta, filename="./venta.json"):
+    with open(filename, "r", encoding="utf-8") as f:
+        ventas = json.load(f)
 
-    for venta in Venta.ventas_inventario:
-        venta.mostrar_detalles_venta()
+        confirmacion = input(
+            "¿Está seguro de que desea cancelar esta venta? (s/n): "
+        ).lower()
+
+        if confirmacion == "s":
+            for idx, obj in enumerate(ventas):
+                if obj["_id_venta"] == venta._id_venta:
+                    ventas.pop(idx)
+            print("Compra cancelada exitosamente.")
+        else:
+            print("Operación cancelada.")
+
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(json.dumps(ventas, indent=4))
 
 
 def realizar_venta(lista_vehiculos, lista_clientes):
@@ -190,11 +221,5 @@ def mostrar_vehiculos_disponibles(lista_vehiculos):
 #             print("Opción no válida. Por favor, intente de nuevo.")
 
 #     compra_de_vehiculo = Venta()
-# cargar_ventas()
-
-mi_nueva_venta = Venta("addfsad", "gdsadaf")
-
-guardar_venta(mi_nueva_venta)
-mostrar_todas_los_ventas()
 # Ejecutar el menú
 # menu()
