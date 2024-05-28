@@ -5,13 +5,32 @@ import json
 class Vehiculo:
         vehiculo_inventario = []
 
-        def __init__(self, id_vehiculo=None, marca=None, modelo=None, anio=None, placa=None, color=None, combustible=None, transmision=None, cilindraje=None, kilometraje=None, puertas=None, alarma=bool, sensor=bool, precio=None, lista_vehiculo=None):
-            if id_vehiculo:
-               self._id_vehiculo = id_vehiculo
-            elif  not self.vehiculo_inventario and (not id_vehiculo):
-               self._id_vehiculo = 0     
-            else:
-                self._id_vehiculo = self.vehiculo_inventario[-1]._id_vehiculo + 1 
+        def __init__(
+                self, 
+                id_vehiculo=None, 
+                marca=None, 
+                modelo=None, 
+                anio=None, 
+                placa=None, 
+                color=None, 
+                combustible=None, 
+                transmision=None, 
+                cilindraje=None, 
+                kilometraje=None, 
+                puertas=None, 
+                alarma=bool, 
+                sensor=bool, 
+                precio=None, 
+                vehiculo_inventario=None,
+                ):
+            with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
+                vehiculos = json.load(archivo)
+                if id_vehiculo:
+                  self._id_vehiculo = id_vehiculo
+                elif  not self.vehiculo_inventario and (not id_vehiculo):
+                    self._id_vehiculo = 0     
+                else:
+                    self._id_vehiculo = self.vehiculo_inventario[-1]._id_vehiculo + 1 
             self._marca = marca
             self._modelo = modelo
             self._anio = anio
@@ -218,20 +237,32 @@ class Vehiculo:
 def agregar_vehiculo():
     vehiculo = Vehiculo()
     vehiculo.ingresar_vehiculo()
-    #if vehiculo.marca and vehiculo.modelo and vehiculo.año and vehiculo.placa and vehiculo.color and vehiculo.combustible and vehiculo.transmision and vehiculo.cilindraje and vehiculo.kilometraje and vehiculo.puertas and vehiculo.alarma and vehiculo.sensor and vehiculo.precio:
-    Vehiculo.vehiculo_inventario.append(vehiculo)
     guardar_vehiculo(vehiculo)
     print("Vehiculo agregado exitosamente.")
-    #else:
-       # print("Error: Datos del vehiculo incompletos o incorrectos.")
-
+   
 
 def mostrar_todos_los_vehiculos():
     if not Vehiculo.vehiculo_inventario:
         print("No hay ningún vehiculo registrado.")
         return
-    for vehiculo in Vehiculo.vehiculo_inventario:
-        vehiculo.mostrar_detalles_vehiculo()
+    for vehiculo in vehiculo:
+        nuevo_vehiculo = Vehiculo(
+            id_vehiculo= vehiculo["_id_vehculo"],
+            marca = vehiculo["_marca"],
+            modelo = vehiculo["_modelo"],
+            anio = vehiculo["_anio"],
+            placa = vehiculo["_placa"],
+            color = vehiculo["_color"],
+            combustible = vehiculo["_combustible"],
+            transmision = vehiculo["_transmision"],
+            cilindraje = vehiculo["_cilindraje"],
+            kilometraje = vehiculo["_kilometraje"],
+            puertas = vehiculo["_puertas"],
+            alarma = vehiculo["_alarma"],
+            sensor = vehiculo["_sensor"],
+            precio = vehiculo["_precio"],
+        )
+        nuevo_vehiculo.mostrar_detalles_vehiculo()
 
 def buscar_vehiculo_por_id(id_vehiculo):
     for vehiculo in Vehiculo.vehiculo_inventario:
