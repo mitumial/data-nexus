@@ -1,0 +1,26 @@
+[
+    {
+        "_id_cliente": 1,
+        "_nombre": "Alvaro",
+        "_apellidos": "Osuna",
+        "_documento": 71937870,
+        "_edad": 25,
+        "_genero": "Masculino",
+        "_direccion": "Buenaventura",
+        "_email": "alvaro845@gmail.com",
+        "_celular": 3152459874,
+        "_vehiculos_comprados": []
+    },
+    {
+        "_id_cliente": 2,
+        "_nombre": "carlos",
+        "_apellidos": "enrique",
+        "_documento": 2321565489,
+        "_edad": 35,
+        "_genero": "femenino",
+        "_direccion": "alpacheque",
+        "_email": "alala@mg.com",
+        "_celular": 3124567890,
+        "_vehiculos_comprados": []
+    }
+]
