@@ -1,1 +1,19 @@
-[]
+[
+    {
+        "_id_vehiculo": 0,
+        "_marca": "Toyota",
+        "_modelo": "prado",
+        "_anio": 2023,
+        "_placa": "HJL-761",
+        "_color": "negro",
+        "_combustible": "diesel",
+        "_transmision": "manual",
+        "_cilindraje": 5.1,
+        "_kilometraje": 250.0,
+        "_puertas": 5,
+        "_alarma": true,
+        "_sensor": true,
+        "_precio": 25369875.0,
+        "vehiculo_inventario": []
+    }
+]
