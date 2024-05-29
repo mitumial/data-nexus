@@ -206,7 +206,7 @@ class Vehiculo:
             self.color = input("Ingrese el color del vehiculo: \n")
             self.combustible = input("Ingrese el tipo de combustible del vehiculo \n (gasolina, diesel, electrica): \n")
             self.transmision = input("Ingrese el tipo de transmision del vehiculo \n (Manual, Automatica, CVT, Semiautomatica): \n")
-            self.cilindraje = float(input("Ingrese el cilindraje del vehiculo \n(El cilindraje debe ser un número (entero o decimal)): \n"))
+            self.cilindraje = float(input("Ingrese el cilindraje del vehiculo \n(El cilindraje debe ser un número (entero o decimal entre 1 y 8.0)): \n"))
             self.kilometraje = float(input("Ingrese el kilometraje del vehiculo: \n"))
             self.puertas = int(input("Ingrese el numero de puertas del vehiculo: \n"))
             self.alarma = input("¿El vehiculo tiene alarma? (si/no): \n")
@@ -241,11 +241,13 @@ def agregar_vehiculo():
     print("Vehiculo agregado exitosamente.")
    
 
-def mostrar_todos_los_vehiculos():
-    if not Vehiculo.vehiculo_inventario:
-        print("No hay ningún vehiculo registrado.")
-        return
-    for vehiculo in vehiculo:
+def mostrar_todos_los_vehiculos(filename="./vehiculo.json"):
+    with open(filename, "r", encoding="utf-8") as archivo:
+        vehiculos = json.load(archivo)
+        if not vehiculos:
+            print("No hay ningún cliente registrado.")
+            return
+    for vehiculo in vehiculos:
         nuevo_vehiculo = Vehiculo(
             id_vehiculo= vehiculo["_id_vehculo"],
             marca = vehiculo["_marca"],
@@ -263,60 +265,44 @@ def mostrar_todos_los_vehiculos():
             precio = vehiculo["_precio"],
         )
         nuevo_vehiculo.mostrar_detalles_vehiculo()
-
-def buscar_vehiculo_por_id(id_vehiculo):
-    for vehiculo in Vehiculo.vehiculo_inventario:
-        if vehiculo.id_vehiculo == id_vehiculo:
-            return vehiculo
-    return None
-    
-def eliminar_vehiculo():
-    if not Vehiculo.vehiculo_inventario:
-        print("No hay ningún vehiculo registrado para borrar.")
-        return
+   
+def eliminar_vehiculo(filename="./vehiculo.json"):
+    with open(filename, "r", encoding="utf-8") as f:
+        vehiculos = json.load(f)
+        if not vehiculos:
+            print("No hay ningún vehiculo registrado para borrar.")
+            return
 
     id_vehiculo = int(input("Ingrese la ID del vehiculo que desea eliminar: "))
-    Vehiculo = buscar_vehiculo_por_id(id_vehiculo)
 
-    if Vehiculo:
-        confirmacion = input("¿Está seguro de que desea borrar este vehiculo? (s/n): ").lower()
-        if confirmacion == "s":
-            Vehiculo.vehiculo_inventario.remove(Vehiculo)
-            print("vehiculo borrado exitosamente.")
-        else:
-            print("Operación cancelada.")
-    else:
-        print("Vehiculo no encontrado.")
+    confirmacion = input("¿Está seguro de que desea borrar este vehiculo? (s/n): ").lower()
 
-    
-    def eliminar(id, filename="./vehiculo.json"):
-        with open(filename, 'r', encoding='utf-8') as f:
-            vehiculos = json.load(f)
-
+    if confirmacion == "s":
         for idx, obj in enumerate(vehiculos):
-            if obj['_id_vehiculo'] == id:
+            if obj["_id_vehiculo"] == id_vehiculo:
                 vehiculos.pop(idx)
+                print("Vehiculo borrado exitosamente.")
+                break
+        else:
+            print("Vehiculo no encontrado.")
+    else:
+        print("Operación cancelada.")
 
-        with open(filename, 'w', encoding='utf-8') as f:
-            f.write(json.dumps(vehiculos, indent=4))
-        
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(vehiculos, f, indent=4)
 
-def cargar_vehiculo(filename="./vehiculo.json"):
-    with open(filename, "r") as archivo:
-        vehiculos = json.load(archivo)
-
-    for vehiculo in vehiculos:
-        Vehiculo.vehiculo_inventario.append(Vehiculo(vehiculo["_id_vehiculo"], vehiculo["_marca"], vehiculo["_modelo"], vehiculo["_anio"], vehiculo["_placa"], vehiculo["_color"], vehiculo["_combustible"], vehiculo["_transmision"], vehiculo["_cilindraje"], vehiculo["_kilometraje"], vehiculo["_puertas"], vehiculo["_alarma"], vehiculo["_sensor"], vehiculo["_precio"], vehiculo["vehiculo_inventario"]))         #modificar y agg los atributos a usar como aleja - que se ingresan
 
 def guardar_vehiculo(vehiculo, filename="./vehiculo.json"):
-    with open(filename, "r+") as archivo:
-        archivo_datos = json.load(archivo)
+    with open(filename, "r+", encoding="utf-8") as archivo:
+        try:
+            archivo_datos = json.load(archivo)
+        except json.JSONDecodeError:
+            archivo_datos = []
         archivo_datos.append(vehiculo.__dict__)
         archivo.seek(0)
         json.dump(archivo_datos, archivo, indent=4)
 
 def menu():
-
     while True:
         print("\n" + "-" * 50)
         print("MENÚ DE OPCIONES")
@@ -339,6 +325,4 @@ def menu():
         else:
             print("Opción no válida. Por favor, intente de nuevo.")
 
-
-cargar_vehiculo()
 menu()

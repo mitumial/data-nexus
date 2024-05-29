@@ -15,5 +15,22 @@
         "_sensor": true,
         "_precio": 12586450.0,
         "vehiculo_inventario": []
+    },
+    {
+        "_id_vehiculo": 0,
+        "_marca": "mazda",
+        "_modelo": "cx-5",
+        "_anio": 2022,
+        "_placa": "HJI-861",
+        "_color": "negro",
+        "_combustible": "gasolina",
+        "_transmision": "manual",
+        "_cilindraje": 3.5,
+        "_kilometraje": 200.0,
+        "_puertas": 5,
+        "_alarma": true,
+        "_sensor": false,
+        "_precio": 15462532.0,
+        "vehiculo_inventario": []
     }
 ]
