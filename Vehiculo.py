@@ -249,7 +249,7 @@ def mostrar_todos_los_vehiculos(filename="./vehiculo.json"):
             return
     for vehiculo in vehiculos:
         nuevo_vehiculo = Vehiculo(
-            id_vehiculo= vehiculo["_id_vehculo"],
+            id_vehiculo= vehiculo["_id_vehiculo"],
             marca = vehiculo["_marca"],
             modelo = vehiculo["_modelo"],
             anio = vehiculo["_anio"],
