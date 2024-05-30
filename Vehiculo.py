@@ -25,12 +25,12 @@ class Vehiculo:
                 ):
             with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
                 vehiculos = json.load(archivo)
-                if id_vehiculo:
+                if id_vehiculo is not None:
                   self._id_vehiculo = id_vehiculo
-                elif  not self.vehiculo_inventario and (not id_vehiculo):
+                elif  not self.vehiculo_inventario and (id_vehiculo is None):
                     self._id_vehiculo = 0     
                 else:
-                    self._id_vehiculo = self.vehiculo_inventario[-1]._id_vehiculo + 1 
+                    self._id_vehiculo = vehiculos[-1]['_id_vehiculo'] + 1 
             self._marca = marca
             self._modelo = modelo
             self._anio = anio
