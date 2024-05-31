@@ -1,15 +1,8 @@
+from vehiculo import Vehiculo
+from cliente import Cliente
 import json
 from datetime import datetime as dt
 import re
-
-
-class Cliente:
-    pass
-
-
-class Vehiculo:
-
-    pass
 
 
 class Venta:
@@ -76,19 +69,19 @@ class Venta:
     def vehiculo(self, value):
         self._vehiculo = value
 
-    def realizar_compra(self):
-        if self.pago.cantidad < self.calcular_total():
-            self._estado = "Pagado"
-            self.tarjeta.fondos = self.tarjeta.fondos - self.vehiculo.precio
+    # def realizar_compra(self):
+    #     if self.pago.cantidad < self.calcular_total():
+    #         self._estado = "Pagado"
+    #         self.tarjeta.fondos = self.tarjeta.fondos - self.vehiculo.precio
 
     def mostrar_detalles_venta(self):
         print(
             f"""\n
-                Cliente:{self._cliente.nombres} {self._cliente.apellidos}
-                Vehiculo:{self._vehiculo.marca} {self._vehiculo.modelo}
+                Cliente:{self.cliente.nombre} {self.cliente.apellidos}
+                Vehiculo:{self.vehiculo.marca} {self.vehiculo.modelo}
                 Fecha:{self._fecha}
                 Estado:{self._estado}
-                Por la suma total de: {self._vehiculo}
+                Por la suma total de: {self.vehiculo.calcular_total()}
                 \n
             """
         )
@@ -97,6 +90,17 @@ class Venta:
         pass
 
 
+# # cargamos la informacion del cliente y vehiculo que hacen parte de la venta
+# with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
+#     vehiculos = json.load(archivo)
+#     for vehiculo in vehiculos:
+#         if vehiculo["_id_vehiculo"] == self._id_vehiculo:
+#             vehiculo_info = Vehiculo(vehiculo)
+# with open("./cliente.json", "r", encoding="utf-8") as archivo:
+#     clientes = json.load(archivo)
+#     for cliente in clientes:
+#         if cliente["_id_cliente"] == self._id_cliente:
+#             cliente_info = Cliente(cliente)
 def cargar_ventas(filename="./venta.json"):
     with open(filename, "r") as archivo:
         ventas = json.load(archivo)
