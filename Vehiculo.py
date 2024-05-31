@@ -3,7 +3,6 @@ from datetime import datetime
 import json
 
 class Vehiculo:
-        vehiculo_inventario = []
 
         def __init__(
                 self, 
@@ -21,7 +20,6 @@ class Vehiculo:
                 alarma=bool, 
                 sensor=bool, 
                 precio=None, 
-                vehiculo_inventario=None,
                 ):
             with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
                 vehiculos = json.load(archivo)
@@ -213,7 +211,6 @@ class Vehiculo:
             self.sensor = input("¿El vehiculo tiene sensores? (si/no): \n")
             self.precio = float(input("Ingrese el precio del vehiculo: \n"))
                     
-            self.vehiculo_inventario = []
 
         def mostrar_detalles_vehiculo(self):
             print("-"*30)
@@ -245,7 +242,7 @@ def mostrar_todos_los_vehiculos(filename="./vehiculo.json"):
     with open(filename, "r", encoding="utf-8") as archivo:
         vehiculos = json.load(archivo)
         if not vehiculos:
-            print("No hay ningún cliente registrado.")
+            print("No hay ningún vehiculo registrado.")
             return
     for vehiculo in vehiculos:
         nuevo_vehiculo = Vehiculo(
