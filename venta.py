@@ -8,11 +8,6 @@ class Cliente:
 
 
 class Vehiculo:
-    interes = 0.19
-
-    def calcular_total(self):
-        precio_total = self.vehiculo.precio * (1 + self.interes)
-        return precio_total
 
     pass
 
@@ -23,6 +18,7 @@ class Venta:
     _estado = str
     _cliente = Cliente
     _vehiculo = Vehiculo
+    interes = 0.19
 
     def __init__(
         self, id_venta=None, fecha=None, estado=None, cliente=None, vehiculo=None
