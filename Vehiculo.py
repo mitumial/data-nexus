@@ -4,7 +4,6 @@ import json
 
 
 class Vehiculo:
-    interes = 0.19
 
     def __init__(
         self,
@@ -247,10 +246,6 @@ class Vehiculo:
         print("El vehiculo cuenta con sensor ", self._sensor)
         print("El vehiculo tiene un valor de ", self._precio, "pesos")
 
-    def calcular_precio_total(self):
-        precio_total = self.vehiculo.precio * (1 + self.interes)
-        return precio_total
-
 
 def agregar_vehiculo():
     vehiculo = Vehiculo()
@@ -291,7 +286,6 @@ def eliminar_vehiculo(filename="./vehiculo.json"):
         if not vehiculos:
             print("No hay ningún vehiculo registrado para borrar.")
             return
-
     id_vehiculo = int(input("Ingrese la ID del vehiculo que desea eliminar: "))
 
     confirmacion = input(

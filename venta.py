@@ -1,6 +1,6 @@
 from vehiculo import Vehiculo
 from cliente import Cliente
-from pago import Pago
+import pago
 import json
 from datetime import datetime as dt
 import re
@@ -70,10 +70,9 @@ class Venta:
         self._id_vehiculo = value
 
     def realizar_pago(self):
-        Pago()
-        # if self.pago.cantidad < self.calcular_total():
-        #     self._estado = "Pagado"
-        #     self.tarjeta.fondos = self.tarjeta.fondos - self.vehiculo.precio
+        pago.registrar_pago(self._id_cliente, self.id_vehiculo)
+        self._estado = "Pagado"
+        # borrar vehiculo
 
     def mostrar_detalles_venta(self):
         with open("./cliente.json", "r", encoding="utf-8") as archivo:
@@ -95,6 +94,7 @@ class Venta:
             with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
                 vehiculos = json.load(archivo)
                 for vehiculo in vehiculos:
+                    # simplificar quitando Vehiculo(), dejar datos en dict
                     if vehiculo["_id_vehiculo"] == self.id_vehiculo:
                         vehiculo_info = Vehiculo(
                             id_vehiculo=vehiculo["_id_vehiculo"],
@@ -118,7 +118,7 @@ class Venta:
                         Vehiculo:{vehiculo_info.marca} {vehiculo_info.modelo}
                         Fecha:{self._fecha}
                         Estado:{self._estado}
-                        Por la suma total de: {vehiculo_info.calcular_total()}
+                        Por la suma total de: {vehiculo_info.precio}
                         \n
                     """
                 )
@@ -191,8 +191,8 @@ def mostrar_vehiculos_disponibles():
 
 def seleccionar_vehiculo():
     mostrar_vehiculos_disponibles()
-    id_vehiculo_seleccionado = input(
-        "Ingrese el id correspondiente al vehiculo deseado: \n"
+    id_vehiculo_seleccionado = int(
+        input("Ingrese el id correspondiente al vehiculo deseado: \n")
     )
     with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
         vehiculos = json.load(archivo)
@@ -205,6 +205,25 @@ def seleccionar_vehiculo():
             #     "El id ingresado no existe. Intente de nuevo: \n"
             # )
     return id_vehiculo_seleccionado
+
+
+def borrar_vehiculo(id_vehiculo, filename="./vehiculo.json"):
+    with open(filename, "r", encoding="utf-8") as f:
+        vehiculos = json.load(f)
+        if not vehiculos:
+            print("No hay ningún vehiculo registrado para borrar.")
+            return
+
+        for idx, obj in enumerate(vehiculos):
+            if obj["_id_vehiculo"] == id_vehiculo:
+                vehiculos.pop(idx)
+                print("Vehiculo borrado exitosamente.")
+                break
+        else:
+            print("Vehiculo no encontrado.")
+
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(vehiculos, f, indent=4)
 
 
 def realizar_compra():
@@ -220,7 +239,7 @@ def menu():
     while True:
         print("\n" + "-" * 50)
         print("VENTA DE VEHICULOS")
-        print("1. Realizar nueva compra")
+        print("1. Realizar compra")
         print("2. Realizar pago")
         print("3. Salir")
 

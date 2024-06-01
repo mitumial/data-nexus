@@ -19,5 +19,61 @@
         "_estado": "No pagado",
         "_id_cliente": 6,
         "_id_vehiculo": "3"
+    },
+    {
+        "_id_venta": 3,
+        "_fecha": "01-06-2024",
+        "_estado": "No pagado",
+        "_id_cliente": 6,
+        "_id_vehiculo": "2"
+    },
+    {
+        "_id_venta": 4,
+        "_fecha": "01-06-2024",
+        "_estado": "No pagado",
+        "_id_cliente": 6,
+        "_id_vehiculo": "3"
+    },
+    {
+        "_id_venta": 5,
+        "_fecha": "01-06-2024",
+        "_estado": "No pagado",
+        "_id_cliente": 5,
+        "_id_vehiculo": "1"
+    },
+    {
+        "_id_venta": 6,
+        "_fecha": "01-06-2024",
+        "_estado": "No pagado",
+        "_id_cliente": 5,
+        "_id_vehiculo": "1"
+    },
+    {
+        "_id_venta": 7,
+        "_fecha": "01-06-2024",
+        "_estado": "No pagado",
+        "_id_cliente": 5,
+        "_id_vehiculo": 1
+    },
+    {
+        "_id_venta": 8,
+        "_fecha": "01-06-2024",
+        "_estado": "No pagado",
+        "_id_cliente": 5,
+        "_id_vehiculo": 0
+    },
+    {
+        "_id_venta": 9,
+        "_fecha": "01-06-2024",
+        "_estado": "No pagado",
+        "_id_cliente": 5,
+        "_id_vehiculo": 1
+    },
+    {
+        "_id_venta": 10,
+        "_fecha": "01-06-2024",
+        "_estado": "No pagado",
+        "_id_cliente": 5,
+        "_id_vehiculo": 1
     }
 ]
