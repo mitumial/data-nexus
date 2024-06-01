@@ -22,5 +22,101 @@
         "_email": "alala@mg.com",
         "_celular": 3124567890,
         "_vehiculos_comprados": []
+    },
+    {
+        "_id_cliente": 3,
+        "_nombre": "Carla Andrea",
+        "_apellidos": "Eprectus Lopez",
+        "_documento": 9478566547,
+        "_edad": 20,
+        "_genero": "Femenino",
+        "_direccion": "Cundinamarca",
+        "_email": "Carla205@gmail.com",
+        "_celular": 312456789,
+        "_vehiculos_comprados": []
+    },
+    {
+        "_id_cliente": 4,
+        "_nombre": "Manuel",
+        "_apellidos": "Moreno Perez",
+        "_documento": 1025965874,
+        "_edad": 19,
+        "_genero": "Masculino",
+        "_direccion": "Medellin",
+        "_email": "Perez@105@gmail.com",
+        "_celular": 3102956874,
+        "_vehiculos_comprados": []
+    },
+    {
+        "_id_cliente": 5,
+        "_nombre": "Yimara Andrea",
+        "_apellidos": "Ruiz Quevedo",
+        "_documento": 716549874,
+        "_edad": 37,
+        "_genero": "Femenino",
+        "_direccion": "Bogota",
+        "_email": "Ruizque@gmail.com",
+        "_celular": 3156549874,
+        "_vehiculos_comprados": []
+    },
+    {
+        "_id_cliente": 6,
+        "_nombre": "Pedro Andres",
+        "_apellidos": "Gonzales Diaz",
+        "_documento": 63475000,
+        "_edad": 25,
+        "_genero": "Masculino",
+        "_direccion": "Cartagena",
+        "_email": "GDali@gmail.com",
+        "_celular": 3145421654,
+        "_vehiculos_comprados": []
+    },
+    {
+        "_id_cliente": 7,
+        "_nombre": "Libardo",
+        "_apellidos": "Munera Gomez",
+        "_documento": 95895826,
+        "_edad": 65,
+        "_genero": "Masculino",
+        "_direccion": "Medellin",
+        "_email": "Libardogom@gmail.com",
+        "_celular": 3136548565,
+        "_vehiculos_comprados": []
+    },
+    {
+        "_id_cliente": 8,
+        "_nombre": "Lina Marcela",
+        "_apellidos": "Jaramillo Jaramillo",
+        "_documento": 30232233,
+        "_edad": 43,
+        "_genero": "Femenino",
+        "_direccion": "Cartago",
+        "_email": "Linamarcela202Jara@gmail.com",
+        "_celular": 3108475694,
+        "_vehiculos_comprados": []
+    },
+    {
+        "_id_cliente": 9,
+        "_nombre": "Nohemi",
+        "_apellidos": "Sierra Ramirez",
+        "_documento": 52291364,
+        "_edad": 30,
+        "_genero": "Femenino",
+        "_direccion": "Medellin",
+        "_email": "Nohesierramirez58@gmail.com",
+        "_celular": 3123253653,
+        "_vehiculos_comprados": []
+    },
+    {
+        "_id_cliente": 10,
+        "_nombre": "Edgar Fernando",
+        "_apellidos": "Riascos Vallejo",
+        "_documento": 79582494,
+        "_edad": 33,
+        "_genero": "Masculino",
+        "_direccion": "Pereira",
+        "_email": "edgarvallejo@gmail.com",
+        "_celular": 31532626265,
+        "_vehiculos_comprados": []
     }
 ]
