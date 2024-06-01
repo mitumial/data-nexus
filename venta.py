@@ -1,5 +1,6 @@
 from vehiculo import Vehiculo
 from cliente import Cliente
+from pago import Pago
 import json
 from datetime import datetime as dt
 import re
@@ -68,10 +69,11 @@ class Venta:
     def id_vehiculo(self, value):
         self._id_vehiculo = value
 
-    # def realizar_compra(self):
-    #     if self.pago.cantidad < self.calcular_total():
-    #         self._estado = "Pagado"
-    #         self.tarjeta.fondos = self.tarjeta.fondos - self.vehiculo.precio
+    def realizar_pago(self):
+        Pago()
+        # if self.pago.cantidad < self.calcular_total():
+        #     self._estado = "Pagado"
+        #     self.tarjeta.fondos = self.tarjeta.fondos - self.vehiculo.precio
 
     def mostrar_detalles_venta(self):
         with open("./cliente.json", "r", encoding="utf-8") as archivo:
@@ -195,9 +197,13 @@ def seleccionar_vehiculo():
     with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
         vehiculos = json.load(archivo)
         for vehiculo in vehiculos:
-            if vehiculo["_id_vehiculo"] == id_vehiculo_seleccionado:
+            if id_vehiculo_seleccionado == vehiculo["_id_vehiculo"]:
                 break
-    print("Vehiculo seleccionado exitosamente.")
+            #         print("Vehiculo seleccionado exitosamente.")
+            #         return id_vehiculo_seleccionado
+            # id_vehiculo_seleccionado = input(
+            #     "El id ingresado no existe. Intente de nuevo: \n"
+            # )
     return id_vehiculo_seleccionado
 
 
@@ -207,6 +213,7 @@ def realizar_compra():
     nueva_venta.id_cliente = identificar_cliente()
     guardar_venta(nueva_venta)
     print("Su transacción ha sido creada exitosamente")
+    return nueva_venta
 
 
 def menu():
@@ -214,12 +221,15 @@ def menu():
         print("\n" + "-" * 50)
         print("VENTA DE VEHICULOS")
         print("1. Realizar nueva compra")
-        print("2. Salir")
+        print("2. Realizar pago")
+        print("3. Salir")
 
         opcion = input("Seleccione una opción: ")
         if opcion == "1":
-            realizar_compra()
+            venta_actual = realizar_compra()
         elif opcion == "2":
+            venta_actual.realizar_pago()
+        elif opcion == "3":
             print("Saliendo del programa...")
             break
         else:
