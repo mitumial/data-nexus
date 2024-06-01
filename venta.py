@@ -86,8 +86,27 @@ class Venta:
             """
         )
 
-    def cancelar_compra(self):
-        pass
+    def cancelar_compra(self, filename="./venta.json"):
+        with open(filename, "r", encoding="utf-8") as f:
+            ventas = json.load(f)
+
+            id_venta = self._id_venta
+
+            confirmacion = input(
+                "¿Está seguro de que desea cancelar su compra? (s/n): "
+            ).lower()
+
+            if confirmacion == "s":
+                for idx, obj in enumerate(ventas):
+                    if obj["_id_venta"] == id_venta:
+                        ventas.pop(idx)
+                        print("Compra cancelada exitosamente.")
+                        break
+            else:
+                print("Operación cancelada.")
+
+            with open(filename, "w", encoding="utf-8") as f:
+                json.dump(ventas, f, indent=4)
 
 
 # # cargamos la informacion del cliente y vehiculo que hacen parte de la venta
