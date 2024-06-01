@@ -9,12 +9,11 @@ class Venta:
     _id_venta = int
     _fecha = str
     _estado = str
-    _cliente = Cliente
-    _vehiculo = Vehiculo
-    interes = 0.19
+    _id_cliente = int
+    _id_vehiculo = int
 
     def __init__(
-        self, id_venta=None, fecha=None, estado=None, cliente=None, vehiculo=None
+        self, id_venta=None, fecha=None, estado=None, id_cliente=None, id_vehiculo=None
     ):
         with open("./venta.json", "r", encoding="utf-8") as archivo:
             ventas = json.load(archivo)
@@ -35,8 +34,8 @@ class Venta:
         else:
             self._estado = "No pagado"
 
-        self._cliente = cliente
-        self._vehiculo = vehiculo
+        self._id_cliente = id_cliente
+        self._id_vehiculo = id_vehiculo
 
     @property
     def id_venta(self):
@@ -54,20 +53,20 @@ class Venta:
             self._fecha = value
 
     @property
-    def cliente(self):
-        return self._cliente
+    def id_cliente(self):
+        return self._id_cliente
 
-    @cliente.setter
-    def cliente(self, value):
-        self._cliente = value
+    @id_cliente.setter
+    def id_cliente(self, value):
+        self._id_cliente = value
 
     @property
-    def vehiculo(self):
-        return self._vehiculo
+    def id_vehiculo(self):
+        return self._id_vehiculo
 
-    @vehiculo.setter
-    def vehiculo(self, value):
-        self._vehiculo = value
+    @id_vehiculo.setter
+    def id_vehiculo(self, value):
+        self._id_vehiculo = value
 
     # def realizar_compra(self):
     #     if self.pago.cantidad < self.calcular_total():
@@ -75,16 +74,52 @@ class Venta:
     #         self.tarjeta.fondos = self.tarjeta.fondos - self.vehiculo.precio
 
     def mostrar_detalles_venta(self):
-        print(
-            f"""\n
-                Cliente:{self.cliente.nombre} {self.cliente.apellidos}
-                Vehiculo:{self.vehiculo.marca} {self.vehiculo.modelo}
-                Fecha:{self._fecha}
-                Estado:{self._estado}
-                Por la suma total de: {self.vehiculo.calcular_total()}
-                \n
-            """
-        )
+        with open("./cliente.json", "r", encoding="utf-8") as archivo:
+            clientes = json.load(archivo)
+            for cliente in clientes:
+                if cliente["_id_cliente"] == self.id_cliente:
+                    cliente_info = Cliente(
+                        id_cliente=cliente["_id_cliente"],
+                        nombre=cliente["_nombre"],
+                        apellidos=cliente["_apellidos"],
+                        documento=cliente["_documento"],
+                        edad=cliente["_edad"],
+                        genero=cliente["_genero"],
+                        direccion=cliente["_direccion"],
+                        email=cliente["_email"],
+                        celular=cliente["_celular"],
+                        vehiculos_comprados=cliente["_vehiculos_comprados"],
+                    )
+            with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
+                vehiculos = json.load(archivo)
+                for vehiculo in vehiculos:
+                    if vehiculo["_id_vehiculo"] == self.id_vehiculo:
+                        vehiculo_info = Vehiculo(
+                            id_vehiculo=vehiculo["_id_vehiculo"],
+                            marca=vehiculo["_marca"],
+                            modelo=vehiculo["_modelo"],
+                            anio=vehiculo["_anio"],
+                            placa=vehiculo["_placa"],
+                            color=vehiculo["_color"],
+                            combustible=vehiculo["_combustible"],
+                            transmision=vehiculo["_transmision"],
+                            cilindraje=vehiculo["_cilindraje"],
+                            kilometraje=vehiculo["_kilometraje"],
+                            puertas=vehiculo["_puertas"],
+                            alarma=vehiculo["_alarma"],
+                            sensor=vehiculo["_sensor"],
+                            precio=vehiculo["_precio"],
+                        )
+                print(
+                    f"""\n
+                        Cliente:{cliente_info.nombre} {cliente_info.apellidos}
+                        Vehiculo:{vehiculo_info.marca} {vehiculo_info.modelo}
+                        Fecha:{self._fecha}
+                        Estado:{self._estado}
+                        Por la suma total de: {vehiculo_info.calcular_total()}
+                        \n
+                    """
+                )
 
     def cancelar_compra(self, filename="./venta.json"):
         with open(filename, "r", encoding="utf-8") as f:
@@ -128,25 +163,15 @@ def identificar_cliente():
             if cliente["_documento"] == doc:
                 while True:
                     es_cliente = input(
-                        f"¿Esta seguro que se identifica como {cliente["_nombre"]} {cliente["_apellidos"]}? (Si/No)\n"
+                        f'¿Esta seguro que se identifica como {cliente["_nombre"]} {cliente["_apellidos"]}? (Si/No)\n'
                     )
                     if es_cliente.lower() == "si":
                         break
                     doc = int(input("Por favor, ingrese su documento de nuevo:\n"))
-                cliente_seleccionado = Cliente(
-                    id_cliente=cliente["_id_cliente"],
-                    nombre=cliente["_nombre"],
-                    apellidos=cliente["_apellidos"],
-                    documento=cliente["_documento"],
-                    edad=cliente["_edad"],
-                    genero=cliente["_genero"],
-                    direccion=cliente["_direccion"],
-                    email=cliente["_email"],
-                    celular=cliente["_celular"],
-                    vehiculos_comprados=cliente["_vehiculos_comprados"],
-                )
+                id_cliente_seleccionado = cliente["_id_cliente"]
         print("Cliente identificado exitosamente.")
-        return cliente_seleccionado
+        return id_cliente_seleccionado
+
 
 def mostrar_vehiculos_disponibles():
     with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
@@ -156,11 +181,11 @@ def mostrar_vehiculos_disponibles():
             return
         for vehiculo in vehiculos:
             print("\n" + "-" * 50)
-            print(f"[{vehiculo["_id_vehiculo"]}] \t")
-            print(f"{vehiculo["_precio"]} pesos")
-            print(f"{vehiculo["_marca"]} {vehiculo["_modelo"]}")
-            print(f"{vehiculo["_kilometraje"]} km | {vehiculo["_anio"]}")
-            print("\n" + "-" * 50)
+            print(f'[{vehiculo["_id_vehiculo"]}] \t')
+            print(f'{vehiculo["_marca"]} {vehiculo["_modelo"]}')
+            print(f'{vehiculo["_kilometraje"]} km | {vehiculo["_anio"]}')
+            print(f'{vehiculo["_precio"]} pesos')
+
 
 def seleccionar_vehiculo():
     mostrar_vehiculos_disponibles()
@@ -170,36 +195,21 @@ def seleccionar_vehiculo():
     with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
         vehiculos = json.load(archivo)
         for vehiculo in vehiculos:
-            if vehiculo.id_vehiculo == id_vehiculo_seleccionado:
-                vehiculo_seleccionado = Vehiculo(
-                    id_vehiculo=vehiculo["_id_vehiculo"],
-                    marca=vehiculo["_marca"],
-                    modelo=vehiculo["_modelo"],
-                    anio=vehiculo["_anio"],
-                    placa=vehiculo["_placa"],
-                    color=vehiculo["_color"],
-                    combustible=vehiculo["_combustible"],
-                    transmision=vehiculo["_transmision"],
-                    cilindraje=vehiculo["_cilindraje"],
-                    kilometraje=vehiculo["_kilometraje"],
-                    puertas=vehiculo["_puertas"],
-                    alarma=vehiculo["_alarma"],
-                    sensor=vehiculo["_sensor"],
-                    precio=vehiculo["_precio"],
-                )
+            if vehiculo["_id_vehiculo"] == id_vehiculo_seleccionado:
+                break
     print("Vehiculo seleccionado exitosamente.")
-    return vehiculo_seleccionado
+    return id_vehiculo_seleccionado
 
 
 def realizar_compra():
     nueva_venta = Venta()
-    nueva_venta.vehiculo = seleccionar_vehiculo()
-    nueva_venta.cliente = identificar_cliente()
+    nueva_venta.id_vehiculo = seleccionar_vehiculo()
+    nueva_venta.id_cliente = identificar_cliente()
     guardar_venta(nueva_venta)
     print("Su transacción ha sido creada exitosamente")
 
-def menu():
 
+def menu():
     while True:
         print("\n" + "-" * 50)
         print("VENTA DE VEHICULOS")
@@ -214,5 +224,6 @@ def menu():
             break
         else:
             print("Opción no válida. Por favor, intente de nuevo.")
+
 
 menu()

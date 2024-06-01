@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "_id_venta": 0,
+        "_fecha": "01-06-2024",
+        "_estado": "No pagado",
+        "_id_cliente": 10,
+        "_id_vehiculo": "2"
+    }
+]
