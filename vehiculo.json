@@ -13,8 +13,7 @@
         "_puertas": 5,
         "_alarma": true,
         "_sensor": true,
-        "_precio": 56945620.0,
-        "vehiculo_inventario": []
+        "_precio": 56945620.0
     },
     {
         "_id_vehiculo": 1,
@@ -30,8 +29,7 @@
         "_puertas": 5,
         "_alarma": true,
         "_sensor": true,
-        "_precio": 48953682.0,
-        "vehiculo_inventario": []
+        "_precio": 48953682.0
     },
     {
         "_id_vehiculo": 2,
@@ -47,8 +45,7 @@
         "_puertas": 3,
         "_alarma": true,
         "_sensor": false,
-        "_precio": 25745000.0,
-        "vehiculo_inventario": []
+        "_precio": 25745000.0
     },
     {
         "_id_vehiculo": 3,
@@ -64,7 +61,6 @@
         "_puertas": 2,
         "_alarma": true,
         "_sensor": true,
-        "_precio": 8595865900.0,
-        "vehiculo_inventario": []
+        "_precio": 8595865900.0
     }
 ]

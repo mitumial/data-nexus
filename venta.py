@@ -120,11 +120,12 @@ def guardar_venta(venta, filename="./venta.json"):
 def identificar_cliente():
     with open("./cliente.json", "r", encoding="utf-8") as archivo:
         clientes = json.load(archivo)
-
+        if not clientes:
+            print("No hay ningún cliente registrado.")
+            return
         doc = int(input("Ingrese su numero de documento:\n"))
-
         for cliente in clientes:
-            if cliente.documento == doc:
+            if cliente["_documento"] == doc:
                 while True:
                     es_cliente = input(
                         f"¿Esta seguro que se identifica como {cliente["_nombre"]} {cliente["_apellidos"]}? (Si/No)\n"
@@ -144,8 +145,22 @@ def identificar_cliente():
                     celular=cliente["_celular"],
                     vehiculos_comprados=cliente["_vehiculos_comprados"],
                 )
+        print("Cliente identificado exitosamente.")
         return cliente_seleccionado
 
+def mostrar_vehiculos_disponibles():
+    with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
+        vehiculos = json.load(archivo)
+        if not vehiculos:
+            print("No hay ningún vehiculo disponible.")
+            return
+        for vehiculo in vehiculos:
+            print("\n" + "-" * 50)
+            print(f"[{vehiculo["_id_vehiculo"]}] \t")
+            print(f"{vehiculo["_precio"]} pesos")
+            print(f"{vehiculo["_marca"]} {vehiculo["_modelo"]}")
+            print(f"{vehiculo["_kilometraje"]} km | {vehiculo["_anio"]}")
+            print("\n" + "-" * 50)
 
 def seleccionar_vehiculo():
     mostrar_vehiculos_disponibles()
@@ -172,19 +187,8 @@ def seleccionar_vehiculo():
                     sensor=vehiculo["_sensor"],
                     precio=vehiculo["_precio"],
                 )
+    print("Vehiculo seleccionado exitosamente.")
     return vehiculo_seleccionado
-
-
-def mostrar_vehiculos_disponibles():
-    with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
-        vehiculos = json.load(archivo)
-        for vehiculo in vehiculos:
-            print("\n" + "-" * 50)
-            print(f"[{vehiculo["id_vehiculo"]}] \t")
-            print(f"{vehiculo["precio"]} pesos")
-            print(f"{vehiculo["marca"]} {vehiculo["modelo"]}")
-            print(f"{vehiculo["kilometraje"]} km | {vehiculo["año"]}")
-            print("\n" + "-" * 50)
 
 
 def realizar_compra():
@@ -194,35 +198,21 @@ def realizar_compra():
     guardar_venta(nueva_venta)
     print("Su transacción ha sido creada exitosamente")
 
+def menu():
 
-realizar_compra()
-# def menu():
+    while True:
+        print("\n" + "-" * 50)
+        print("VENTA DE VEHICULOS")
+        print("1. Realizar nueva compra")
+        print("2. Salir")
 
-#     while True:
-#         print("\n" + "-" * 50)
-#         print("VENTA DE VEHICULOS")
-#         print("1. Mostrar lista de todos los vehiculos disponibles")
-#         print("2. Identifiquese")
-#         print("3. Elegir metodo de pago")
-#         print("4. Cancelar compra")
+        opcion = input("Seleccione una opción: ")
+        if opcion == "1":
+            realizar_compra()
+        elif opcion == "2":
+            print("Saliendo del programa...")
+            break
+        else:
+            print("Opción no válida. Por favor, intente de nuevo.")
 
-#         opcion = input("Seleccione una opción: ")
-
-#         if opcion == "1":
-#             mostrar_vehiculos_disponibles(lista_vehiculos)
-#             id_carro_seleccionado = input(
-#                 "Ingrese el id correspondiente al vehiculo deseado: \n"
-#             )
-#         elif opcion == "2":
-#             id_cliente_seleccionado = identificar_cliente(lista_clientes)
-#         elif opcion == "3":
-#             pass
-#         elif opcion == "4":
-#             print("Saliendo del programa...")
-#             break
-#         else:
-#             print("Opción no válida. Por favor, intente de nuevo.")
-
-#     compra_de_vehiculo = Venta()
-# Ejecutar el menú
-# menu()
+menu()
