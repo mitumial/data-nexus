@@ -226,4 +226,5 @@ def menu():
             print("Opción no válida. Por favor, intente de nuevo.")
 
 
-menu()
+if __name__ == "__main__":
+    menu()
