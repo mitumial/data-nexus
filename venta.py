@@ -1,31 +1,20 @@
+from vehiculo import Vehiculo
+from cliente import Cliente
+import pago
 import json
 from datetime import datetime as dt
 import re
-
-
-class Cliente:
-    pass
-
-
-class Vehiculo:
-    interes = 0.19
-
-    def calcular_total(self):
-        precio_total = self.vehiculo.precio * (1 + self.interes)
-        return precio_total
-
-    pass
 
 
 class Venta:
     _id_venta = int
     _fecha = str
     _estado = str
-    _cliente = Cliente
-    _vehiculo = Vehiculo
+    _id_cliente = int
+    _id_vehiculo = int
 
     def __init__(
-        self, id_venta=None, fecha=None, estado=None, cliente=None, vehiculo=None
+        self, id_venta=None, fecha=None, estado=None, id_cliente=None, id_vehiculo=None
     ):
         with open("./venta.json", "r", encoding="utf-8") as archivo:
             ventas = json.load(archivo)
@@ -46,8 +35,8 @@ class Venta:
         else:
             self._estado = "No pagado"
 
-        self._cliente = cliente
-        self._vehiculo = vehiculo
+        self._id_cliente = id_cliente
+        self._id_vehiculo = id_vehiculo
 
     @property
     def id_venta(self):
@@ -65,161 +54,179 @@ class Venta:
             self._fecha = value
 
     @property
-    def cliente(self):
-        return self._cliente
+    def id_cliente(self):
+        return self._id_cliente
 
-    @cliente.setter
-    def cliente(self, value):
-        self._cliente = value
+    @id_cliente.setter
+    def id_cliente(self, value):
+        self._id_cliente = value
 
     @property
-    def vehiculo(self):
-        return self._vehiculo
+    def id_vehiculo(self):
+        return self._id_vehiculo
 
-    @vehiculo.setter
-    def vehiculo(self, value):
-        self._vehiculo = value
+    @id_vehiculo.setter
+    def id_vehiculo(self, value):
+        self._id_vehiculo = value
 
-    def realizar_compra(self):
-        if self.pago.cantidad < self.calcular_total():
-            self._estado = "Pagado"
-            self.tarjeta.fondos = self.tarjeta.fondos - self.vehiculo.precio
+    def realizar_pago(self):
+        pago.registrar_pago(self._id_cliente, self.id_vehiculo)
+        self._estado = "Pagado"
+        # borrar vehiculo
 
     def mostrar_detalles_venta(self):
+        with open("./cliente.json", "r", encoding="utf-8") as archivo:
+            clientes = json.load(archivo)
+            for cliente in clientes:
+                if cliente["_id_cliente"] == self.id_cliente:
+                    cliente_info = cliente
+        with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
+            vehiculos = json.load(archivo)
+            for vehiculo in vehiculos:
+                if vehiculo["_id_vehiculo"] == self.id_vehiculo:
+                    vehiculo_info = vehiculo
         print(
             f"""\n
-                Cliente:{self._cliente.nombres} {self._cliente.apellidos}
-                Vehiculo:{self._vehiculo.marca} {self._vehiculo.modelo}
-                Fecha:{self._fecha}
-                Estado:{self._estado}
-                Por la suma total de: {self._vehiculo}
-                \n
+                Cliente: {cliente_info["_nombre"]} {cliente_info["_apellidos"]}
+                Vehiculo: {vehiculo_info["_marca"]} {vehiculo_info["_modelo"]}
+                Fecha: {self._fecha}
+                Estado: {self._estado}
+                Por la suma total de: {vehiculo_info["_precio"]} pesos
             """
         )
 
-    def cancelar_compra(self):
-        pass
+    def cancelar_compra(self, filename="./venta.json"):
+        with open(filename, "r", encoding="utf-8") as f:
+            ventas = json.load(f)
 
+            id_venta = self._id_venta
 
-def cargar_ventas(filename="./venta.json"):
-    with open(filename, "r") as archivo:
-        ventas = json.load(archivo)
-        for venta in ventas:
-            nueva_venta = Venta(
-                venta["_id_venta"],
-                venta["_fecha"],
-                venta["_estado"],
-                venta["_cliente"],
-                venta["_vehiculo"],
-            )
+            confirmacion = input(
+                "¿Está seguro de que desea cancelar su compra? (s/n): "
+            ).lower()
+
+            if confirmacion == "s":
+                for idx, obj in enumerate(ventas):
+                    if obj["_id_venta"] == id_venta:
+                        ventas.pop(idx)
+                        print("Compra cancelada exitosamente.")
+                        break
+            else:
+                print("Operación cancelada.")
+
+            with open(filename, "w", encoding="utf-8") as f:
+                json.dump(ventas, f, indent=4)
 
 
 def guardar_venta(venta, filename="./venta.json"):
-    with open(filename, "r+") as archivo:
+    with open(filename, "r+", encoding="utf-8") as archivo:
         ventas = json.load(archivo)
         ventas.append(venta.__dict__)
         archivo.seek(0)
         json.dump(ventas, archivo, indent=4)
 
 
-def cancelar_venta(venta, filename="./venta.json"):
+def identificar_cliente():
+    with open("./cliente.json", "r", encoding="utf-8") as archivo:
+        clientes = json.load(archivo)
+        if not clientes:
+            print("No hay ningún cliente registrado.")
+            return
+        doc = int(input("Ingrese su numero de documento:\n"))
+        for cliente in clientes:
+            if cliente["_documento"] == doc:
+                while True:
+                    es_cliente = input(
+                        f'¿Esta seguro que se identifica como {cliente["_nombre"]} {cliente["_apellidos"]}? (Si/No)\n'
+                    )
+                    if es_cliente.lower() == "si":
+                        break
+                    doc = int(input("Por favor, ingrese su documento de nuevo:\n"))
+                id_cliente_seleccionado = cliente["_id_cliente"]
+        print("Cliente identificado exitosamente.")
+        return id_cliente_seleccionado
+
+
+def mostrar_vehiculos_disponibles():
+    with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
+        vehiculos = json.load(archivo)
+        if not vehiculos:
+            print("No hay ningún vehiculo disponible.")
+            return
+        for vehiculo in vehiculos:
+            print("\n" + "-" * 50)
+            print(f'[{vehiculo["_id_vehiculo"]}] \t')
+            print(f'{vehiculo["_marca"]} {vehiculo["_modelo"]}')
+            print(f'{vehiculo["_kilometraje"]} km | {vehiculo["_anio"]}')
+            print(f'{vehiculo["_precio"]} pesos')
+
+
+def seleccionar_vehiculo():
+    mostrar_vehiculos_disponibles()
+    id_vehiculo_seleccionado = int(
+        input("Ingrese el id correspondiente al vehiculo deseado: \n")
+    )
+    with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
+        vehiculos = json.load(archivo)
+        for vehiculo in vehiculos:
+            if id_vehiculo_seleccionado == vehiculo["_id_vehiculo"]:
+                break
+            #         print("Vehiculo seleccionado exitosamente.")
+            #         return id_vehiculo_seleccionado
+            # id_vehiculo_seleccionado = input(
+            #     "El id ingresado no existe. Intente de nuevo: \n"
+            # )
+    return id_vehiculo_seleccionado
+
+
+def borrar_vehiculo(id_vehiculo, filename="./vehiculo.json"):
     with open(filename, "r", encoding="utf-8") as f:
-        ventas = json.load(f)
+        vehiculos = json.load(f)
+        if not vehiculos:
+            print("No hay ningún vehiculo registrado para borrar.")
+            return
 
-        confirmacion = input(
-            "¿Está seguro de que desea cancelar esta venta? (s/n): "
-        ).lower()
-
-        if confirmacion == "s":
-            for idx, obj in enumerate(ventas):
-                if obj["_id_venta"] == venta._id_venta:
-                    ventas.pop(idx)
-            print("Compra cancelada exitosamente.")
+        for idx, obj in enumerate(vehiculos):
+            if obj["_id_vehiculo"] == id_vehiculo:
+                vehiculos.pop(idx)
+                print("Vehiculo borrado exitosamente.")
+                break
         else:
-            print("Operación cancelada.")
+            print("Vehiculo no encontrado.")
 
         with open(filename, "w", encoding="utf-8") as f:
-            f.write(json.dumps(ventas, indent=4))
+            json.dump(vehiculos, f, indent=4)
 
 
-def realizar_venta(lista_vehiculos, lista_clientes):
+def realizar_compra():
     nueva_venta = Venta()
-    mostrar_vehiculos_disponibles(lista_vehiculos)
-    id_carro_seleccionado = input(
-        "Ingrese el id correspondiente al vehiculo deseado: \n"
-    )
-    vehiculo_informacion = list(
-        filter(
-            lambda vehiculo: vehiculo["id"] == id_carro_seleccionado,
-            Vehiculo.vehiculos_inventario,
-        )
-    )
-    nueva_venta.vehiculo = vehiculo_informacion
-
-    id_cliente_seleccionado = identificar_cliente(lista_clientes)
-    cliente_informacion = list(
-        filter(
-            lambda cliente: cliente["id"] == id_cliente_seleccionado,
-            Cliente.clientes_inventario,
-        )
-    )
-    nueva_venta.cliente = cliente_informacion
+    nueva_venta.id_vehiculo = seleccionar_vehiculo()
+    nueva_venta.id_cliente = identificar_cliente()
     guardar_venta(nueva_venta)
+    print("Su transacción ha sido creada exitosamente")
+    return nueva_venta
 
 
-def identificar_cliente(lista_clientes):
-    doc = int(input("Ingrese su numero de documento:\n"))
-    for cliente in lista_clientes:
-        if cliente.documento == doc:
-            while True:
-                es_cliente = input(
-                    f"¿Esta seguro que se identifica como {cliente.nombre} {cliente.apellidos}? (Si/No)\n"
-                )
-                if es_cliente.lower() == "si":
-                    break
-                print(f"Por favor, ingrese su documento de nuevo.\n")
-            id_cliente_seleccionado = cliente.id_cliente
-    return id_cliente_seleccionado
-
-
-def mostrar_vehiculos_disponibles(lista_vehiculos):
-    for vehiculo in lista_vehiculos:
+def menu():
+    while True:
         print("\n" + "-" * 50)
-        print(f"[{vehiculo.id_vehiculo}] \t")
-        print(f"Promoción especial! \033[9m{vehiculo.calcular_total()} pesos\033[0m")
-        print(f"{vehiculo.precio * 1.19 * 5} pesos")
-        print(f"{vehiculo.marca} {vehiculo.modelo}")
-        print(f"{vehiculo.kilometraje} km | {vehiculo.año}")
-        print("\n" + "-" * 50)
+        print("VENTA DE VEHICULOS")
+        print("1. Realizar compra")
+        print("2. Realizar pago")
+        print("3. Salir")
+
+        opcion = input("Seleccione una opción: ")
+        if opcion == "1":
+            venta_actual = realizar_compra()
+            venta_actual.mostrar_detalles_venta()
+        elif opcion == "2":
+            venta_actual.realizar_pago()
+        elif opcion == "3":
+            print("Saliendo del programa...")
+            break
+        else:
+            print("Opción no válida. Por favor, intente de nuevo.")
 
 
-# def menu(lista_clientes, lista_vehiculos):
-
-#     while True:
-#         print("\n" + "-" * 50)
-#         print("VENTA DE VEHICULOS")
-#         print("1. Mostrar lista de todos los vehiculos disponibles")
-#         print("2. Identifiquese")
-#         print("3. Elegir metodo de pago")
-#         print("4. Cancelar compra")
-
-#         opcion = input("Seleccione una opción: ")
-
-#         if opcion == "1":
-#             mostrar_vehiculos_disponibles(lista_vehiculos)
-#             id_carro_seleccionado = input(
-#                 "Ingrese el id correspondiente al vehiculo deseado: \n"
-#             )
-#         elif opcion == "2":
-#             id_cliente_seleccionado = identificar_cliente(lista_clientes)
-#         elif opcion == "3":
-#             pass
-#         elif opcion == "4":
-#             print("Saliendo del programa...")
-#             break
-#         else:
-#             print("Opción no válida. Por favor, intente de nuevo.")
-
-#     compra_de_vehiculo = Venta()
-# Ejecutar el menú
-# menu()
+if __name__ == "__main__":
+    menu()

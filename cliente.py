@@ -1,6 +1,7 @@
 import re
 import json
 
+
 class Cliente:
 
     def __init__(
@@ -23,7 +24,7 @@ class Cliente:
             elif not clientes and (id_cliente is None):
                 self._id_cliente = 0
             else:
-                self._id_cliente = clientes[-1]['_id_cliente'] + 1
+                self._id_cliente = clientes[-1]["_id_cliente"] + 1
         self._nombre = nombre
         self._apellidos = apellidos
         self._documento = documento
@@ -89,7 +90,9 @@ class Cliente:
         self._edad = int(input("Ingrese la edad del cliente: \n"))
         self._genero = input("Ingrese el genero del cliente : (Masculino/Femenino): \n")
         self._direccion = input("Ingrese la dirección del cliente: \n")
-        self._email = input("Ingrese la direccion de correo electronico del cliente: \n")
+        self._email = input(
+            "Ingrese la direccion de correo electronico del cliente: \n"
+        )
         self._celular = int(input("Ingrese el número de celular del cliente: \n"))
 
         self._vehiculos_comprados = []
@@ -108,11 +111,13 @@ class Cliente:
         print("Celular:", self._celular)
         print("Vehículos Comprados:", self._vehiculos_comprados)
 
+
 def agregar_cliente():
     cliente = Cliente()
     cliente.ingresar_cliente()
     guardar_cliente(cliente)
     print("Cliente agregado exitosamente.")
+
 
 def mostrar_todos_los_clientes(filename="./cliente.json"):
     with open(filename, "r", encoding="utf-8") as archivo:
@@ -135,6 +140,7 @@ def mostrar_todos_los_clientes(filename="./cliente.json"):
             )
             nuevo_cliente.mostrar_detalles_cliente()
 
+
 def eliminar_cliente(filename="./cliente.json"):
     with open(filename, "r", encoding="utf-8") as f:
         clientes = json.load(f)
@@ -144,7 +150,9 @@ def eliminar_cliente(filename="./cliente.json"):
 
         id_cliente = int(input("Ingrese la ID del cliente que desea eliminar: "))
 
-        confirmacion = input("¿Está seguro de que desea borrar este cliente? (s/n): ").lower()
+        confirmacion = input(
+            "¿Está seguro de que desea borrar este cliente? (s/n): "
+        ).lower()
 
         if confirmacion == "s":
             for idx, obj in enumerate(clientes):
@@ -160,6 +168,7 @@ def eliminar_cliente(filename="./cliente.json"):
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(clientes, f, indent=4)
 
+
 def guardar_cliente(cliente, filename="./cliente.json"):
     with open(filename, "r+", encoding="utf-8") as archivo:
         try:
@@ -169,6 +178,7 @@ def guardar_cliente(cliente, filename="./cliente.json"):
         archivo_datos.append(cliente.__dict__)
         archivo.seek(0)
         json.dump(archivo_datos, archivo, indent=4)
+
 
 def menu():
     while True:
@@ -193,5 +203,8 @@ def menu():
         else:
             print("Opción no válida. Por favor, intente de nuevo.")
 
-menu()
+
+if __name__ == "__main__":
+    menu()
+
 #
