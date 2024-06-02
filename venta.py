@@ -79,49 +79,21 @@ class Venta:
             clientes = json.load(archivo)
             for cliente in clientes:
                 if cliente["_id_cliente"] == self.id_cliente:
-                    cliente_info = Cliente(
-                        id_cliente=cliente["_id_cliente"],
-                        nombre=cliente["_nombre"],
-                        apellidos=cliente["_apellidos"],
-                        documento=cliente["_documento"],
-                        edad=cliente["_edad"],
-                        genero=cliente["_genero"],
-                        direccion=cliente["_direccion"],
-                        email=cliente["_email"],
-                        celular=cliente["_celular"],
-                        vehiculos_comprados=cliente["_vehiculos_comprados"],
-                    )
-            with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
-                vehiculos = json.load(archivo)
-                for vehiculo in vehiculos:
-                    # simplificar quitando Vehiculo(), dejar datos en dict
-                    if vehiculo["_id_vehiculo"] == self.id_vehiculo:
-                        vehiculo_info = Vehiculo(
-                            id_vehiculo=vehiculo["_id_vehiculo"],
-                            marca=vehiculo["_marca"],
-                            modelo=vehiculo["_modelo"],
-                            anio=vehiculo["_anio"],
-                            placa=vehiculo["_placa"],
-                            color=vehiculo["_color"],
-                            combustible=vehiculo["_combustible"],
-                            transmision=vehiculo["_transmision"],
-                            cilindraje=vehiculo["_cilindraje"],
-                            kilometraje=vehiculo["_kilometraje"],
-                            puertas=vehiculo["_puertas"],
-                            alarma=vehiculo["_alarma"],
-                            sensor=vehiculo["_sensor"],
-                            precio=vehiculo["_precio"],
-                        )
-                print(
-                    f"""\n
-                        Cliente:{cliente_info.nombre} {cliente_info.apellidos}
-                        Vehiculo:{vehiculo_info.marca} {vehiculo_info.modelo}
-                        Fecha:{self._fecha}
-                        Estado:{self._estado}
-                        Por la suma total de: {vehiculo_info.precio}
-                        \n
-                    """
-                )
+                    cliente_info = cliente
+        with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
+            vehiculos = json.load(archivo)
+            for vehiculo in vehiculos:
+                if vehiculo["_id_vehiculo"] == self.id_vehiculo:
+                    vehiculo_info = vehiculo
+        print(
+            f"""\n
+                Cliente: {cliente_info["_nombre"]} {cliente_info["_apellidos"]}
+                Vehiculo: {vehiculo_info["_marca"]} {vehiculo_info["_modelo"]}
+                Fecha: {self._fecha}
+                Estado: {self._estado}
+                Por la suma total de: {vehiculo_info["_precio"]} pesos
+            """
+        )
 
     def cancelar_compra(self, filename="./venta.json"):
         with open(filename, "r", encoding="utf-8") as f:
@@ -246,6 +218,7 @@ def menu():
         opcion = input("Seleccione una opción: ")
         if opcion == "1":
             venta_actual = realizar_compra()
+            venta_actual.mostrar_detalles_venta()
         elif opcion == "2":
             venta_actual.realizar_pago()
         elif opcion == "3":
