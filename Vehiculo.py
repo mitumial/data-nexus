@@ -25,7 +25,7 @@ class Vehiculo:
                 vehiculos = json.load(archivo)
                 if id_vehiculo is not None:
                   self._id_vehiculo = id_vehiculo
-                elif  not self.vehiculo_inventario and (id_vehiculo is None):
+                elif  not vehiculos and (id_vehiculo is None):
                     self._id_vehiculo = 0     
                 else:
                     self._id_vehiculo = vehiculos[-1]['_id_vehiculo'] + 1 
@@ -42,7 +42,7 @@ class Vehiculo:
             self._alarma = alarma
             self._sensor = sensor
             self._precio = precio
-            self.vehiculo_inventario.append(self)
+            
 
         @property
         def marca(self):
