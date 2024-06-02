@@ -95,7 +95,19 @@ def registrar_pago(id_cliente, id_vehiculo):
     cantidad = vehiculo["_precio"]
     if metodo_pago == "1":
         nro_cuenta = input("Número de cuenta (16 dígitos): ")
-        tipo = input("Tipo de tarjeta (por ejemplo, Visa, MasterCard): ")
+        if metodo_pago == "1":
+            print("Seleccione el tipo de tarjeta:")
+            print("1. Débito")
+            print("2. Crédito")
+            tipo_tarjeta = input("Ingrese el tipo de tarjeta: ")
+
+        if tipo_tarjeta == "1":
+            tipo = "Débito"
+        elif tipo_tarjeta == "2":
+            tipo = "Crédito"
+        else:
+            print("Tipo de tarjeta no válido.")
+            return
         fecha_expiracion = input("Fecha de expiración (MM-AAAA): ")
         fondos = float(input("Fondos disponibles en la tarjeta: "))
 
@@ -109,8 +121,10 @@ def registrar_pago(id_cliente, id_vehiculo):
                 print(
                     f"Pago con tarjeta realizado con éxito. Sus saldo restante es de: {pago_tarjeta.fondos} pesos"
                 )
+                return
             else:
                 print("Fondos insuficientes en la tarjeta.")
+                return
         else:
             print("La tarjeta no es válida.")
 
@@ -122,10 +136,12 @@ def registrar_pago(id_cliente, id_vehiculo):
             print(
                 f"Pago en efectivo realizado con éxito. Le devolvemos su cambio de: {cambio}"
             )
+            return
         except ValueError as e:
             print(e)
     else:
         print("Opción de pago no válida.")
+        return
 
 
 # Ejemplo de uso:
