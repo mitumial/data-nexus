@@ -209,7 +209,7 @@ class Vehiculo:
             self.puertas = int(input("Ingrese el numero de puertas del vehiculo: \n"))
             self.alarma = input("¿El vehiculo tiene alarma? (si/no): \n")
             self.sensor = input("¿El vehiculo tiene sensores? (si/no): \n")
-            self.precio = float(input("Ingrese el precio del vehiculo: \n"))
+            self.precio = int(input("Ingrese el precio del vehiculo: \n"))
                     
 
         def mostrar_detalles_vehiculo(self):
