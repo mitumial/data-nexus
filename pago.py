@@ -147,3 +147,4 @@ def registrar_pago(id_cliente, id_vehiculo):
 # Ejemplo de uso:
 if __name__ == "__main__":
     registrar_pago()
+    #
