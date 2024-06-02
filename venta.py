@@ -194,8 +194,8 @@ def borrar_vehiculo(id_vehiculo, filename="./vehiculo.json"):
         else:
             print("Vehiculo no encontrado.")
 
-    with open(filename, "w", encoding="utf-8") as f:
-        json.dump(vehiculos, f, indent=4)
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(vehiculos, f, indent=4)
 
 
 def realizar_compra():

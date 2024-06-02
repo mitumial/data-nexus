@@ -109,8 +109,10 @@ def registrar_pago(id_cliente, id_vehiculo):
                 print(
                     f"Pago con tarjeta realizado con éxito. Sus saldo restante es de: {pago_tarjeta.fondos} pesos"
                 )
+                return
             else:
                 print("Fondos insuficientes en la tarjeta.")
+                return
         else:
             print("La tarjeta no es válida.")
 
@@ -122,10 +124,12 @@ def registrar_pago(id_cliente, id_vehiculo):
             print(
                 f"Pago en efectivo realizado con éxito. Le devolvemos su cambio de: {cambio}"
             )
+            return
         except ValueError as e:
             print(e)
     else:
         print("Opción de pago no válida.")
+        return
 
 
 # Ejemplo de uso:
