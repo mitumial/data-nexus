@@ -116,10 +116,9 @@ def registrar_pago(id_cliente, id_vehiculo):
             if contraseña.isdigit() and len(contraseña) == 3:
                 break
             else:
-                print("Error: La contraseña debe de contener 3 digitos númericos.")    
-                
+                print("Error: La contraseña debe de contener 3 digitos númericos.")   
         fondos = float(input("Fondos disponibles en la tarjeta: "))
-            
+
         pago_tarjeta = Tarjeta(
             cantidad, id_cliente, nro_cuenta, tipo, fecha_expiracion, fondos, contraseña
         )
