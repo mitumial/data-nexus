@@ -173,6 +173,23 @@ def mostrar_vehiculos_disponibles():
             print("-" * 50)
 
 
+def mostrar_vehiculos_disponibles_filtrados(
+    marca=None, modelo=None, anio=None, precio=None
+):
+    with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
+        vehiculos = json.load(archivo)
+        if not vehiculos:
+            print("No hay ningún vehiculo disponible.")
+            return
+        for vehiculo in vehiculos:
+            print("-" * 50)
+            print(f'[{vehiculo["_id_vehiculo"]}] \t')
+            print(f'{vehiculo["_marca"]} {vehiculo["_modelo"]}')
+            print(f'{vehiculo["_kilometraje"]} km | {vehiculo["_anio"]}')
+            print(f'{vehiculo["_precio"]} pesos')
+            print("-" * 50)
+
+
 def seleccionar_vehiculo():
     mostrar_vehiculos_disponibles()
     with open("./vehiculo.json", "r", encoding="utf-8") as archivo:

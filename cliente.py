@@ -15,7 +15,6 @@ class Cliente:
         direccion=None,
         email=None,
         celular=None,
-        vehiculos_comprados=None,
     ):
         with open("./cliente.json", "r", encoding="utf-8") as archivo:
             clientes = json.load(archivo)
