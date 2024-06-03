@@ -132,19 +132,26 @@ def identificar_cliente():
         if not clientes:
             print("No hay ningún cliente registrado.")
             return
-        doc = int(input("Ingrese su numero de documento:\n"))
         for cliente in clientes:
-            if cliente["_documento"] == doc:
-                while True:
+            while True:
+                doc = int(input("Ingrese su numero de documento:\n"))
+                cliente = next(
+                    (c for c in clientes if c["_documento"] == doc),
+                    None,
+                )
+                if cliente is None:
+                    print("Cliente no encontrado.")
+                    continue
+                if cliente["_documento"] == doc:
                     es_cliente = input(
                         f'¿Esta seguro que se identifica como {cliente["_nombre"]} {cliente["_apellidos"]}? (Si/No)\n'
                     )
                     if es_cliente.lower() == "si":
-                        break
-                    doc = int(input("Por favor, ingrese su documento de nuevo:\n"))
-                id_cliente_seleccionado = cliente["_id_cliente"]
-        print("Cliente identificado exitosamente.")
-        return id_cliente_seleccionado
+                        id_cliente_seleccionado = cliente["_id_cliente"]
+                        print("Cliente identificado exitosamente.")
+                        return id_cliente_seleccionado
+                    else:
+                        continue
 
 
 def mostrar_vehiculos_disponibles():
@@ -154,29 +161,31 @@ def mostrar_vehiculos_disponibles():
             print("No hay ningún vehiculo disponible.")
             return
         for vehiculo in vehiculos:
-            print("\n" + "-" * 50)
+            print("-" * 50)
             print(f'[{vehiculo["_id_vehiculo"]}] \t')
             print(f'{vehiculo["_marca"]} {vehiculo["_modelo"]}')
             print(f'{vehiculo["_kilometraje"]} km | {vehiculo["_anio"]}')
             print(f'{vehiculo["_precio"]} pesos')
+            print("-" * 50)
 
 
 def seleccionar_vehiculo():
     mostrar_vehiculos_disponibles()
-    id_vehiculo_seleccionado = int(
-        input("Ingrese el id correspondiente al vehiculo deseado: \n")
-    )
     with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
         vehiculos = json.load(archivo)
-        for vehiculo in vehiculos:
-            if id_vehiculo_seleccionado == vehiculo["_id_vehiculo"]:
-                break
-            #         print("Vehiculo seleccionado exitosamente.")
-            #         return id_vehiculo_seleccionado
-            # id_vehiculo_seleccionado = input(
-            #     "El id ingresado no existe. Intente de nuevo: \n"
-            # )
-    return id_vehiculo_seleccionado
+        while True:
+            id_vehiculo_seleccionado = int(
+                input("Ingrese el id correspondiente al vehiculo deseado: \n")
+            )
+            vehiculo = next(
+                (v for v in vehiculos if v["_id_vehiculo"] == id_vehiculo_seleccionado),
+                None,
+            )
+            if vehiculo is None:
+                print("Vehiculo no encontrado.")
+                continue
+            else:
+                return id_vehiculo_seleccionado
 
 
 def borrar_vehiculo(id_vehiculo, filename="./vehiculo.json"):
