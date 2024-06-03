@@ -69,10 +69,16 @@ class Venta:
     def id_vehiculo(self, value):
         self._id_vehiculo = value
 
-    def realizar_pago(self):
+    def realizar_pago(self, filename="./venta.json"):
         pago.registrar_pago(self._id_cliente, self.id_vehiculo)
-        self._estado = "Pagado"
-        # borrar vehiculo
+        with open(filename, "r", encoding="utf-8") as archivo:
+            ventas = json.load(archivo)
+            for venta in ventas:
+                if venta["_id_venta"] == self.id_venta:
+                    venta["_estado"] = "Pagado"
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(ventas, f, indent=4)
+        borrar_vehiculo(self._id_vehiculo, filename="./vehiculo.json")
 
     def mostrar_detalles_venta(self):
         with open("./cliente.json", "r", encoding="utf-8") as archivo:
@@ -195,16 +201,16 @@ def borrar_vehiculo(id_vehiculo, filename="./vehiculo.json"):
             print("No hay ningún vehiculo registrado para borrar.")
             return
 
-        for idx, obj in enumerate(vehiculos):
-            if obj["_id_vehiculo"] == id_vehiculo:
-                vehiculos.pop(idx)
-                print("Vehiculo borrado exitosamente.")
-                break
-        else:
-            print("Vehiculo no encontrado.")
+    for idx, obj in enumerate(vehiculos):
+        if obj["_id_vehiculo"] == id_vehiculo:
+            vehiculos.pop(idx)
+            print("Vehiculo borrado exitosamente.")
+            break
+    else:
+        print("Vehiculo no encontrado.")
 
-        with open(filename, "w", encoding="utf-8") as f:
-            json.dump(vehiculos, f, indent=4)
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(vehiculos, f, indent=4)
 
 
 def realizar_compra():
