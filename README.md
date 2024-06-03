@@ -31,5 +31,3 @@ tarjeta.
 R11: Devolución del cambio en efectivo de acuerdo al pago del vehículo.
 
 R12: Verificación de fondos del cliente para realizar el pago.
-
-R13: Cálculo del precio total de la venta dado el impuesto
