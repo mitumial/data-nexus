@@ -1,5 +1,3 @@
-from vehiculo import Vehiculo
-from cliente import Cliente
 import pago
 import json
 from datetime import datetime as dt

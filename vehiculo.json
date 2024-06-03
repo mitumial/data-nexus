@@ -32,22 +32,6 @@
         "_precio": 48953682.0
     },
     {
-        "_id_vehiculo": 2,
-        "_marca": "Ford",
-        "_modelo": "Shelby",
-        "_anio": 2005,
-        "_placa": "KLI-566",
-        "_color": "azul",
-        "_combustible": "gasolina",
-        "_transmision": "manual",
-        "_cilindraje": 4.5,
-        "_kilometraje": 350.0,
-        "_puertas": 3,
-        "_alarma": true,
-        "_sensor": false,
-        "_precio": 25745000.0
-    },
-    {
         "_id_vehiculo": 3,
         "_marca": "Koenigsegg",
         "_modelo": "Agera RS",
