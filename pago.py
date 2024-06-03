@@ -110,11 +110,16 @@ def registrar_pago(id_cliente, id_vehiculo):
             print("Tipo de tarjeta no válido.")
             return
         fecha_expiracion = input("Fecha de expiración (MM-AAAA): ")
-        contraseña = (input("Ingrese su contraseña (Debe ser de 3 digitos): "))
-        if contraseña.isdigit() and len(contraseña) != 3:
-            print("Error: La contraseña debe de contener 3 digitos númericos.")
+        
+        while True:
+            contraseña = (input("Ingrese su contraseña (Debe ser de 3 digitos): "))
+            if contraseña.isdigit() and len(contraseña) == 3:
+                break
+            else:
+                print("Error: La contraseña debe de contener 3 digitos númericos.")    
+                
         fondos = float(input("Fondos disponibles en la tarjeta: "))
-
+            
         pago_tarjeta = Tarjeta(
             cantidad, id_cliente, nro_cuenta, tipo, fecha_expiracion, fondos, contraseña
         )
