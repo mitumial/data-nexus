@@ -22,7 +22,14 @@ class Pago:
 
 class Tarjeta(Pago):
     def __init__(
-        self, cantidad, id_cliente, nro_cuenta, tipo, fecha_expiracion, fondos, contraseña
+        self,
+        cantidad,
+        id_cliente,
+        nro_cuenta,
+        tipo,
+        fecha_expiracion,
+        fondos,
+        contraseña,
     ):
         super().__init__(cantidad, id_cliente)
         self.nro_cuenta = nro_cuenta
@@ -110,13 +117,13 @@ def registrar_pago(id_cliente, id_vehiculo):
             print("Tipo de tarjeta no válido.")
             return
         fecha_expiracion = input("Fecha de expiración (MM-AAAA): ")
-        
+
         while True:
-            contraseña = (input("Ingrese su contraseña (Debe ser de 3 digitos): "))
+            contraseña = input("Ingrese su contraseña (Debe ser de 3 digitos): ")
             if contraseña.isdigit() and len(contraseña) == 3:
                 break
             else:
-                print("Error: La contraseña debe de contener 3 digitos númericos.")   
+                print("Error: La contraseña debe de contener 3 digitos númericos.")
         fondos = float(input("Fondos disponibles en la tarjeta: "))
 
         pago_tarjeta = Tarjeta(
@@ -155,4 +162,3 @@ def registrar_pago(id_cliente, id_vehiculo):
 # Ejemplo de uso:
 if __name__ == "__main__":
     registrar_pago()
-    

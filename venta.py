@@ -158,40 +158,71 @@ def identificar_cliente():
                         continue
 
 
-def mostrar_vehiculos_disponibles():
-    with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
-        vehiculos = json.load(archivo)
-        if not vehiculos:
-            print("No hay ningún vehiculo disponible.")
-            return
-        for vehiculo in vehiculos:
-            print("-" * 50)
-            print(f'[{vehiculo["_id_vehiculo"]}] \t')
-            print(f'{vehiculo["_marca"]} {vehiculo["_modelo"]}')
-            print(f'{vehiculo["_kilometraje"]} km | {vehiculo["_anio"]}')
-            print(f'{vehiculo["_precio"]} pesos')
-            print("-" * 50)
-
-
-def mostrar_vehiculos_disponibles_filtrados(
-    marca=None, modelo=None, anio=None, precio=None
+def mostrar_vehiculos_disponibles(
+    marca=None, modelo=None, anio=None, precio=None, opcion=None
 ):
-    with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
-        vehiculos = json.load(archivo)
-        if not vehiculos:
-            print("No hay ningún vehiculo disponible.")
-            return
-        for vehiculo in vehiculos:
-            print("-" * 50)
-            print(f'[{vehiculo["_id_vehiculo"]}] \t')
-            print(f'{vehiculo["_marca"]} {vehiculo["_modelo"]}')
-            print(f'{vehiculo["_kilometraje"]} km | {vehiculo["_anio"]}')
-            print(f'{vehiculo["_precio"]} pesos')
-            print("-" * 50)
+    if opcion is not None:
+        filtro_valor = next(f for f in [marca, modelo, anio, precio] if f != None)
+        if opcion == "anio" or opcion == "precio":
+            filtro_valor = int(filtro_valor)
+        with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
+            vehiculos = json.load(archivo)
+            if not vehiculos:
+                print("No hay ningún vehiculo disponible.")
+                return
+            for vehiculo in vehiculos:
+                if vehiculo[f"_{opcion}"] == filtro_valor:
+                    print("-" * 50)
+                    print(f'[{vehiculo["_id_vehiculo"]}] \t')
+                    print(f'{vehiculo["_marca"]} {vehiculo["_modelo"]}')
+                    print(f'{vehiculo["_kilometraje"]} km | {vehiculo["_anio"]}')
+                    print(f'{vehiculo["_precio"]} pesos')
+                    print("-" * 50)
+    else:
+        with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
+            vehiculos = json.load(archivo)
+            if not vehiculos:
+                print("No hay ningún vehiculo disponible.")
+                return
+            for vehiculo in vehiculos:
+                print("-" * 50)
+                print(f'[{vehiculo["_id_vehiculo"]}] \t')
+                print(f'{vehiculo["_marca"]} {vehiculo["_modelo"]}')
+                print(f'{vehiculo["_kilometraje"]} km | {vehiculo["_anio"]}')
+                print(f'{vehiculo["_precio"]} pesos')
+                print("-" * 50)
 
 
 def seleccionar_vehiculo():
-    mostrar_vehiculos_disponibles()
+    print("\nSeleccione el filtro:")
+    print("0. Todos los vehiculos")
+    print("1. Marca")
+    print("2. Modelo")
+    print("3. Año")
+    print("4. Precio")
+    filtro = int(input("Ingrese el numero a la opcion correspondiente: \n"))
+    if filtro == 0:
+        mostrar_vehiculos_disponibles()
+    elif filtro == 1:
+        opcion = "marca"
+        filtro_valor = input(f"Ingrese valor de {opcion} que desea visualizar: \n")
+        mostrar_vehiculos_disponibles(marca=filtro_valor, opcion=opcion)
+    elif filtro == 2:
+        opcion = "modelo"
+        filtro_valor = input(f"Ingrese valor de {opcion} que desea visualizar: \n")
+        mostrar_vehiculos_disponibles(modelo=filtro_valor, opcion=opcion)
+    elif filtro == 3:
+        opcion = "anio"
+        filtro_valor = input(f"Ingrese valor de {opcion} que desea visualizar: \n")
+        mostrar_vehiculos_disponibles(anio=filtro_valor, opcion=opcion)
+    elif filtro == 4:
+        opcion = "precio"
+        filtro_valor = input(f"Ingrese valor de {opcion} que desea visualizar: \n")
+        mostrar_vehiculos_disponibles(precio=filtro_valor, opcion=opcion)
+    else:
+        print("Opcion no valida. Por favor, intente de nuevo")
+        return
+
     with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
         vehiculos = json.load(archivo)
         while True:
