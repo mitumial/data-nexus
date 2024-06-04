@@ -32,22 +32,6 @@
         "_precio": 48953682
     },
     {
-        "_id_vehiculo": 2,
-        "_marca": "Toyota",
-        "_modelo": "Corolla",
-        "_anio": 2020,
-        "_placa": "SAD-425",
-        "_color": "Blanco",
-        "_combustible": "gasolina",
-        "_transmision": "automatica",
-        "_cilindraje": 1.8,
-        "_kilometraje": 25000.0,
-        "_puertas": 4,
-        "_alarma": true,
-        "_sensor": true,
-        "_precio": 18000000
-    },
-    {
         "_id_vehiculo": 3,
         "_marca": "Toyota",
         "_modelo": "Camry",
@@ -62,22 +46,6 @@
         "_alarma": true,
         "_sensor": true,
         "_precio": 24000000
-    },
-    {
-        "_id_vehiculo": 4,
-        "_marca": "Toyota",
-        "_modelo": "RAV4",
-        "_anio": 2021,
-        "_placa": "GJU-111",
-        "_color": "negro",
-        "_combustible": "gasolina",
-        "_transmision": "automatica",
-        "_cilindraje": 2.5,
-        "_kilometraje": 15000.0,
-        "_puertas": 5,
-        "_alarma": true,
-        "_sensor": true,
-        "_precio": 28000000
     },
     {
         "_id_vehiculo": 5,

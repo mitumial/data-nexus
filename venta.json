@@ -145,5 +145,12 @@
         "_estado": "Pagado",
         "_id_cliente": 10,
         "_id_vehiculo": 4
+    },
+    {
+        "_id_venta": 21,
+        "_fecha": "04-06-2024",
+        "_estado": "No pagado",
+        "_id_cliente": 10,
+        "_id_vehiculo": 16
     }
 ]
