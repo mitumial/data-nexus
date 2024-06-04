@@ -170,14 +170,29 @@ def mostrar_vehiculos_disponibles(
             if not vehiculos:
                 print("No hay ningún vehiculo disponible.")
                 return
+            flag = True
             for vehiculo in vehiculos:
-                if vehiculo[f"_{opcion}"] == filtro_valor:
-                    print("-" * 50)
-                    print(f'[{vehiculo["_id_vehiculo"]}] \t')
-                    print(f'{vehiculo["_marca"]} {vehiculo["_modelo"]}')
-                    print(f'{vehiculo["_kilometraje"]} km | {vehiculo["_anio"]}')
-                    print(f'{vehiculo["_precio"]} pesos')
-                    print("-" * 50)
+                if opcion == "precio":
+                    if vehiculo[f"_{opcion}"] <= filtro_valor:
+                        print("-" * 50)
+                        print(f'[{vehiculo["_id_vehiculo"]}] \t')
+                        print(f'{vehiculo["_marca"]} {vehiculo["_modelo"]}')
+                        print(f'{vehiculo["_kilometraje"]} km | {vehiculo["_anio"]}')
+                        print(f'{vehiculo["_precio"]} pesos')
+                        print("-" * 50)
+                        flag = False
+                else:
+                    if vehiculo[f"_{opcion}"] == filtro_valor:
+                        print("-" * 50)
+                        print(f'[{vehiculo["_id_vehiculo"]}] \t')
+                        print(f'{vehiculo["_marca"]} {vehiculo["_modelo"]}')
+                        print(f'{vehiculo["_kilometraje"]} km | {vehiculo["_anio"]}')
+                        print(f'{vehiculo["_precio"]} pesos')
+                        print("-" * 50)
+                        flag = False
+            if flag:
+                print("No se encontraron vehiculos disponibles que cumplan su filtro")
+                seleccionar_vehiculo()
     else:
         with open("./vehiculo.json", "r", encoding="utf-8") as archivo:
             vehiculos = json.load(archivo)
@@ -217,7 +232,9 @@ def seleccionar_vehiculo():
         mostrar_vehiculos_disponibles(anio=filtro_valor, opcion=opcion)
     elif filtro == 4:
         opcion = "precio"
-        filtro_valor = input(f"Ingrese valor de {opcion} que desea visualizar: \n")
+        filtro_valor = input(
+            f"Ingrese valor máximo de {opcion} que desea visualizar: \n"
+        )
         mostrar_vehiculos_disponibles(precio=filtro_valor, opcion=opcion)
     else:
         print("Opcion no valida. Por favor, intente de nuevo")
