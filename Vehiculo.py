@@ -137,7 +137,7 @@ class Vehiculo:
 
         @kilometraje.setter
         def kilometraje(self, value):
-            if not isinstance(value, (int, float)) or value < 0 or value > 2000:
+            if not isinstance(value, (int, float)) or value < 0 or value > 200000:
                 raise ValueError("El kilometraje debe ser un número entero no negativo que debe estar entre cero y 2000 km.")
             else:
                  self._kilometraje = value
