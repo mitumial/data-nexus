@@ -33,7 +33,7 @@ class Cliente:
         self._email = email
         self._celular = celular
         self._vehiculos_comprados = (
-            vehiculos_comprados if vehiculos_comprados is not None else []
+            
         )
 
     @property
