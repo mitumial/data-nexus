@@ -1,8 +1,8 @@
 import json
 from venta import Venta, guardar_venta, seleccionar_vehiculo, identificar_cliente, borrar_vehiculo
 from pago import registrar_pago
-from cliente import agregar_cliente, eliminar_cliente
-from vehiculo import agregar_vehiculo, eliminar_vehiculo
+from cliente import agregar_cliente, eliminar_cliente, mostrar_todos_los_clientes
+from vehiculo import agregar_vehiculo, eliminar_vehiculo, mostrar_todos_los_vehiculos
 
 
 def realizar_compra():
@@ -20,7 +20,8 @@ def manejo_clientes():
         print("MANEJO DE CLIENTES")
         print("1. Agregar cliente")
         print("2. Eliminar cliente")
-        print("3. Volver al menú principal")
+        print("3. Mostrar todos los clientes")
+        print("4. Volver al menú principal")
 
         opcion = input("Seleccione una opción: ")
         if opcion == "1":
@@ -28,6 +29,8 @@ def manejo_clientes():
         elif opcion == "2":
             eliminar_cliente()
         elif opcion == "3":
+            mostrar_todos_los_clientes()
+        elif opcion == "4":    
             break
         else:
             print("Opción no válida. Por favor, intente de nuevo.")
@@ -39,7 +42,8 @@ def manejo_vehiculos():
         print("MANEJO DE VEHÍCULOS")
         print("1. Agregar vehículo")
         print("2. Eliminar vehículo")
-        print("3. Volver al menú principal")
+        print("3. Mostras todos los vehiculos")
+        print("4. Volver al menú principal")
 
         opcion = input("Seleccione una opción: ")
         if opcion == "1":
@@ -47,6 +51,8 @@ def manejo_vehiculos():
         elif opcion == "2":
             eliminar_vehiculo()
         elif opcion == "3":
+            mostrar_todos_los_vehiculos()
+        elif opcion == "4":
             break
         else:
             print("Opción no válida. Por favor, intente de nuevo.")
