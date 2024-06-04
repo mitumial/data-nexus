@@ -30,7 +30,7 @@
     {
         "_id_venta": 4,
         "_fecha": "01-06-2024",
-        "_estado": "No pagado",
+        "_estado": "Pagado",
         "_id_cliente": 6,
         "_id_vehiculo": "3"
     },
