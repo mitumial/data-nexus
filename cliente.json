@@ -118,5 +118,17 @@
         "_email": "edgarvallejo@gmail.com",
         "_celular": 31532626265,
         "_vehiculos_comprados": []
+    },
+    {
+        "_id_cliente": 11,
+        "_nombre": "Carlos",
+        "_apellidos": "Prado Humberto",
+        "_documento": 976589765,
+        "_edad": 54,
+        "_genero": "Masculino",
+        "_direccion": "Apartad\u00f3",
+        "_email": "Prado.humberto@gmail.com",
+        "_celular": 3162489574,
+        "_vehiculos_comprados": []
     }
 ]
