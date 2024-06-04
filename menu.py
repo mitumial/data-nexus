@@ -14,19 +14,53 @@ def realizar_compra():
     return nueva_venta
 
 
-def menu():
+def manejo_clientes():
     while True:
         print("\n" + "-" * 50)
-        print("VENTA DE VEHICULOS --DATANEXUS--")
+        print("MANEJO DE CLIENTES")
+        print("1. Agregar cliente")
+        print("2. Eliminar cliente")
+        print("3. Volver al menú principal")
+
+        opcion = input("Seleccione una opción: ")
+        if opcion == "1":
+            agregar_cliente()
+        elif opcion == "2":
+            eliminar_cliente()
+        elif opcion == "3":
+            break
+        else:
+            print("Opción no válida. Por favor, intente de nuevo.")
+
+
+def manejo_vehiculos():
+    while True:
+        print("\n" + "-" * 50)
+        print("MANEJO DE VEHÍCULOS")
+        print("1. Agregar vehículo")
+        print("2. Eliminar vehículo")
+        print("3. Volver al menú principal")
+
+        opcion = input("Seleccione una opción: ")
+        if opcion == "1":
+            agregar_vehiculo()
+        elif opcion == "2":
+            eliminar_vehiculo()
+        elif opcion == "3":
+            break
+        else:
+            print("Opción no válida. Por favor, intente de nuevo.")
+
+
+def manejo_ventas():
+    while True:
+        print("\n" + "-" * 50)
+        print("MANEJO DE VENTAS")
         print("1. Realizar compra")
         print("2. Realizar pago")
         print("3. Cancelar compra")
         print("4. Mostrar detalles de la venta")
-        print("5. Agregar cliente")
-        print("6. Eliminar cliente")
-        print("7. Agregar vehículo")
-        print("8. Eliminar vehículo")
-        print("9. Salir")
+        print("5. Volver al menú principal")
 
         opcion = input("Seleccione una opción: ")
         if opcion == "1":
@@ -80,14 +114,28 @@ def menu():
                 else:
                     print("Venta no encontrada.")
         elif opcion == "5":
-            agregar_cliente()
-        elif opcion == "6":
-            eliminar_cliente()
-        elif opcion == "7":
-            agregar_vehiculo()
-        elif opcion == "8":
-            eliminar_vehiculo()
-        elif opcion == "9":
+            break
+        else:
+            print("Opción no válida. Por favor, intente de nuevo.")
+
+
+def menu_principal():
+    while True:
+        print("\n" + "-" * 50)
+        print("MENÚ PRINCIPAL")
+        print("1. Manejo de clientes")
+        print("2. Manejo de vehículos")
+        print("3. Manejo de ventas")
+        print("4. Salir")
+
+        opcion = input("Seleccione una opción: ")
+        if opcion == "1":
+            manejo_clientes()
+        elif opcion == "2":
+            manejo_vehiculos()
+        elif opcion == "3":
+            manejo_ventas()
+        elif opcion == "4":
             print("Saliendo del programa...")
             break
         else:
@@ -95,4 +143,4 @@ def menu():
 
 
 if __name__ == "__main__":
-    menu()
+    menu_principal()
